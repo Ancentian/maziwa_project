@@ -62,6 +62,7 @@ class Farmers extends BASE_Controller {
     public function storeFarmer()
     {
         $this->form_validation->set_rules('fname', 'First Name', 'required');
+        $this->form_validation->set_rules('mname', 'Middle Name', '');
         $this->form_validation->set_rules('lname', 'Last Name', 'required');
         $this->form_validation->set_rules('farmerID', 'Farmer ID', 'required|is_unique[farmers_biodata.farmerID]');
         $this->form_validation->set_rules('contact1', 'Contact 1', 'required');
@@ -78,6 +79,7 @@ class Farmers extends BASE_Controller {
         } else {
             $data = array(
                 'fname' => $this->input->post('fname'),
+                'mname' => $this->input->post('mname'),
                 'lname' => $this->input->post('lname'),
                 'farmerID' => $this->input->post('farmerID'),
                 'contact1' => $this->input->post('contact1'),

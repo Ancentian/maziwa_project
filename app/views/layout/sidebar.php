@@ -56,6 +56,14 @@
                                     </ul>
                                 </li>
                                 <li class="submenu">
+                                    <a href="#"><i class="la la-money"></i> <span> Shop </span> <span class="menu-arrow"></span></a>
+                                    <ul style="display: none;">
+                                        <li><a href="<?php echo base_url('shop/farmers')?>">Farmers</a></li>
+                                        <li ><a href="<?php echo base_url('shop/index')?>"> Shop </a></li>
+                                        <li ><a href="<?php echo base_url('shop/inventory')?>"> Inventory </a></li>
+                                    </ul>
+                                </li>
+                                <li class="submenu">
                                     <a href="#"><i class="la la-pie-chart"></i> <span> Reports </span> <span class="menu-arrow"></span></a>
                                     <ul style="display: none;">
                                         <li><a href="expense-reports.html"> Expense Report </a></li>
