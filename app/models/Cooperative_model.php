@@ -57,6 +57,19 @@ class Cooperative_model extends CI_Model{
         return $query->result_array();
     }
 
+    public function fetch_farmerMilkCollectionByID($id)
+    {
+        $this->db->where('milk_collections.farmerID', $id);
+        $this->db->select('milk_collections.*, collection_centers.id as colID, collection_centers.centerName, users.id as userID, users.firstname, users.lastname, farmers_biodata.farmerID, farmers_biodata.fname, farmers_biodata.lname');
+        $this->db->from('milk_collections');
+        $this->db->join('collection_centers', 'collection_centers.id = milk_collections.center_id');
+        $this->db->join('users', 'users.id = milk_collections.user_id');
+        $this->db->join('farmers_biodata', 'farmers_biodata.farmerID = milk_collections.farmerID', 'left');
+        $this->db->order_by('milk_collections.id', 'DESC');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
     /*
         Store the record in the database
     */

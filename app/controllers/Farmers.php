@@ -6,6 +6,7 @@ class Farmers extends BASE_Controller {
         parent::__construct();
         $this->load->model('farmers_model', 'farmers');
         $this->load->model('cooperative_model', 'cooperative');
+        $this->load->model('shop_model', 'shop');
     }
 
     /*
@@ -30,6 +31,8 @@ class Farmers extends BASE_Controller {
     public function farmerProfile($id)
     {
         $this->data['farmer'] = $this->farmers->farmer_profile($id);
+        $this->data['milk'] = $this->cooperative->fetch_farmerMilkCollectionByID($id);
+        $this->data['shopping'] = $this->shop->fetch_shoppingByFarmerID($id);
         //var_dump($this->farmers->farmer_profile($id));die;
         $this->data['pg_title'] = "Cooperatives";
         $this->data['page_content'] = 'farmers/profile';
