@@ -17,30 +17,13 @@ class Shop_model extends CI_Model{
         return $query->result_array();
     }
 
-    function fetch_allCollectionCenters()
+    public function fetch_farmerShopRecords()
     {
-        $this->db->select('collection_centers.*, cooperatives.id as CoopID, cooperatives.cooperativeName,users.id as userID, users.firstname, users.lastname');
-        $this->db->from('collection_centers');
-        $this->db->join('cooperatives', 'cooperatives.id = collection_centers.cooperative_id');
-        $this->db->join('users', 'users.id = collection_centers.clerk_id');
-        $this->db->order_by('collection_centers.id', 'DESC');
-        $query = $this->db->get();
-        return $query->result_array();
-    }
-
-    function searchCollectionCenter($data)
-    {     
-        $this->db->like('centerName', $data['centerName']);
-        $query = $this->db->get('collection_centers');
-        //var_dump($query->result_array());die;
-        return $query->result_array();
-    }
-
-    public function center_members($id)
-    {
-        $this->db->where('collection_centers.id', $id);
-        $this->db->select('collection_centers.*, farmers_biodata.id as keyID, farmers_biodata.fname, farmers_biodata.lname, farmers_biodata.farmerID, farmers_biodata.center_id')->from('collection_centers');
-        $this->db->join('farmers_biodata', 'farmers_biodata.center_id = collection_centers.id');
+        $this->db->select('farmers_biodata.*, collection_centers.id as colID, collection_centers.centerName, shop_sales.id as salesID, shop_sales.farmerID, sum(shop_sales.amount) as totShopAmount')->from('farmers_biodata');
+        $this->db->join('collection_centers', 'collection_centers.id = farmers_biodata.center_id', 'left');
+        $this->db->join('shop_sales', 'shop_sales.farmerID = farmers_biodata.farmerID');
+        $this->db->group_by('shop_sales.farmerID');
+        $this->db->order_by('id', 'DESC');
         $query = $this->db->get();
         return $query->result_array();
     }

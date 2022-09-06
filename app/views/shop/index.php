@@ -75,8 +75,9 @@
 								
 								<th>Contact</th>
 								<th>Collection Center</th>
-								<th class="text-nowrap">Join Date</th>
+								<!-- <th class="text-nowrap">Join Date</th> -->
 								<th>Gender</th>
+								<th>Amount</th>
 								<th class="text-right no-sort">Action</th>
 							</tr>
 						</thead>
@@ -94,9 +95,9 @@
 								
 								<td><?php echo $key['contact1']?></td>
 								<td><?php echo ucfirst($key['centerName'])?></td>
-								<td><?php echo date('d/m/Y', strtotime($key['join_date']))?></td>
+								<!-- <td><?php //echo date('d/m/Y', strtotime($key['join_date']))?></td> -->
 								<td><?php echo $key['gender']?></td>
-								
+								<td><?php echo $key['totShopAmount']?></td>
 								<td class="text-right">
 									<a href="<?php echo base_url('shop/viewShopping/'.$key['farmerID']) ?>" title="View Shoppings" class="btn btn-info"><i class="fa fa-eye"></i></a>
 								</td>

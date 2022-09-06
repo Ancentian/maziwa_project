@@ -23,7 +23,7 @@
                     <div class="card-body">
                         <span class="dash-widget-icon"><i class="fa fa-cubes"></i></span>
                         <div class="dash-widget-info">
-                            <h3>112</h3>
+                            <h3><?php echo $collectionCenters; ?></h3>
                             <span>Col. Centers</span>
                         </div>
                     </div>
@@ -34,7 +34,7 @@
                     <div class="card-body">
                         <span class="dash-widget-icon"><i class="fa fa-usd"></i></span>
                         <div class="dash-widget-info">
-                            <h3>44</h3>
+                            <h3><?php //echo $milkRate * $totMilk?></h3>
                             <span>Amount </span>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                     <div class="card-body">
                         <span class="dash-widget-icon"><i class="fa fa-diamond"></i></span>
                         <div class="dash-widget-info">
-                            <h3>37</h3>
+                            <h3><?php echo $totMilk; ?></h3>
                             <span>Litres</span>
                         </div>
                     </div>
@@ -56,7 +56,7 @@
                     <div class="card-body">
                         <span class="dash-widget-icon"><i class="fa fa-user"></i></span>
                         <div class="dash-widget-info">
-                            <h3>218</h3>
+                            <h3><?php echo $allFarmers; ?></h3>
                             <span>Farmers</span>
                         </div>
                     </div>
