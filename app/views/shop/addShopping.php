@@ -356,9 +356,9 @@
         var amounts = sum;
         $(document).on("change keyup blur", "#qty", function() 
         {
-            // var qty = $("#qty").val();
-            // $(".total").val(amounts * qty);
-            // $("#sum_total").val(amounts * qty);
+            var qty = $("#qty").val();
+            //$(".total").val(amounts * qty);
+            $("#sum_total").val(amounts * qty);
             $("#grand_total").val(parseInt(amounts));
         }); 
     }

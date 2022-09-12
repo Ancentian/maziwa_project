@@ -40,10 +40,11 @@ class Payments_model extends CI_Model
 
     function farmer_payments()
     {
-        $this->db->select('farmers_biodata.*, milk_collections.id as milkColID, milk_collections.center_id,milk_collections.farmerID, sum(milk_collections.total) as totalMilk,collection_centers.id as colID, collection_centers.centerName');
+        $this->db->select('farmers_biodata.*, milk_collections.id as milkColID, milk_collections.center_id,milk_collections.farmerID, sum(milk_collections.total) as totalMilk,collection_centers.id as colID, collection_centers.centerName, shop_sales.id as salesID, shop_sales.farmerID, sum(shop_sales.amount) as totShopAmount');
         $this->db->from('farmers_biodata');
         $this->db->join('milk_collections', 'milk_collections.farmerID = farmers_biodata.farmerID');
         $this->db->join('collection_centers', 'collection_centers.id = milk_collections.center_id', 'LEFT');
+        $this->db->join('shop_sales', 'shop_sales.farmerID = farmers_biodata.farmerID', 'LEFT');     
         $this->db->group_by('milk_collections.farmerID');
         $this->db->order_by('milk_collections.farmerID', 'DESC');
         $query = $this->db->get();
@@ -84,15 +85,6 @@ class Payments_model extends CI_Model
         $this->db->order_by('shop_sales.created_at');
         $query = $this->db->get();
         return $query->row_array();
-
-        // $this->db->where('shop_sales.farmerID', $id);
-        // $this->db->select('shop_sales.*, inventory.id as invID, inventory.itemName, users.id as userID, users.firstname,users.lastname,');
-        // $this->db->from('shop_sales');
-        // $this->db->join('inventory', 'inventory.id = shop_sales.itemID');
-        // $this->db->join('users', 'users.id = shop_sales.user_id');
-        // $this->db->order_by('shop_sales.created_at');
-        // $query = $this->db->get();
-        // return $query->result_array();
     }
 
     function check_email($email, $table)

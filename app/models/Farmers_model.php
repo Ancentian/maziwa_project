@@ -27,6 +27,16 @@ class Farmers_model extends CI_Model{
         $query = $this->db->get();
         return $query->row_array();
     }
+
+    public function fetch_farmerByID($id)
+    {
+        $this->db->where('farmers_biodata.farmerID', $id);
+        $this->db->select('farmers_biodata.*, collection_centers.id as colID,collection_centers.centerName');
+        $this->db->from('farmers_biodata');
+        $this->db->join('collection_centers', 'collection_centers.id = farmers_biodata.center_id');
+        $query = $this->db->get();
+        return $query->row_array();
+    }
     /*
         Store the record in the database
     */
@@ -64,11 +74,10 @@ class Farmers_model extends CI_Model{
         return $this->db->affected_rows();
     }
 
-    function edit_employee($id, $data)
+    function update_farmer($id, $data)
     {
-        $this->db->where('id', $id);
-        //$this->db->where('id', $this->session->userdata('user_aob')->id);
-        $this->db->update('users', $data);
+        $this->db->where('farmerID', $id);
+        $this->db->update('farmers_biodata', $data);
         return $this->db->affected_rows();
     }
 

@@ -9,91 +9,42 @@ class Reports_model extends CI_Model{
     /*
         Get all the records from the database
     */
-        function fetch_carByServices()
+
+    public function milk_collections($sdate, $edate)
     {
-        $this->db->select()->from('cars');
-        $this->db->order_by('id', 'DESC');
+        //var_dump($sdate);die;
+        $this->db->select('milk_collections.*, collection_centers.id as colID, collection_centers.centerName, users.id as userID, users.firstname, users.lastname, farmers_biodata.farmerID, farmers_biodata.fname, farmers_biodata.lname');
+        $this->db->from('milk_collections');
+        $this->db->join('collection_centers', 'collection_centers.id = milk_collections.center_id');
+        $this->db->join('users', 'users.id = milk_collections.user_id');
+        $this->db->join('farmers_biodata', 'farmers_biodata.farmerID = milk_collections.farmerID', 'left');
+        if($sdate != "" && $edate != ""){
+            $edate = date('d/m/Y',strtotime($edate)+86400);
+            $this->db->where('milk_collections.collection_date >=',$sdate);
+            $this->db->where('milk_collections.collection_date <',$edate);
+        }
+        $this->db->order_by('milk_collections.id', 'DESC');
         $query = $this->db->get();
         return $query->result_array();
     }
 
-    function fetch_carRepairsById($id)
+    public function milk_collectionsByCenter($id, $sdate, $edate)
     {
-        $this->db->where('car_repairs.car_id', $id);
-        $this->db->select('car_repairs.*,cars.*,mechanics.id, mechanics.firstname as mfname, mechanics.lastname as mlname,');
-        $this->db->from('car_repairs');
-        $this->db->join('cars', 'cars.id = car_repairs.car_id');
-        $this->db->join('mechanics', 'mechanics.id = car_repairs.mec_id');
-        $this->db->group_by('car_repairs.id');
-        $this->db->order_by('car_repairs.id', 'DESC');
+        $this->db->where('collection_centers.id', $id);
+        $this->db->select('milk_collections.*, collection_centers.id as colID, collection_centers.centerName, users.id as userID, users.firstname, users.lastname, farmers_biodata.farmerID, farmers_biodata.fname, farmers_biodata.lname');
+        $this->db->from('milk_collections');
+        $this->db->join('collection_centers', 'collection_centers.id = milk_collections.center_id');
+        $this->db->join('users', 'users.id = milk_collections.user_id');
+        $this->db->join('farmers_biodata', 'farmers_biodata.farmerID = milk_collections.farmerID', 'left');
+        if($sdate != "" && $edate != ""){
+            $edate = date('d/m/Y',strtotime($edate)+86400);
+            $this->db->where('milk_collections.collection_date >=',$sdate);
+            $this->db->where('milk_collections.collection_date <',$edate);
+        }
+        $this->db->order_by('milk_collections.id', 'DESC');
         $query = $this->db->get();
         return $query->result_array();
     }
-
-     public function fetch_allPayments()
-    {
-        $this->db->select('payments.*,car_repairs.car_id,car_repairs.total_cost,car_repairs.discount');
-        $this->db->from('payments');
-        $this->db->join('car_repairs', 'car_repairs.id = payments.repair_id');
-        $this->db->order_by('payments.id', 'DESC');
-        $query = $this->db->get();
-        return $query->result_array();
-    }
-
-    public function fetch_bookings()
-    {
-        $this->db->select('bookings.*,cars.id,cars.car_model,cars.car_make,cars.reg_no,cars.price,cars.file');
-        $this->db->from('bookings');
-        $this->db->join('cars', 'cars.id = bookings.car_id');
-        $this->db->order_by('bookings.id', 'DESC');
-        $query = $this->db->get();
-        return $query->result_array();
-    }
-
-    public function fetch_allCarReturns()
-    {
-        $this->db->select('cars.*,bookings.car_id,bookings.fname as bname,bookings.lname as bname,bookings.id_number,bookings.phno,bookings.total_cost,bookings.discount,payments.id as pid,payments.booking_id,car_returns.*');
-        $this->db->from('cars');
-        $this->db->join('bookings', 'bookings.car_id = cars.id');
-        $this->db->join('payments', 'payments.booking_id = bookings.id');
-        $this->db->join('car_returns', 'car_returns.booking_id = bookings.id');
-        $this->db->order_by('car_returns.id', 'DESC');
-        $query = $this->db->get();
-        return $query->result_array();
-    }
-
-    public function fetch_carRepairsByMechanic($id)
-    {
-        $this->db->where('mechanics.id', $id);
-        $this->db->select('mechanics.*,car_repairs.id as crid,car_repairs.car_id,car_repairs.mec_id,car_repairs.repair_status,car_repairs.created_at as repair_date, cars.id as cid, cars.car_model, cars.color, cars.reg_no, cars.car_make, cars.file');
-        $this->db->from('mechanics');
-        $this->db->join('car_repairs', 'car_repairs.mec_id = mechanics.id');
-        $this->db->join('cars', 'cars.id = car_repairs.car_id');
-        $this->db->group_by('car_repairs.id');
-        $this->db->order_by('car_repairs.id', 'DESC');
-        $query = $this->db->get();
-        return $query->result_array();
-    }
-
-    public function fetch_allExpenses()
-    {
-        $this->db->select('expenses.*,employees.id,employees.firstname,employees.lastname');
-        $this->db->from('expenses');
-        $this->db->join('employees', 'employees.id = expenses.user_id');
-        $this->db->order_by('expenses.id', 'DESC');
-        $query = $this->db->get();
-        // var_dump($expenses);die;
-        return $query->result_array();
-    }
-
-    public function fetch_mechanicReports()
-    {
-        $this->db->select()->from('mechanics');
-        $this->db->order_by('id', 'DESC');
-        $query = $this->db->get();
-        return $query->result_array();
-    }
-
 
 
     public function fetch_todaysIncome()//Used in Reporting Module and Gives a List
@@ -145,22 +96,33 @@ class Reports_model extends CI_Model{
         return $tot;
     }
 
-    function all_repairs()
+    function all_collectionCenters()
     {
-        $query = $this->db->query('select * from car_repairs');
+        $query = $this->db->query('select * from collection_centers');
         $info = $query->result_array();
         $no = 0;
         $no = sizeof($info);
         return $no;
     }
 
-    function all_cars()
+    function all_farmers()
     {
-        $query = $this->db->query('select * from cars');
+        $query = $this->db->query('select * from farmers_biodata');
         $info = $query->result_array();
         $no = 0;
         $no = sizeof($info);
         return $no;
+    }
+
+    function total_milkCollected()
+    {
+        $query = $this->db->query('select *, sum(total) as totMilk from milk_collections');
+        $info = $query->result_array();
+        $tot = $info[0]['totMilk'];
+        if(!$tot){
+             $tot = 0;
+        }
+        return $tot;
     }
 
     function active_bookings()

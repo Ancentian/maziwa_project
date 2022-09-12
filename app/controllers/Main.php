@@ -11,10 +11,15 @@ class Main extends BASE_Controller {
 		parent::__construct();
         $this->load->model('employee_model');
         $this->load->model('reports_model');
+        $this->load->model('payments_model');
 	}
 
 	public function index()
 	{
+        $this->data['totMilk'] = $this->reports_model->total_milkCollected();
+        $this->data['collectionCenters'] = $this->reports_model->all_collectionCenters();
+        $this->data['allFarmers'] = $this->reports_model->all_farmers();
+        $this->data['milkRate'] = $this->payments_model->fetch_milkRates();
 		$this->data['pg_title'] = "Dashboard";
 		$this->data['page_content'] = 'admin/index';
 		$this->load->view('layout/template', $this->data);

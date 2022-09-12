@@ -159,38 +159,32 @@ class Farmers extends BASE_Controller {
     /*
       Edit a record page
     */
-    public function edit($id)
+    public function editFarmer($id)
     {
-        $this->data['expense'] = $this->expense->get($id);
-        $this->data['pg_title'] = "Edit Leave";
-        $this->data['page_content'] = 'expenses/edit';
+        $this->data['collectionCenter'] = $this->cooperative->fetch_allCollectionCenters();
+        $this->data['farmer'] = $this->farmers->fetch_farmerByID($id);
+        $this->data['pg_title'] = "Edit Farmer";
+        $this->data['page_content'] = 'farmers/edit';
         $this->load->view('layout/template', $this->data);
     }
 
     /*
       Update the submitted record
     */
-    public function updateExpense(int $id)
+    public function updateFarmer($id)
     {
         $forminput = $this->input->post();
 
-        //CALCULATES THE TOTAL OF EXPENSE AMOUNT
-        $total = 0;
-        foreach ($forminput['amount'] as $key ) {
-            $total += $key;
-        }
-        //END OF CALCULATION
+        //var_dump($forminput);die;
 
-        $data = array('user_id' => $forminput['user_id'], 'item_name' => json_encode($forminput['item_name']), 'date' => json_encode($forminput['date']), 'amount' => json_encode($forminput['amount']), 'description' => $forminput['description'], 'total_amount' => $total);
-
-        $inserted = $this->expense->update_expense($id, $data);
+        $inserted = $this->farmers->update_farmer($id, $forminput);
 
         if ($inserted > 0) {
-            $this->session->set_flashdata('success-msg', 'Expense Updated Successfully');
+            $this->session->set_flashdata('success-msg', 'Farmer Updated Successfully');
         }else{
-            $this->sessison->set_flashdata('error-msg', 'Err! Failed Try Again');
+            $this->session->set_flashdata('error-msg', 'Err! Failed Try Again');
         }
-        return redirect('expense/index');
+        return redirect(base_url('farmers/index'));
     }
     /*
       Delete a record

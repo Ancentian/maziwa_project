@@ -38,7 +38,7 @@
                                         <li><a href="#">Expenses</a></li>
                                     </ul>
                                 </li>
-                                <li class="submenu">
+                                <li class="submenu" hidden>
                                     <a href="#"><i class="la la-files-o"></i> <span> Accounting </span> <span class="menu-arrow"></span></a>
                                     <ul style="display: none;">
                                         <li><a href="categories.html">Categories</a></li>
@@ -66,7 +66,7 @@
                                 <li class="submenu">
                                     <a href="#"><i class="la la-pie-chart"></i> <span> Reports </span> <span class="menu-arrow"></span></a>
                                     <ul style="display: none;">
-                                        <li><a href="expense-reports.html"> Expense Report </a></li>
+                                        <li><a href="<?php echo base_url('reports/milk_CollectionReports')?>"> Milk Collection Report </a></li>
                                         <li><a href="invoice-reports.html"> Invoice Report </a></li>
                                         <li><a href="payments-reports.html"> Payments Report </a></li>
                                         <li><a href="user-reports.html"> User Report </a></li>
@@ -74,7 +74,20 @@
                                         <li><a href="payslip-reports.html"> Payslip Report </a></li>
                                         <li><a href="daily-reports.html"> Daily Report </a></li>
                                     </ul>
-                                </li>                     
+                                </li> 
+                                <li class="submenu">
+                                    <a href="#"><i class="la la-table"></i> <span>Col. Center Reports </span> <span class="menu-arrow"></span></a>
+                                    <ul style="display: none;">
+                                        <?php 
+                                        $this->db->select()->from('collection_centers');
+                                        $query = $this->db->get();
+                                        $center = $query->result_array();
+                                        foreach($center as $key) {?>
+                                        <li><a href="<?php echo base_url('reports/collection_centerReports/'.$key['id'])?>"><?php echo ucfirst($key['centerName'])?> </a></li>
+                                        <?php }?>
+                                        
+                                    </ul>
+                                </li>                    
                                 <li class="menu-title"> 
                                     <span>Administration</span>
                                 </li>
@@ -91,19 +104,17 @@
                                         <li><a href="<?php echo base_url('payments/milkRates'); ?>">Milk Rates</a></li>
                                     </ul>
                                 </li>     
-                                <li class="menu-title"> 
+                                <li class="menu-title" hidden> 
                                     <span>Pages</span>
                                 </li>
-                                <li class="submenu">
+                                <li class="submenu" hidden>
                                     <a href="#"><i class="la la-user"></i> <span> Profile </span> <span class="menu-arrow"></span></a>
                                     <ul style="display: none;">
                                         <li><a href="profile.html"> Employee Profile </a></li>
                                         <li><a href="client-profile.html"> Client Profile </a></li>
                                     </ul>
                                 </li>
-                                <li> 
-                                    <a href="#"><i class="la la-file-text"></i> <span>Documentation</span></a>
-                                </li>
+                                
 
                             </ul>
                         </div>

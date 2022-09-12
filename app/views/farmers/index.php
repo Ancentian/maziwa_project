@@ -95,18 +95,10 @@
 								<td><?php echo $key['contact1']?></td>
 								<td><?php echo $key['centerName']?></td>
 								<td><?php echo date('d/m/Y', strtotime($key['join_date']))?></td>
-								<td><?php echo $key['gender']?></td>
-								
+								<td><?php echo $key['gender']?></td>					
 								<td class="text-right">
-									<div class="dropdown dropdown-action">
-										<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-										<div class="dropdown-menu dropdown-menu-right">
-											<a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-											<a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-											
-											
-										</div>
-									</div>
+									<a href="<?php echo base_url('farmers/editFarmer/'.$key['farmerID'])?>" class="btn btn-success"><i class="fa fa-pencil"></i></a>
+									<a href="<?php echo base_url('farmers/deleteFarmer/'.$key['farmerID'])?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
 								</td>
 							</tr>
 

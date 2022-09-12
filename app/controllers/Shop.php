@@ -14,8 +14,8 @@ class Shop extends BASE_Controller {
     */
     public function index()
     {
-        $this->data['farmers'] = $this->farmers->fetch_farmers();
-        $this->data['collectionCenter'] = $this->cooperative->fetch_allCollectionCenters();
+        $this->data['farmers'] = $this->shop->fetch_farmerShopRecords();
+        //$this->data['collectionCenter'] = $this->cooperative->fetch_allCollectionCenters();
         $this->data['pg_title'] = "Farmers";
         $this->data['pg_title'] = "Shop Records";
         $this->data['page_content'] = 'shop/index';

@@ -63,6 +63,7 @@ class Payments extends BASE_Controller {
     {
         $this->data['salary'] = $this->payments_model->farmer_payments();
         $this->data['milkRate'] = $this->payments_model->fetch_milkRates();
+        
         $this->data['pg_title'] = "Salary";
         $this->data['page_content'] = 'payments/salary';
         $this->load->view('layout/template', $this->data);
