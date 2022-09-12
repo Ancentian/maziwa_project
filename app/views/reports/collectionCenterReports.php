@@ -31,7 +31,7 @@
 			<div class="alert alert-danger"><?php echo $this->session->flashdata('error-msg'); ?></div>
 		<?php } ?>
 		<!-- Search Filter -->
-		<form action="<?php echo base_url('reports/milk_CollectionReports')?>" method="GET">
+		<!-- <form action="<?php //echo base_url('reports/collection_centerReports/'.$milkCollection[0]['center_id'])?>" method="GET"> -->
 		<div class="row filter-row">
 			<div class="col-md-4">  
 				<div class="form-group form-focus">
@@ -54,7 +54,7 @@
 				<!-- <button class="btn btn-success " value="FILTER" type="submit"> Search</button>  --> 
 			</div>     
 		</div>
-		</form>
+		<!-- </form> -->
 		<!-- /Search Filter -->	
 		<div class="row">
 			<div class="col-md-12">

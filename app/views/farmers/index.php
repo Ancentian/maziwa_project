@@ -66,7 +66,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="table-responsive">
-					<table class="table table-striped custom-table datatable">
+					<table class="table table-striped custom-table" id="maziwa">
 						<thead>
 							<tr>
 								<th>#</th>
@@ -87,18 +87,26 @@
 								<td><?php echo $key['farmerID']?></td>
 								<td>
 									<h2 class="table-avatar">
-										<a href="<?php echo base_url('farmers/farmerProfile/'. $key['farmerID'] )?>" class="avatar"><img alt="" src="<?php echo base_url()?>res/assets/img/profiles/avatar-02.jpg"></a>
-										<a href="<?php echo base_url('farmers/farmerProfile/'. $key['farmerID'] )?>"><?php echo $key['fname']." ". $key['lname']?> <span><?php echo $key['location']?></span></a>
+										<a href="<?php echo base_url('farmers/farmerProfile/'. $key['id'] )?>" class="avatar"><img alt="" src="<?php echo base_url()?>res/assets/img/profiles/avatar-02.jpg"></a>
+										<a href="<?php echo base_url('farmers/farmerProfile/'. $key['id'] )?>"><?php echo $key['fname']." ". $key['lname']?> <span><?php echo $key['location']?></span></a>
 									</h2>
 								</td>
 								
 								<td><?php echo $key['contact1']?></td>
-								<td><?php echo $key['centerName']?></td>
+								<td><?php echo ucfirst($key['centerName'])?></td>
 								<td><?php echo date('d/m/Y', strtotime($key['join_date']))?></td>
-								<td><?php echo $key['gender']?></td>					
+								<td><?php echo $key['gender']?></td>
+								
 								<td class="text-right">
-									<a href="<?php echo base_url('farmers/editFarmer/'.$key['farmerID'])?>" class="btn btn-success"><i class="fa fa-pencil"></i></a>
-									<a href="<?php echo base_url('farmers/deleteFarmer/'.$key['farmerID'])?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+									<div class="dropdown dropdown-action">
+										<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+										<div class="dropdown-menu dropdown-menu-right">
+											<a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+											<a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+											
+											
+										</div>
+									</div>
 								</td>
 							</tr>
 
@@ -156,7 +164,7 @@
 							</div>
 							<div class="col-sm-6">
 								<div class="form-group">
-									<label class="col-form-label">Contact 2<span class="text-danger">*</span></label>
+									<label class="col-form-label">Contact 2<span class="text-danger"></span></label>
 									<input class="form-control" name="contact2" type="number">
 								</div>
 							</div>
@@ -183,8 +191,8 @@
 							<div class="col-md-6">
 								<div class="form-group">
 									<label>Collection Center <span class="text-danger">*</span></label>
-									<select name="center_id" class="select">
-										<option>Select Collection Center</option>
+									<select name="center_id" class="select" required>
+										<option value="">Select Collection Center</option>
 										<?php foreach ($collectionCenter as $key) { ?>
 											<option value="<?php echo $key['id']?>"><?php echo $key['centerName']?></option>
 										<?php }?>
@@ -222,116 +230,7 @@
 	</div>
 	<!-- /Add Employee Modal -->
 	
-	<!-- Edit Employee Modal -->
-	<div id="edit_employee" class="modal custom-modal fade" role="dialog">
-		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Edit Employee</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<form>
-						<div class="row">
-							<div class="col-sm-6">
-								<div class="form-group">
-									<label class="col-form-label">First Name <span class="text-danger">*</span></label>
-									<input class="form-control" value="John" type="text">
-								</div>
-							</div>
-							<div class="col-sm-6">
-								<div class="form-group">
-									<label class="col-form-label">Last Name</label>
-									<input class="form-control" value="Doe" type="text">
-								</div>
-							</div>
-							<div class="col-sm-6">
-								<div class="form-group">
-									<label class="col-form-label">Username <span class="text-danger">*</span></label>
-									<input class="form-control" value="johndoe" type="text">
-								</div>
-							</div>
-							<div class="col-sm-6">
-								<div class="form-group">
-									<label class="col-form-label">Email <span class="text-danger">*</span></label>
-									<input class="form-control" value="johndoe@example.com" type="email">
-								</div>
-							</div>
-							<div class="col-sm-6">
-								<div class="form-group">
-									<label class="col-form-label">Password</label>
-									<input class="form-control" value="johndoe" type="password">
-								</div>
-							</div>
-							<div class="col-sm-6">
-								<div class="form-group">
-									<label class="col-form-label">Confirm Password</label>
-									<input class="form-control" value="johndoe" type="password">
-								</div>
-							</div>
-							<div class="col-sm-6">  
-								<div class="form-group">
-									<label class="col-form-label">Employee ID <span class="text-danger">*</span></label>
-									<input type="text" value="FT-0001" readonly class="form-control floating">
-								</div>
-							</div>
-							<div class="col-sm-6">  
-								<div class="form-group">
-									<label class="col-form-label">Joining Date <span class="text-danger">*</span></label>
-									<div class="cal-icon"><input class="form-control datetimepicker" type="text"></div>
-								</div>
-							</div>
-							<div class="col-sm-6">
-								<div class="form-group">
-									<label class="col-form-label">Phone </label>
-									<input class="form-control" value="9876543210" type="text">
-								</div>
-							</div>
-							<div class="col-sm-6">
-								<div class="form-group">
-									<label class="col-form-label">Company</label>
-									<select class="select">
-										<option>Global Technologies</option>
-										<option>Delta Infotech</option>
-										<option selected>International Software Inc</option>
-									</select>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<label>Department <span class="text-danger">*</span></label>
-									<select class="select">
-										<option>Select Department</option>
-										<option>Web Development</option>
-										<option>IT Management</option>
-										<option>Marketing</option>
-									</select>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<label>Designation <span class="text-danger">*</span></label>
-									<select class="select">
-										<option>Select Designation</option>
-										<option>Web Designer</option>
-										<option>Web Developer</option>
-										<option>Android Developer</option>
-									</select>
-								</div>
-							</div>
-						</div>
-						
-						<div class="submit-section">
-							<button class="btn btn-primary submit-btn">Save</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- /Edit Employee Modal -->
+
 	
 	<!-- Delete Employee Modal -->
 	<div class="modal custom-modal fade" id="delete_employee" role="dialog">
@@ -363,5 +262,4 @@
 
 </div>
 <!-- /Main Wrapper -->
-
 

@@ -1,3 +1,7 @@
+<?php $sdate = "";$edate="";
+    $sdate = $_GET['sdate'];
+    $edate = $_GET['edate'];
+?>
 <!-- Page Wrapper -->
 <div class="page-wrapper">
 
@@ -26,10 +30,36 @@
 		<?php if ($this->session->flashdata('error-msg')) { ?>
 			<div class="alert alert-danger"><?php echo $this->session->flashdata('error-msg'); ?></div>
 		<?php } ?>	
+		<!-- Search Filter -->
+		<form action="<?php echo base_url('reports/collection_centerReports')?>" method="GET"> 
+		<div class="row filter-row">
+			<div class="col-md-4">  
+				<div class="form-group form-focus">
+					<div class="cal-icon">
+						<input class="form-control floating datetimepicker" name="sdate" value="<?php echo $sdate;?>" type="text">
+					</div>
+					<label class="focus-label">From</label>
+				</div>
+			</div>
+			<div class="col-md-4 ">  
+				<div class="form-group form-focus">
+					<div class="cal-icon">
+						<input class="form-control floating datetimepicker" name="edate" value="<?php echo $edate;?>" type="text">
+					</div>
+					<label class="focus-label">To</label>
+				</div>
+			</div>
+			<div class="col-md-4 ">  
+				<input type="submit" class="btn btn-success btn-block" value="FILTER" required>
+				<!-- <button class="btn btn-success " value="FILTER" type="submit"> Search</button>  --> 
+			</div>     
+		</div>
+		</form>
+		<!-- /Search Filter -->
 		<div class="row">
 			<div class="col-md-12">
 				<div>
-					<table class="table table-striped custom-table mb-0 datatable">
+					<table class="table table-striped custom-table mb-0" id="maziwa">
 						<thead>
 							<tr>
 								<th style="width: 30px;">#</th>
@@ -39,7 +69,8 @@
 								<th>Collection Date</th>
 								<th>Morning</th>
 								<th>Evening</th>
-								<th>Rejected</th>					
+								<th>Rejected</th>
+								<th>Total</th>					
 								<th>Recorded By</th>
 								<th>Created at</th>
 								<th class="text-right">Action</th>
@@ -50,12 +81,13 @@
 								<tr>
 								<td><?php echo $i; ?></td>
 								<td><?php echo $key['farmerID']?></td>
-								<td><?php echo $key['fname']." ".$key['lname']?></td>
-								<td><?php echo $key['centerName']?></td>
+								<td><?php echo $key['fname']." ".$key['mname']." ".$key['lname']?></td>
+								<td><?php echo ucfirst($key['centerName'])?></td>
 								<td><?php echo $key['collection_date']?></td>	
 								<td><?php echo $key['morning']?></td>
 								<td><?php echo $key['evening']?></td>
-								<td><?php echo $key['rejected']?></td>				
+								<td><?php echo $key['rejected']?></td>	
+								<td><?php echo $key['total']?></td>			
 								<td><?php echo $key['firstname']?></td>
 								<td><?php echo date('d/m/Y', strtotime($key['created_at'])) ?></td>
 								<td class="text-right">

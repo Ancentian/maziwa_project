@@ -31,6 +31,26 @@ class Payments extends BASE_Controller {
         $this->load->view('layout/template', $this->data);
     }
 
+    public function searchDates()
+    {
+        $this->data['pg_title'] = "Search Dates";
+        $this->data['page_content'] = 'payments/searchDates';
+        $this->load->view('layout/template', $this->data);
+    }
+
+    public function addPayment()
+    {
+        $sdate = "";$edate = "";
+        $forminput = $this->input->get();
+        $sdate = $forminput['sdate'];
+        $edate = $forminput['edate'];
+        $this->data['milkCollection'] = $this->payments_model->monthly_milkCollections($sdate, $edate);
+        //var_dump($this->data['milkCollection'][1]);die;
+        $this->data['pg_title'] = "Payments";
+        $this->data['page_content'] = 'payments/monthlyPayments';
+        $this->load->view('layout/template', $this->data);
+    }
+
     /*
       Display a record
     */
@@ -101,60 +121,40 @@ class Payments extends BASE_Controller {
         }
     }
 
-    public function store()
+    public function storeMonthlyPayments()
     {
-        $config['max_size'] = 10000;
-        $config['allowed_types'] = '*';
-        $config['upload_path'] = FCPATH . 'uploads/expenses';
-
-        $this->load->library('upload', $config);
-
-         if (isset($_FILES["file"]) && !empty($_FILES['file']['name'])) {
-            // var_dump($_FILES);die;
-
-            $fileInfo = pathinfo($_FILES["file"]["name"]);
-            $file =  time().".".$fileInfo['extension'];
-
-            // echo $file;die;
-            $this->load->library('upload', $config);
-            $this->upload->initialize($config);
-            move_uploaded_file($_FILES["file"]["tmp_name"], FCPATH . "/uploads/expenses/" . $file);
-        }
-
         $forminput = $this->input->post();
+        //var_dump($forminput);die;
+        $start = $forminput['from_date'];
+        $end = $forminput['to_date'];
+        $milkRate = $forminput['milkRate'];
+        $farmer = $forminput['farmerID'];
+        $morning = $forminput['total_morning'];
+        $evening = $forminput['total_evening'];
+        $rejected = $forminput['total_rejected'];
+        $total = $forminput['total_milk'];
+        //$amountEarned = ((int)$milkRate * (int)$total);
+        //var_dump($total);die;
+        $user = $this->session->userdata('user_aob')->id;
 
-        //CALCULATES THE TOTAL OF EXPENSE AMOUNT
-        $total = 0;
-        foreach ($forminput['amount'] as $key ) {
-            $total += $key;
+        $i = 0;
+        foreach ($farmer as $key) {
+            $mrng = $morning[$i];
+            $evng = $evening[$i];
+            $rjcted = $rejected[$i];
+            $tot = $total[$i];
+            //$amnt = $amountEarned[$i];
+            $this->db->insert('payments', ['from_date' => $start, 'to_date' => $end, 'milkRate' => $milkRate, 'farmerID' => $key, 'total_morning' => $mrng, 'total_evening' => $evng, 'total_rejected' => $rjcted, 'total_milk' => $tot, 'created_by' => $user]);
+            $i++;
         }
-        //END OF CALCULATION
-
-        if ($forminput['by'] == '1') { //Stores Self Expense
-            $data = array('user_id' => $forminput['user_id'], 'item_name' => json_encode($forminput['item_name']), 'date' => json_encode($forminput['date']), 'amount' => json_encode($forminput['amount']), 'description' => $forminput['description'], 'total_amount' => $total, 'file' => $file );
-
-        $inserted = $this->expense->storeExpense($data);
-
+        $inserted = $this->db->affected_rows();
+        //var_dump($inserted);die;
         if ($inserted > 0) {
-            $this->session->set_flashdata('success-msg', 'Expense Added Successfully');
+            $this->session->set_flashdata('success-msg', 'Payment Added Successfully');
         }else{
-            $this->sessison->set_flashdata('error-msg', 'Err! Failed Try Again');
+            $this->session->set_flashdata('error-msg', 'Err! Failed Try Again');
         }
-        return redirect('expense/index');
-
-        }else{
-            $data = array('user_id' => $forminput['user_id'], 'emp_fname' => $forminput['emp_fname'], 'emp_lname' => $forminput['emp_lname'], 'item_name' => json_encode($forminput['item_name']), 'date' => json_encode($forminput['date']), 'amount' => json_encode($forminput['amount']), 'description' => $forminput['description'], 'total_amount' => $total, 'file' => $file );
-
-        $inserted = $this->expense->storeExpense($data);
-
-        if ($inserted > 0) {
-            $this->session->set_flashdata('success-msg', 'Expense Added Successfully');
-        }else{
-            $this->sessison->set_flashdata('error-msg', 'Err! Failed Try Again');
-        }
-        return redirect('expense/index');
-        }
-     
+        return redirect(base_url('cooperative/milkCollection'));
     }
 
 
@@ -199,6 +199,8 @@ class Payments extends BASE_Controller {
     {
         $this->form_validation->set_rules('rateName', 'Rate Name', 'required'); 
         $this->form_validation->set_rules('milkRate', 'Milk Price', 'required');
+        $this->form_validation->set_rules('runs_from', 'Runs From', 'required');
+        $this->form_validation->set_rules('runs_to', 'Runs To', 'required');
         //$user = $this->session->userdata('user_aob')->id;
         if ($this->form_validation->run() == FALSE) {
             redirect(base_url('payments/milkRates')); 
@@ -206,6 +208,8 @@ class Payments extends BASE_Controller {
             $data = array(
                 'rateName' => $this->input->post('rateName'),
                 'milkRate' => $this->input->post('milkRate'),
+                'runs_from' => $this->input->post('runs_from'),
+                'runs_to' => $this->input->post('runs_to'),
                 'updated_by' => $this->session->userdata('user_aob')->id
             );
             //var_dump($data);die;
