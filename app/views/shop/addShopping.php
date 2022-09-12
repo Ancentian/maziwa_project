@@ -37,12 +37,13 @@
 					<div class="row">
 						<div class="col-sm-6 col-md-4">
 							<div class="form-group">
-								<label>Client <span class="text-danger">*</span></label>
-								<select class="select" id="client" name="farmerID" readonly>
-									<?php foreach($farmers as $key) {?>
-									<option value="<?php echo $farmer['farmerID']?>"<?php if($key['farmerID'] == $farmer['farmerID']){ echo "selected"; }?> readonly><?php echo $key['fname']." ".$key['mname']." ".$key['lname'] ?> </option>
-									<?php }?>
-								</select>
+								<label>Farmer Code <span class="text-danger">*</span></label>
+								<input class="form-control floating" type="text" id="farmerID" value="<?php echo $farmer['farmerID']?>" name="farmerID" required>
+								<!-- <select class="select" id="client" name="farmerID" disabled>
+									<?php //foreach($farmers as $key) {?>
+									<option value="<?php //echo $farmer['farmerID']?>"<?php //if($key['farmerID'] == $farmer['farmerID']){ //echo "selected"; }?> ><?php //echo $key['fname']." ".$key['mname']." ".$key['lname'] ?> </option>
+									<?php //}?>
+								</select> -->
 							</div>
 						</div> 
 						<div class="col-sm-6 col-md-8">
@@ -95,7 +96,7 @@
 							<div class="table-responsive">
 								<table class="table table-hover table-white">
 									<tbody>
-										<tr>
+										<!-- <tr>
 											<td></td>
 											<td></td>
 											<td></td>
@@ -104,7 +105,7 @@
 											<td>
 												<input class="form-control text-right total" type="text" id="sum_total" name="" value="0" readonly>
 											</td>
-										</tr>
+										</tr> -->
 
 										<tr>
 											<td colspan="5" style="text-align: right; font-weight: bold">
@@ -351,14 +352,15 @@
         $(".total").each(function () {
         sum += parseFloat($(this).val());
         });
-        $(".subtotal").text(sum);
+        //$(".subtotal").text(sum);
         
         var amounts = sum;
-        $(document).on("change keyup blur", "#qty", function() 
+        // alert(amounts)
+        $(document).on("change keyup blur", "#qty","unit_cost", function() 
         {
-            var qty = $("#qty").val();
+            //var qty = $("#qty").val();
             //$(".total").val(amounts * qty);
-            $("#sum_total").val(amounts * qty);
+            //$("#sum_total").val(amounts * qty);
             $("#grand_total").val(parseInt(amounts));
         }); 
     }

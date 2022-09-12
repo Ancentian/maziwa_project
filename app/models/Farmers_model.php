@@ -13,6 +13,15 @@ class Farmers_model extends CI_Model{
     {
         $this->db->select('farmers_biodata.*, collection_centers.id as colID, collection_centers.centerName')->from('farmers_biodata');
         $this->db->join('collection_centers', 'collection_centers.id = farmers_biodata.center_id', 'left');
+        // if($query != '')
+        // {
+        //     $this->db->like('fname', $query);
+        //     $this->db->like('lname', $query);
+        //     $this->db->or_like('farmerID', $query);
+            //$this->db->or_like('City', $query);
+            //$this->db->or_like('PostalCode', $query);
+            //$this->db->or_like('Country', $query);
+        //}
         $this->db->order_by('id', 'DESC');
         $query = $this->db->get();
         return $query->result_array();
@@ -121,10 +130,10 @@ class Farmers_model extends CI_Model{
         return $this->db->affected_rows();
     }
 
-    function delete_mechanic($id)
+    function delete_farmer($id)
     {
-        $this->db->where('id', $id);
-        $this->db->delete('mechanics');
+        $this->db->where('farmerID', $id);
+        $this->db->delete('farmers_biodata');
         return $this->db->affected_rows();
     }
 

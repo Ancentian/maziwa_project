@@ -7,7 +7,7 @@
                                 <span>Main</span>
                             </li>
                             <li class="submenu">
-                                <a href="<?php base_url('main/index');?>"><i class="la la-dashboard"></i> <span> Dashboard</span> <span class="menu-arrow"></span></a>
+                                <a href="<?php echo base_url('main/index');?>"><i class="la la-dashboard"></i> <span> Dashboard</span> <span class="menu-arrow"></span></a>
                                 <ul style="display: none;">
                                     <li><a class="active" href="<?php echo base_url('main/index');?>">Admin Dashboard</a></li>
                                     <li hidden><a href="#">Employee Dashboard</a></li>
@@ -51,7 +51,7 @@
                                     <a href="#"><i class="la la-money"></i> <span> Payroll </span> <span class="menu-arrow"></span></a>
                                     <ul style="display: none;">
                                         <li><a href="<?php echo base_url('payments/salary')?>"> Farmer Salary </a></li>
-                                        <li hidden><a href="salary-view.html"> Payslip </a></li>
+                                        <li><a href="<?php echo base_url('payments/addPayment')?>"> Add Payment </a></li>
                                         <li hidden><a href="payroll-items.html"> Payroll Items </a></li>
                                     </ul>
                                 </li>

@@ -188,7 +188,7 @@
                                             <div class="list-item">
                                                 <div class="list-left">
                                                     <span class="avatar">
-                                                        <img alt="" src="assets/img/profiles/avatar-02.jpg">
+                                                        <img alt="" src="<?php echo base_url(); ?>res/assets/img/profiles/avatar-02.jpg">
                                                     </span>
                                                 </div>
                                                 <div class="list-body">
@@ -205,7 +205,7 @@
                                             <div class="list-item">
                                                 <div class="list-left">
                                                     <span class="avatar">
-                                                        <img alt="" src="assets/img/profiles/avatar-03.jpg">
+                                                        <img alt="" src="<?php echo base_url(); ?>res/assets/img/profiles/avatar-03.jpg">
                                                     </span>
                                                 </div>
                                                 <div class="list-body">
@@ -222,7 +222,7 @@
                                             <div class="list-item">
                                                 <div class="list-left">
                                                     <span class="avatar">
-                                                        <img alt="" src="assets/img/profiles/avatar-05.jpg">
+                                                        <img alt="" src="<?php echo base_url(); ?>res/assets/img/profiles/avatar-05.jpg">
                                                     </span>
                                                 </div>
                                                 <div class="list-body">
@@ -239,7 +239,7 @@
                                             <div class="list-item">
                                                 <div class="list-left">
                                                     <span class="avatar">
-                                                        <img alt="" src="assets/img/profiles/avatar-08.jpg">
+                                                        <img alt="" src="<?php echo base_url(); ?>res/assets/img/profiles/avatar-08.jpg">
                                                     </span>
                                                 </div>
                                                 <div class="list-body">
@@ -262,7 +262,7 @@
 
                     <li class="nav-item dropdown has-arrow main-drop">
                         <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                            <span class="user-img"><img src="assets/img/profiles/avatar-21.jpg" alt="">
+                            <span class="user-img"><img src="<?php echo base_url(); ?>res/assets/img/profiles/avatar-21.jpg" alt="">
                             <span class="status online"></span></span>
                             <span><?php echo ucfirst($this->session->userdata('user_aob')->firstname." ".$this->session->userdata('user_aob')->lastname)?> </span>
                         </a>

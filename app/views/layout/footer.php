@@ -28,6 +28,14 @@
 	<script src="<?php echo base_url(); ?>res/assets/js/app.js"></script>
 
 	<script type="text/javascript">
+
+		//Datatable Search
+		var table = $('#maziwa').DataTable();
+		// #myInput is a <input type="text"> element
+		$('#myInput').on( 'keyup', function () {
+		    table.search( this.value ).draw();
+		} );
+		//Datatable search End
      
 
       $("#addMilk tbody").on("input", ".morning", function () {

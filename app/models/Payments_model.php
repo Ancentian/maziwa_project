@@ -42,7 +42,7 @@ class Payments_model extends CI_Model
     {
         $this->db->select('farmers_biodata.*, milk_collections.id as milkColID, milk_collections.center_id,milk_collections.farmerID, sum(milk_collections.total) as totalMilk,collection_centers.id as colID, collection_centers.centerName, shop_sales.id as salesID, shop_sales.farmerID, sum(shop_sales.amount) as totShopAmount');
         $this->db->from('farmers_biodata');
-        $this->db->join('milk_collections', 'milk_collections.farmerID = farmers_biodata.farmerID');
+        $this->db->join('milk_collections', 'milk_collections.farmerID = farmers_biodata.farmerID','LEFT');
         $this->db->join('collection_centers', 'collection_centers.id = milk_collections.center_id', 'LEFT');
         $this->db->join('shop_sales', 'shop_sales.farmerID = farmers_biodata.farmerID', 'LEFT');     
         $this->db->group_by('milk_collections.farmerID');
@@ -87,24 +87,44 @@ class Payments_model extends CI_Model
         return $query->row_array();
     }
 
-    function check_email($email, $table)
+    public function monthly_milkCollections($sdate, $edate)
     {
-        $this->db->select('*');
-        $this->db->from($table);
-        $this->db->where('email', $email);
-        // $this->db->where('status',$this->status_active);
+        $this->db->select('farmers_biodata.*, milk_collections.id as milkColID, milk_collections.user_id,milk_collections.center_id,  milk_collections.collection_date,milk_collections.farmerID, SUM(milk_collections.morning) as totMorning, SUM(milk_collections.evening) as totEvening, SUM(milk_collections.rejected) as totRejected, SUM(milk_collections.total) as totalMilk,users.id as userID, users.firstname, users.lastname,collection_centers.id as colID, collection_centers.centerName, shop_sales.id as salesID, shop_sales.farmerID,sum(shop_sales.amount) as totShopAmount');
+        $this->db->from('farmers_biodata');
+        $this->db->join('milk_collections', 'milk_collections.farmerID = farmers_biodata.farmerID','LEFT');
+        $this->db->join('users', 'users.id = milk_collections.user_id');
+        $this->db->join('collection_centers', 'collection_centers.id = milk_collections.center_id','LEFT');
+        $this->db->join('shop_sales', 'shop_sales.farmerID = milk_collections.farmerID','LEFT');
+        if($sdate != "" && $edate != ""){
+            $edate = date('d/m/Y',strtotime($edate)+86400);
+            $this->db->where('milk_collections.collection_date >=',$sdate);
+            $this->db->where('milk_collections.collection_date <',$edate);
+            $this->db->where('shop_sales.date >=',$sdate);
+            $this->db->where('shop_sales.date <',$edate);
+        }
+        $this->db->group_by('farmers_biodata.farmerID');
+        $this->db->group_by('shop_sales.farmerID');
+        //$this->db->group_by('farmers_biodata.farmerID');
+        $this->db->order_by('milk_collections.total', 'DESC');
         $query = $this->db->get();
-        $result = $query->result_array();
-        $resp = sizeof($result);
-
-        return $resp > 0 ? true : false;
+        return $query->result_array();
+        //var_dump($edate);die;
+        // $this->db->select('milk_collections.*, collection_centers.id as colID, collection_centers.centerName, users.id as userID, users.firstname, users.lastname, farmers_biodata.id as farID, farmers_biodata.farmerID, farmers_biodata.fname, farmers_biodata.lname');
+        // $this->db->from('milk_collections');
+        // $this->db->join('collection_centers', 'collection_centers.id = milk_collections.center_id', 'LEFT');
+        // $this->db->join('users', 'users.id = milk_collections.user_id');
+        // $this->db->join('farmers_biodata', 'farmers_biodata.farmerID = milk_collections.farmerID', 'LEFT');
+        // if($sdate != "" && $edate != ""){
+        //     $edate = date('d/m/Y',strtotime($edate)+86400);
+        //     $this->db->where('milk_collections.collection_date >=',$sdate);
+        //     $this->db->where('milk_collections.collection_date <=',$edate);
+        // }
+        // $this->db->group_by('farmers_biodata.farmerID');
+        // $this->db->order_by('milk_collections.total', 'DESC');
+        // $query = $this->db->get();
+        // return $query->result_array();
     }
 
-    function store_role($data)
-    {
-        $this->db->insert('roles', $data);
-        return $this->db->affected_rows();
-    }
 
     function edit_staff($id, $data)
     {
@@ -118,14 +138,6 @@ class Payments_model extends CI_Model
         $this->db->where('id', $id);
         $this->db->delete('users');
         return $this->db->affected_rows();
-    }
-
-    function fetch_byId($id)
-    {
-        $this->db->where('id', $id);
-        $this->db->select()->from('users');
-        $query = $this->db->get();
-        return $query->result_array();
     }
 
 }

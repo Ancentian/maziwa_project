@@ -57,6 +57,22 @@
 										<input type="number" name="milkRate" value="<?php echo $milkRate['milkRate']?>" class="form-control">
 									</div>
 								</div>
+								<div class="col-md-6">  
+									<div class="form-group form-focus">
+										<div class="cal-icon">
+											<input class="form-control floating datetimepicker" name="runs_from" value="<?php echo $milkRate['runs_from']?>" type="text">
+										</div>
+										<label class="focus-label">Runs From</label>
+									</div>
+								</div>
+								<div class="col-md-6">  
+									<div class="form-group form-focus">
+										<div class="cal-icon">
+											<input class="form-control floating datetimepicker" name="runs_to" value="<?php echo $milkRate['runs_to']?>" type="text">
+										</div>
+										<label class="focus-label">To</label>
+									</div>
+								</div>
 							</div>		
 						</div>
 						<div class="col-md-10 mb-3">

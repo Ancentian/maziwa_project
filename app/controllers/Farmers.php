@@ -189,11 +189,11 @@ class Farmers extends BASE_Controller {
     /*
       Delete a record
     */
-    public function delete($id)
+    public function deleteFarmer($id)
     {
-        $item = $this->expense->delete($id);
+        $item = $this->farmers->delete_farmer($id);
         $this->session->set_flashdata('success', "Deleted Successfully!");
-        redirect(base_url('expense/index'));
+        redirect(base_url('farmers/index'));
     }
 
 
