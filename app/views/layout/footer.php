@@ -32,9 +32,9 @@
 		//Datatable Search
 		var table = $('#maziwa').DataTable();
 		// #myInput is a <input type="text"> element
-		$('#myInput').on( 'keyup', function () {
+		$('#myInput').on( 'keyup', function (){
 		    table.search( this.value ).draw();
-		} );
+		});
 		//Datatable search End
      
 
@@ -60,6 +60,16 @@
         var evening = parseFloat($(this).closest("tr").find(".evening").val());
         var total = $(this).closest("tr").find(".total");
         total.val((morning + evening)-rejected);
+        //calc_total();
+    });
+
+    //Payments
+    $("#cmaziwa tbody").on("input", ".rate", function () {
+        var rate = parseFloat($(this).val());
+        var totalMilk = parseFloat($(this).closest("tr").find(".totalMilk").val());
+        //var rejected = parseFloat($(this).closest("tr").find(".rejected").val());
+        var earned = $(this).closest("tr").find(".earned");
+        earned.val(rate * totalMilk);
         //calc_total();
     });
     </script>

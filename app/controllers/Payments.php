@@ -41,13 +41,15 @@ class Payments extends BASE_Controller {
     public function addPayment()
     {
         $sdate = "";$edate = "";
+        //var_dump($sdate);die;
         $forminput = $this->input->get();
         $sdate = $forminput['sdate'];
         $edate = $forminput['edate'];
+        //var_dump($sdate." ".$edate);die;
         $this->data['milkCollection'] = $this->payments_model->monthly_milkCollections($sdate, $edate);
         //var_dump($this->data['milkCollection'][1]);die;
         $this->data['pg_title'] = "Payments";
-        $this->data['page_content'] = 'payments/monthlyPayments';
+        $this->data['page_content'] = 'payments/addPayments';
         $this->load->view('layout/template', $this->data);
     }
 
@@ -74,18 +76,35 @@ class Payments extends BASE_Controller {
 
     public function invoiceView()
     {
+
         $this->data['pg_title'] = "Invoice View";
         $this->data['page_content'] = 'payments/invoiceView';
+        $this->load->view('layout/template', $this->data);
+    }
+
+    public function paymentSchedules()
+    {
+        $this->data['schedules'] = $this->payments_model->fetch_paymentSchedules();
+        //var_dump($this->data['schedules']);die;
+        $this->data['pg_title'] = "Payment Schedules";
+        $this->data['page_content'] = 'payments/schedules';
         $this->load->view('layout/template', $this->data);
     }
 
     public function salary()
     {
         $this->data['salary'] = $this->payments_model->farmer_payments();
-        $this->data['milkRate'] = $this->payments_model->fetch_milkRates();
-        
+        $this->data['milkRate'] = $this->payments_model->fetch_milkRates();        
         $this->data['pg_title'] = "Salary";
         $this->data['page_content'] = 'payments/salary';
+        $this->load->view('layout/template', $this->data);
+    }
+
+    public function monthlyPayments()
+    {
+        $this->data['payments'] = $this->payments_model->fetch_allMonthlyPayments();      
+        $this->data['pg_title'] = "Salary";
+        $this->data['page_content'] = 'payments/monthlyPayments';
         $this->load->view('layout/template', $this->data);
     }
 
@@ -129,9 +148,9 @@ class Payments extends BASE_Controller {
         $end = $forminput['to_date'];
         $milkRate = $forminput['milkRate'];
         $farmer = $forminput['farmerID'];
-        $morning = $forminput['total_morning'];
-        $evening = $forminput['total_evening'];
-        $rejected = $forminput['total_rejected'];
+        // $morning = $forminput['total_morning'];
+        // $evening = $forminput['total_evening'];
+        // $rejected = $forminput['total_rejected'];
         $total = $forminput['total_milk'];
         //$amountEarned = ((int)$milkRate * (int)$total);
         //var_dump($total);die;
@@ -139,12 +158,13 @@ class Payments extends BASE_Controller {
 
         $i = 0;
         foreach ($farmer as $key) {
-            $mrng = $morning[$i];
-            $evng = $evening[$i];
-            $rjcted = $rejected[$i];
+            // $mrng = $morning[$i];
+            // $evng = $evening[$i];
+            // $rjcted = $rejected[$i];
             $tot = $total[$i];
             //$amnt = $amountEarned[$i];
-            $this->db->insert('payments', ['from_date' => $start, 'to_date' => $end, 'milkRate' => $milkRate, 'farmerID' => $key, 'total_morning' => $mrng, 'total_evening' => $evng, 'total_rejected' => $rjcted, 'total_milk' => $tot, 'created_by' => $user]);
+            //'total_morning' => $mrng, 'total_evening' => $evng, 'total_rejected' => $rjcted,
+            $this->db->insert('payments', ['from_date' => $start, 'to_date' => $end, 'milkRate' => $milkRate, 'farmerID' => $key, 'total_milk' => $tot, 'created_by' => $user]);
             $i++;
         }
         $inserted = $this->db->affected_rows();
@@ -154,7 +174,31 @@ class Payments extends BASE_Controller {
         }else{
             $this->session->set_flashdata('error-msg', 'Err! Failed Try Again');
         }
-        return redirect(base_url('cooperative/milkCollection'));
+        return redirect(base_url('payments/monthlyPayments'));
+    }
+
+    public function storeSchedules()
+    {
+        $this->form_validation->set_rules('scheduleName', 'Schedules Name', 'required|is_unique[payment_schedules.scheduleName]');
+        $this->form_validation->set_rules('start_date', 'Start Date', 'required|is_unique[payment_schedules.start_date]');
+        $this->form_validation->set_rules('end_date', 'End Date', 'required|is_unique[payment_schedules.end_date]');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->session->set_flashdata('error-msg', validation_errors());
+            redirect(base_url('payments/paymentSchedules'));
+        } else {
+            $user = $this->session->userdata('user_aob')->id;
+            $data = array(
+                'scheduleName' => $this->input->post('scheduleName'),
+                'start_date' => $this->input->post('start_date'),
+                'end_date' => $this->input->post('end_date'),
+                'user_id' => $user
+            );
+            //var_dump($data);die;
+            $this->payments_model->store_paymentsSchedules($data);
+            $this->session->set_flashdata('success-msg', 'Payments Schedules Created Successfully');
+            redirect(base_url('payments/paymentSchedules'));
+        }
     }
 
 
@@ -166,6 +210,14 @@ class Payments extends BASE_Controller {
         $this->data['expense'] = $this->expense->get($id);
         $this->data['pg_title'] = "Edit Leave";
         $this->data['page_content'] = 'expenses/edit';
+        $this->load->view('layout/template', $this->data);
+    }
+
+    public function editSchedule($id)
+    {
+        $this->data['schedule'] = $this->payments_model->fetch_scheduleByID($id);
+        $this->data['pg_title'] = "Edit Schedule";
+        $this->data['page_content'] = 'payments/editSchedule';
         $this->load->view('layout/template', $this->data);
     }
 
@@ -219,14 +271,63 @@ class Payments extends BASE_Controller {
             //return redirect(base_url('payments/milkRates'));
         }
     }
+
+    public function updateSchedule($id)
+    {
+        $forminput = $this->input->post();
+
+        //var_dump($forminput);die;
+
+        $inserted = $this->payments_model->edit_schedule($id, $forminput);
+
+        if ($inserted > 0) {
+            $this->session->set_flashdata('success-msg', 'Data Updated Successfully');
+        }else{
+            $this->session->set_flashdata('error-msg', 'Err! Failed Try Again');
+        }
+        return redirect(base_url('payments/paymentSchedules'));
+    }
+
+    public function print_invoice($id)
+    {     
+        $data['payments'] = $this->payments_model->fetch_allMonthlyPaymentsByID($id); 
+        // boost the memory limit if it's low ;)
+        ini_set('memory_limit', '64M');
+        // load library
+        $this->load->library('pdf');
+        $this->pheight = 0;
+        $this->load->library('pdf');
+        $pdf = $this->pdf->load_thermal();
+        // retrieve data from model or just static date
+        $data['title'] = "items";
+        $pdf->allow_charset_conversion = true;  // Set by default to TRUE
+        $pdf->charset_in = 'UTF-8';
+        //   $pdf->SetDirectionality('rtl'); // Set lang direction for rtl lang
+        $pdf->autoLangToFont = true;
+        $html = $this->load->view('printfiles/invoice', $data, true);
+        $h = 160 + $this->pheight;
+        //  $pdf->_setPageSize(array(70, $h), $this->orientation);
+        $pdf->_setPageSize(array(70, $h), $pdf->DefOrientation);
+        $pdf->WriteHTML($html);
+        // render the view into HTML
+        // write the HTML into the PDF
+        $file_name = preg_replace('/[^A-Za-z0-9]+/', '-', 'ThermalInvoice_' . $tid);
+        if ($this->input->get('d')) {
+            $pdf->Output($file_name . '.pdf', 'D');
+        } else {
+            $pdf->Output($file_name . '.pdf', 'I');
+        }
+
+        unlink('userfiles/temp/' . $data['qrc']);
+    }
     /*
       Delete a record
     */
-    public function delete($id)
+    public function deleteSchedule($id)
     {
-        $item = $this->expense->delete($id);
-        $this->session->set_flashdata('success', "Deleted Successfully!");
-        redirect(base_url('expense/index'));
+        $item = $this->payments_model->delete_schedule($id);
+        $this->session->set_flashdata('success-msg', "Data Deleted Successfully!");
+        redirect(base_url('payments/paymentSchedules'));
     }
 
 

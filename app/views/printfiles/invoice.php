@@ -53,21 +53,25 @@
 
 <div id='printbox'>
      <h3 style="margin-top:0" class="text-center">I N V O I C E<br><b style="font-size: 10px;"></b></b>
-    <h3 style="margin-top:0" class="text-center">Fort Sort Innovations Ltd<br><b style="font-size: 10px;">Mageso Chambers, Moi Avenue<br>Nairobi, Kenya.</b></b>
-        <br><b style="font-size: 10px;">TEL: 0724 654 191<br>Email: info@fortsortinnovations.co.ke</b></h3>
+    <h3 style="margin-top:0" class="text-center">Meru North Cooperative<br><b style="font-size: 10px;"><?php echo ucfirst($payments['centerName'])?> Moi Avenue<br>Meru, Kenya.</b></b>
+        <br><b style="font-size: 10px;">TEL: 0724 654 191<br>Email: info@cowango.co.ke</b></h3>
 
     <table class="inv_info">
         <tr>
             <td>Invoiced To:</td>
-            <td><?php echo $repair->fname; ?> <?php echo $repair->lname; ?></td>
+            <td><?php echo $payments['fname']." ".$payments['mname']." ".$payments['lname']; ?></td>
+        </tr>
+        <tr>
+            <td>Identity Code:</td>
+            <td><?php echo $payments['farmerID']; ?></td>
         </tr>
         <tr>
             <td>Invoice no:</td>
-            <td>#<?php echo str_pad( $repair->id, 4, "0", STR_PAD_LEFT ); ?></td>
+            <td>#<?php echo str_pad( $payments['id'], 4, "0", STR_PAD_LEFT ); ?></td>
         </tr>
         <tr>
             <td>Date: </td>
-            <td><?php echo date('d/m/Y H:s', strtotime($repair->created_at))?><br></td>
+            <td><?php echo date('d/m/Y H:s', strtotime($payments['created_at']))?><br></td>
         </tr>
     </table>
     <hr>
@@ -77,15 +81,19 @@
             <td><b>Description&nbsp;</b></td>
         </tr>
         <tr class="product_row">
-            <td colspan="2"><b>Car Make</b></td>
-            <td><?php echo $repair->car_make ?>&nbsp;</td>
+            <td colspan="2"><b>Total Milk</b></td>
+            <td><?php echo $payments['total_milk'] ?>&nbsp;</td>
         </tr>
         <tr class="product_row">
-            <td colspan="2"><b> Car Model</td>
-            <td><?php echo $repair->car_model ?>&nbsp;</td>
+            <td colspan="2"><b> Rate/Litre</td>
+            <td><?php echo $payments['milkRate'] ?>&nbsp;</td>
         </tr>
         <tr class="product_row">
-            <td colspan="2"><b> Reg No.</b></td>
+            <td colspan="2"><b> Deductions</b></td>
+            <td><?php echo $repair->reg_no ?>&nbsp;</td>
+        </tr>
+        <tr class="product_row">
+            <td colspan="2"><b> Total Earned</b></td>
             <td><?php echo $repair->reg_no ?>&nbsp;</td>
         </tr>
         <?php
