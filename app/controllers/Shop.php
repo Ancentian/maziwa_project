@@ -60,6 +60,19 @@ class Shop extends BASE_Controller {
         $this->load->view('layout/shop', $this->data);
     }
 
+    public function viewShopping($id)
+    {
+        $this->data['farmer'] = $this->shop->fetch_farmerByID($id);
+        //var_dump($this->data['farmer']);die;
+        $this->data['shopping'] = $this->shop->fetch_shoppingByFarmerID($id);
+        
+        $this->data['farmers'] = $this->farmers->fetch_farmers();
+        $this->data['inventory'] = $this->shop->fetch_allInventory();
+        $this->data['pg_title'] = "View Shopping";
+        $this->data['page_content'] = 'shop/viewShopping';
+        $this->load->view('layout/template', $this->data);
+    }
+
     /*
       Create a record page
     */
@@ -107,18 +120,20 @@ class Shop extends BASE_Controller {
         $amt = $forminput['amount'];
         $comments = $forminput['comments'];
         $user = $this->session->userdata('user_aob')->id;
-        //var_dump($forminput);die;
+        //var_dump($itemid);die;
         $i = 0;
-        foreach($itemid as $key ) {
+        foreach($itemid as $key) 
+        {
+            //var_dump($key);die;
             $des = $description[$i];
             $quantity = $qty[$i];
             $unit_cost = $unit[$i];
             $amount = $amt[$i];
-            $this->db->insert('shop_sales', ['farmerID' => $farmer, 'date' => $data, 'itemID' => $key, 'description' => $des, 'qty' => $quantity, 'unit_cost' => $unit_cost, 'amount' => $amount, 'comments' => $comments, 'user_id' => $user]);
+            $this->db->insert('shop_sales', ['farmerID' => $farmer, 'date' => $date, 'itemID' => $key, 'description' => $des, 'qty' => $quantity, 'unit_cost' => $unit_cost, 'amount' => $amount, 'comments' => $comments, 'user_id' => $user]);
             $i++;
         }
         $inserted = $this->db->affected_rows();
-        var_dump($inserted);die;
+        //var_dump($inserted);die;
 
         if ($inserted > 0) {
             $this->session->set_flashdata('success-msg', 'Sales Added Successfully');
@@ -172,6 +187,15 @@ class Shop extends BASE_Controller {
         $item = $this->expense->delete($id);
         $this->session->set_flashdata('success', "Deleted Successfully!");
         redirect(base_url('expense/index'));
+    }
+
+    public function deleteShoppedItem($id)
+    {
+        $farmerID = $this->uri->segment(4);
+        //var_dump($farmerID);die;
+        $item = $this->shop->deleteShoppedItem($id);
+        $this->session->set_flashdata('success-msg', "Entry Deleted Successfully!");
+        redirect(base_url('shop/viewShopping/'.$farmerID));
     }
 
 

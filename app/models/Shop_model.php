@@ -67,6 +67,18 @@ class Shop_model extends CI_Model{
         return $query->row_array();
     }
 
+    public function fetch_shoppingByFarmerID($id)
+    {
+        $this->db->where('shop_sales.farmerID', $id);
+        $this->db->select('shop_sales.*, inventory.id as invID, inventory.itemName, users.id as userID, users.firstname,users.lastname,');
+        $this->db->from('shop_sales');
+        $this->db->join('inventory', 'inventory.id = shop_sales.itemID');
+        $this->db->join('users', 'users.id = shop_sales.user_id');
+        $this->db->order_by('shop_sales.created_at');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
     /*
         Store the record in the database
     */
@@ -98,60 +110,14 @@ class Shop_model extends CI_Model{
         return $this->db->affected_rows();
     }
 
-    // public function store_dailyMilk_collections()
-
-    public function collect_car($status_update, $car_id)// Updates Car Collected status to 0
-    {
-        $status_update = ['status' => '0'];
-
-        $this->db->where('id', $car_id);
-        $this->db->update('cars', $status_update);
-
-        return $this->db->affected_rows();
-    }
-
     /*
         Destroy or Remove a record in the database
     */
-    public function delete_car($id)
-    {
-        $this->db->where('id', $id);
-        $this->db->delete('cars');
-        return $this->db->affected_rows();
-    }
 
-    public function delete_payment($id)
+    public function deleteShoppedItem($id)
     {
         $this->db->where('id', $id);
-        $this->db->delete('payments');
-        return $this->db->affected_rows();
-    }
-
-    public function delete_assignment($id)
-    {
-        $this->db->where('id', $id);
-        $this->db->delete('car_repairs');
-        return $this->db->affected_rows();
-    }
-
-    public function delete_appointment($id)
-    {
-        $this->db->where('id', $id);
-        $this->db->delete('appointments');
-        return $this->db->affected_rows();
-    }
-
-    public function delete_estimate($id)
-    {
-        $this->db->where('id', $id);
-        $this->db->delete('repair_estimates');
-        return $this->db->affected_rows();
-    }
-
-    public function delete_mechanicRequest($id)
-    {
-        $this->db->where('id', $id);
-        $this->db->delete('request_mechanics');
+        $this->db->delete('shop_sales');
         return $this->db->affected_rows();
     }
 

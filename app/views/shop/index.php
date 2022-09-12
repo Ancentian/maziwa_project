@@ -93,12 +93,12 @@
 								</td>
 								
 								<td><?php echo $key['contact1']?></td>
-								<td><?php echo $key['centerName']?></td>
+								<td><?php echo ucfirst($key['centerName'])?></td>
 								<td><?php echo date('d/m/Y', strtotime($key['join_date']))?></td>
 								<td><?php echo $key['gender']?></td>
 								
 								<td class="text-right">
-									<a href="<?php echo base_url('shop/addShopping/'.$key['farmerID']) ?>" class="btn btn-warning"><i class="fa fa-plus"></i></a>
+									<a href="<?php echo base_url('shop/viewShopping/'.$key['farmerID']) ?>" title="View Shoppings" class="btn btn-info"><i class="fa fa-eye"></i></a>
 								</td>
 							</tr>
 

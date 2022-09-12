@@ -75,7 +75,7 @@
 											<td>1</td>
 											<!-- <td><input class="form-control" style="min-width:150px" type="text" id="item" name="item[]"></td> -->
 											<td>
-												<select name="itemID" style="min-width:150px" class="form-control" required>
+												<select name="itemID[]" style="min-width:150px" class="form-control" required>
 													<option>Select --</option>
 													<?php foreach($inventory as $key) {?>
 														<option value="<?php echo $key['id']?>"><?php echo $key['itemName']?></option>
@@ -202,9 +202,9 @@
 										<label>Collection Center <span class="text-danger">*</span></label>
 										<select name="collection_center" class="select">
 											<option>Select Collection Center</option>
-											<?php foreach ($collectionCenter as $key) { ?>
-												<option value="<?php echo $key['id']?>"><?php echo $key['centerName']?></option>
-											<?php }?>
+											<?php //foreach ($collectionCenter as $key) { ?>
+												<option value="<?php //echo $key['id']?>"><?php //echo $key['centerName']?></option>
+											<?php //}?>
 										</select>
 									</div>
 								</div>
@@ -285,7 +285,7 @@
         <tr id="R${++rowIdx}">
             <td class="row-index text-center"><p> ${rowIdx}</p></td>
             <td>
-					<select name="itemID" class="form-control">
+					<select name="itemID[]" class="form-control">
 						<option>Select --</option>
 						<?php foreach($inventory as $key) {?>
 							<option value="<?php echo $key['id']?>"><?php echo $key['itemName']?></option>

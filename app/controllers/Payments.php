@@ -8,6 +8,8 @@ class Payments extends BASE_Controller {
         $this->load->model('cooperative_model', 'cooperative');
         $this->load->model('roles_model', 'roles');
         $this->load->model('payments_model');
+        $this->load->model('shop_model', 'shop');
+        $this->load->library('convertNumbersIntoWords');
     }
 
     /*
@@ -66,11 +68,16 @@ class Payments extends BASE_Controller {
         $this->load->view('layout/template', $this->data);
     }
 
-    public function payslip()
+    public function payslip($id)//Always based on Monthly basis
     {
+        $this->data['milkRate'] = $this->payments_model->fetch_milkRates();
+        $this->data['payslip'] = $this->payments_model->farmer_paymentByID($id);
+        $this->data['shop'] = $this->payments_model->fetch_shoppingByFarmerID($id);
+        $this->data['shopSales'] = $this->payments_model->fetch_sumShoppingByFarmerID($id);
+        //var_dump($this->data['deduction']);die;
         $this->data['pg_title'] = "Payslip";
         $this->data['page_content'] = 'payments/payslip';
-        $this->load->view('layout/template', $this->data);
+        $this->load->view('layout/payslip', $this->data);
     }
 
     /*

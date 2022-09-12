@@ -101,7 +101,7 @@
 								<td><?php echo $milkRate['milkRate']?></td>				
 								<td><?php echo $key['totalMilk']?> Ltrs</td>
 								<td>Ksh. <?php echo ($key['totalMilk'] * $milkRate['milkRate'])?></td>
-								<td><a class="btn btn-sm btn-primary" href="<?php echo base_url('payments/payslip')?>">Generate Slip</a></td>
+								<td><a class="btn btn-sm btn-primary" href="<?php echo base_url('payments/payslip/'.$key['farmerID'])?>">Generate Slip</a></td>
 								
 							</tr>
 							<?php $i++; }?>	

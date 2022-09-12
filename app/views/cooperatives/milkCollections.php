@@ -38,7 +38,8 @@
 								<th>Center</th>
 								<th>Collection Date</th>
 								<th>Morning</th>
-								<th>Evening</th>					
+								<th>Evening</th>
+								<th>Rejected</th>					
 								<th>Recorded By</th>
 								<th>Created at</th>
 								<th class="text-right">Action</th>
@@ -53,7 +54,8 @@
 								<td><?php echo $key['centerName']?></td>
 								<td><?php echo $key['collection_date']?></td>	
 								<td><?php echo $key['morning']?></td>
-								<td><?php echo $key['evening']?></td>				
+								<td><?php echo $key['evening']?></td>
+								<td><?php echo $key['rejected']?></td>				
 								<td><?php echo $key['firstname']?></td>
 								<td><?php echo date('d/m/Y', strtotime($key['created_at'])) ?></td>
 								<td class="text-right">

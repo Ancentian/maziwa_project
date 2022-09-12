@@ -1,3 +1,4 @@
+<?php //echo var_dump($payslip);die; ?>
 <!-- Page Wrapper -->
 <div class="page-wrapper">
 	
@@ -29,14 +30,14 @@
 			<div class="col-md-12">
 				<div class="card">
 					<div class="card-body">
-						<h4 class="payslip-title">Payslip for the month of Feb 2019</h4>
+						<h4 class="payslip-title">Payslip for the month of <?php echo date('M/Y'); ?></h4>
 						<div class="row">
 							<div class="col-sm-6 m-b-20">
 								<img src="assets/img/logo2.png" class="inv-logo" alt="">
 								<ul class="list-unstyled mb-0">
-									<li>Dreamguy's Technologies</li>
-									<li>3864 Quiet Valley Lane,</li>
-									<li>Sherman Oaks, CA, 91403</li>
+									<li><span>Collection Center: </span><?php echo strtoupper($payslip['centerName']) ?></li>
+									<li>P. O Box --,</li>
+									<li>Meru</li>
 								</ul>
 							</div>
 							<div class="col-sm-6 m-b-20">
@@ -51,65 +52,119 @@
 						<div class="row">
 							<div class="col-lg-12 m-b-20">
 								<ul class="list-unstyled">
-									<li><h5 class="mb-0"><strong>John Doe</strong></h5></li>
+									<li><h5 class="mb-0"><strong><?php echo $payslip['fname']." ".$payslip['lname']?></strong></h5></li>
 									<li><span>Web Designer</span></li>
-									<li>Employee ID: FT-0009</li>
-									<li>Joining Date: 1 Jan 2013</li>
+									<li>Farmer Code: <?php echo $payslip['farmerID']?></li>
+									<li>Joining Date: <?php echo $payslip['join_date']?></li>
 								</ul>
 							</div>
 						</div>
 						<div class="row">
+							<?php if($shopSales['totAmount'] > 0) {?>
 							<div class="col-sm-6">
 								<div>
 									<h4 class="m-b-10"><strong>Earnings</strong></h4>
 									<table class="table table-bordered">
 										<tbody>
 											<tr>
-												<td><strong>Basic Salary</strong> <span class="float-right">$6500</span></td>
+												<td><strong>Basic Salary</strong> <span class="float-right">Ksh. <?php echo number_format($milkRate['milkRate'] * $payslip['totalMilk'])?></span></td>
 											</tr>
 											<tr>
-												<td><strong>House Rent Allowance (H.R.A.)</strong> <span class="float-right">$55</span></td>
+												<td><strong>Milk Produced</strong> <span class="float-right"><?php echo $payslip['totalMilk'] ?> Ltrs</span></td>
 											</tr>
 											<tr>
-												<td><strong>Conveyance</strong> <span class="float-right">$55</span></td>
+												<td><strong>Milk Rates</strong> <span class="float-right">Ksh. <?php echo $milkRate['milkRate']?></span></td>
 											</tr>
 											<tr>
-												<td><strong>Other Allowance</strong> <span class="float-right">$55</span></td>
+												<td><strong>Deductions</strong> <span class="float-right">Ksh. <?php echo number_format($shopSales['totAmount']) ?></span></td>
 											</tr>
 											<tr>
-												<td><strong>Total Earnings</strong> <span class="float-right"><strong>$55</strong></span></td>
+												<td><strong>Total Earnings</strong> <span class="float-right"><strong><?php echo number_format(($milkRate['milkRate'] * $payslip['totalMilk']) - $shopSales['totAmount'])?></strong></span></td>
 											</tr>
 										</tbody>
 									</table>
 								</div>
 							</div>
 							<div class="col-sm-6">
+									<h4 class="m-b-10"><strong>Shop Deductions</strong></h4>
+									<table class="table table-bordered">
+										<thead>
+											<tr>
+												<th>Item</th>
+												<th>Qty</th>
+												<th>@</th>
+												<th>Amount</th>
+											</tr>
+										</thead>
+										<tbody>
+											<?php $i=0; $tot = 0; foreach($shop as $key) { $totAmount += $key['amount']; ?>
+											<tr>
+												<td><?php echo $i; ?></td>
+												<td><?php echo $key['itemName']?></td>
+												<td><?php echo $key['qty']?></td>
+												<td><?php echo $key['unit_cost']?></td>
+												<td><?php echo $key['amount']?></td>
+											</tr>
+											<?php $i++; }?>
+										</tbody>
+										<tfoot>
+											<tr>
+												<th rowspan="2"></th>
+												<th></th>
+												<th><strong>Total Deductions</strong> </th>
+												<th></th>
+												<th><span class="float-right"><strong>Ksh. <?php echo $totAmount; ?></strong></span></th>
+											</tr>
+										</tfoot>
+										</tbody>
+									</table>
+							</div>
+							<div class="col-sm-12">
+								<?php 
+								$val = $this->load->library('convertNumbersIntoWords');
+								$number = (($milkRate['milkRate'] * $payslip['totalMilk']) - $shopSales['totAmount']);
+								//echo($number);
+								?>
+								<p>
+									<strong>Net Salary: Ksh. <?php echo number_format(($milkRate['milkRate'] * $payslip['totalMilk']) - $shopSales['totAmount'])?></strong> (<?php echo $this->convertNumbersIntoWords->convert_number($number);?>.)
+								</p>
+							</div>
+						<?php }elseif (condition) {?>
+							<div class="col-md-12">
 								<div>
-									<h4 class="m-b-10"><strong>Deductions</strong></h4>
+									<h4 class="m-b-10"><strong>Earnings</strong></h4>
 									<table class="table table-bordered">
 										<tbody>
 											<tr>
-												<td><strong>Tax Deducted at Source (T.D.S.)</strong> <span class="float-right">$0</span></td>
+												<td><strong>Basic Salary</strong> <span class="float-right">Ksh. <?php echo number_format($milkRate['milkRate'] * $payslip['totalMilk'])?></span></td>
 											</tr>
 											<tr>
-												<td><strong>Provident Fund</strong> <span class="float-right">$0</span></td>
+												<td><strong>Milk Produced</strong> <span class="float-right"><?php echo $payslip['totalMilk'] ?> Ltrs</span></td>
 											</tr>
 											<tr>
-												<td><strong>ESI</strong> <span class="float-right">$0</span></td>
+												<td><strong>Milk Rates</strong> <span class="float-right">Ksh. <?php echo $milkRate['milkRate']?></span></td>
 											</tr>
 											<tr>
-												<td><strong>Loan</strong> <span class="float-right">$300</span></td>
+												<td><strong>Deductions</strong> <span class="float-right">Ksh. <?php echo number_format($shopSales['totAmount']) ?></span></td>
 											</tr>
 											<tr>
-												<td><strong>Total Deductions</strong> <span class="float-right"><strong>$59698</strong></span></td>
+												<td><strong>Total Earnings</strong> <span class="float-right"><strong><?php echo number_format(($milkRate['milkRate'] * $payslip['totalMilk']) - $shopSales['totAmount'])?></strong></span></td>
 											</tr>
 										</tbody>
 									</table>
 								</div>
 							</div>
 							<div class="col-sm-12">
-								<p><strong>Net Salary: $59698</strong> (Fifty nine thousand six hundred and ninety eight only.)</p>
+								<?php 
+								$val = $this->load->library('convertNumbersIntoWords');
+								$number = $milkRate['milkRate'] * $payslip['totalMilk'];
+								//echo($number);
+								?>
+								<p>
+									<strong>Net Salary: Ksh. <?php echo number_format($milkRate['milkRate'] * $payslip['totalMilk']) ?></strong> (<?php echo $this->convertNumbersIntoWords->convert_number($number);?>.)
+								</p>
 							</div>
+						<?php }?>
 						</div>
 					</div>
 				</div>
