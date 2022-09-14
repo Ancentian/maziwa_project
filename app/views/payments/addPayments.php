@@ -84,7 +84,17 @@ $edate = $_GET['edate'];
 								<!-- </div> -->
 								<label class="focus-label">Milk Rate</label>
 							</div>
-							<?php $i=1; foreach ($milkCollection as $key) { ?>
+							<?php 
+							$i=1; foreach ($milkCollection as $key) {
+							$this->db->where('shop_sales.farmerID', $key['farmerID']);
+							$this->db->select('farmers_biodata.*, shop_sales.id as salesID, shop_sales.farmerID, sum(shop_sales.amount) as totShopAmount');
+							$this->db->from('farmers_biodata');
+							$this->db->join('shop_sales', 'shop_sales.farmerID = farmers_biodata.farmerID');
+							$this->db->group_by('shop_sales.farmerID');
+                            $query = $this->db->get();
+                            $center = $query->result_array();
+                            echo $center['totShopAmount'];
+							?>
 								<tr>
 									<td><?php echo $i; ?></td>
 									<td><input type="text" class="form-control" value="<?php echo $key['farmerID']?>" name="farmerID[]" readonly></td>

@@ -89,7 +89,7 @@
             <td><?php echo $payments['milkRate'] ?>&nbsp;</td>
         </tr>
         <tr class="product_row">
-            <td colspan="2"><b> Deductions</b></td>
+            <td colspan="2"><b> Total Deductions</b></td>
             <td><?php echo $repair->reg_no ?>&nbsp;</td>
         </tr>
         <tr class="product_row">

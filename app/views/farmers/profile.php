@@ -11,7 +11,7 @@
 					<h3 class="page-title"> Profile</h3>
 					<ul class="breadcrumb">
 						<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-						<li class="breadcrumb-item active">Profile</li>
+						<li class="breadcrumb-item active">Profile / <?php echo $farmer['fname']." ".$farmer['mname']." ".$farmer['lname']?></li>
 					</ul>
 				</div>
 			</div>
@@ -32,7 +32,7 @@
 								<div class="row">
 									<div class="col-md-5">
 										<div class="profile-info-left">
-											<h3 class="user-name m-t-0 mb-0"><?php echo $farmer['fname']." ".$farmer['lname']?></h3>
+											<h3 class="user-name m-t-0 mb-0"><?php echo $farmer['fname']." ".$farmer['mname']." ".$farmer['lname']?></h3>
 											<h6 class="text-muted"><?php echo $farmer['location']?></h6>
 											<small class="text-muted"><?php echo strtoupper($farmer['centerName'])?></small>
 											<div class="staff-id"><?php echo $farmer['farmerID']?></div>
@@ -189,19 +189,19 @@
 								<ul class="personal-info">
 									<li>
 										<div class="title">Bank name</div>
-										<div class="text">ICICI Bank</div>
+										<div class="text"><?php echo $farmer['bank_name']?></div>
 									</li>
 									<li>
 										<div class="title">Bank account No.</div>
-										<div class="text">159843014641</div>
+										<div class="text"><?php echo $farmer['bank_branch']?></div>
 									</li>
 									<li>
-										<div class="title">IFSC Code</div>
-										<div class="text">ICI24504</div>
+										<div class="title">Account. Name</div>
+										<div class="text"><?php echo $farmer['acc_name']?></div>
 									</li>
 									<li>
-										<div class="title">PAN No</div>
-										<div class="text">TC000Y56</div>
+										<div class="title">Bank account No.</div>
+										<div class="text"><?php echo $farmer['acc_number']?></div>
 									</li>
 								</ul>
 							</div>
@@ -245,183 +245,103 @@
 						</div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-md-6 d-flex">
-						<div class="card profile-box flex-fill">
-							<div class="card-body">
-								<h3 class="card-title">Education Informations <a href="#" class="edit-icon" data-toggle="modal" data-target="#education_info"><i class="fa fa-pencil"></i></a></h3>
-								<div class="experience-box">
-									<ul class="experience-list">
-										<li>
-											<div class="experience-user">
-												<div class="before-circle"></div>
-											</div>
-											<div class="experience-content">
-												<div class="timeline-content">
-													<a href="#/" class="name">International College of Arts and Science (UG)</a>
-													<div>Bsc Computer Science</div>
-													<span class="time">2000 - 2003</span>
-												</div>
-											</div>
-										</li>
-										<li>
-											<div class="experience-user">
-												<div class="before-circle"></div>
-											</div>
-											<div class="experience-content">
-												<div class="timeline-content">
-													<a href="#/" class="name">International College of Arts and Science (PG)</a>
-													<div>Msc Computer Science</div>
-													<span class="time">2000 - 2003</span>
-												</div>
-											</div>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6 d-flex">
-						<div class="card profile-box flex-fill">
-							<div class="card-body">
-								<h3 class="card-title">Experience <a href="#" class="edit-icon" data-toggle="modal" data-target="#experience_info"><i class="fa fa-pencil"></i></a></h3>
-								<div class="experience-box">
-									<ul class="experience-list">
-										<li>
-											<div class="experience-user">
-												<div class="before-circle"></div>
-											</div>
-											<div class="experience-content">
-												<div class="timeline-content">
-													<a href="#/" class="name">Web Designer at Zen Corporation</a>
-													<span class="time">Jan 2013 - Present (5 years 2 months)</span>
-												</div>
-											</div>
-										</li>
-										<li>
-											<div class="experience-user">
-												<div class="before-circle"></div>
-											</div>
-											<div class="experience-content">
-												<div class="timeline-content">
-													<a href="#/" class="name">Web Designer at Ron-tech</a>
-													<span class="time">Jan 2013 - Present (5 years 2 months)</span>
-												</div>
-											</div>
-										</li>
-										<li>
-											<div class="experience-user">
-												<div class="before-circle"></div>
-											</div>
-											<div class="experience-content">
-												<div class="timeline-content">
-													<a href="#/" class="name">Web Designer at Dalt Technology</a>
-													<span class="time">Jan 2013 - Present (5 years 2 months)</span>
-												</div>
-											</div>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
 			</div>
 			<!-- /Profile Info Tab -->
-			<!-- Collection Info Tab -->
-			<div id="milk_collections" class="pro-overview tab-pane fade show active">
-				<div class="row">
-					<div class="col-md-12 d-flex">
-						<div class="card profile-box flex-fill">
-							<div class="card-body">
-								<h3 class="card-title">Milk Collections </h3>
-								<table class="table table-striped custom-table mb-0 datatable">
-									<thead>
-										<tr>
-											<th style="width: 30px;">#</th>
-											<th>Collection Date</th>
-											<th>Morning</th>
-											<th>Evening</th>
-											<th>Rejected</th>					
-											<th>Recorded By</th>
-											<th>Created at</th>
-										</tr>
-									</thead>
-									<tbody>
-										<?php $i=1; foreach ($milk as $key) { ?>
+				<!-- Projects Tab -->
+				<div class="tab-pane fade" id="milk_collections">
+					<div class="row">
+						<div class="col-md-12 ">
+							<div class="card">
+								<div class="card-body">
+									<h3 class="card-title">Milk Production</h3>
+									<table class="table table-striped custom-table mb-0 datatable">
+										<thead>
+											<tr>
+												<th style="width: 30px;">#</th>
+												<th>Collection Date</th>
+												<th>Morning</th>
+												<th>Evening</th>
+												<th>Rejected</th>					
+												<th>Recorded By</th>
+												<th>Created at</th>
+											</tr>
+										</thead>
+										<tbody>
+											<?php $i=1; foreach ($milk as $key) { ?>
+												<tr>
+													<td><?php echo $i; ?></td>
+													<td><?php echo $key['collection_date']?></td>	
+													<td><?php echo $key['morning']?></td>
+													<td><?php echo $key['evening']?></td>
+													<td><?php echo $key['rejected']?></td>				
+													<td><?php echo $key['firstname']?></td>
+													<td><?php echo date('d/m/Y', strtotime($key['created_at'])) ?></td>
+												</tr>
+												<?php $i++; } ?>
+											</tbody>
+										</table>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /Projects Tab -->
+
+				<!-- Projects Tab -->
+				<div class="tab-pane fade" id="shop_collections">
+					<div class="row">
+						<div class="col-md-12 ">
+							<div class="card">
+								<div class="card-body">
+									<h3 class="card-title">Shopping List </h3>
+									<table class="table table-striped custom-table mb-0 datatable">
+										<thead>
+											<tr>
+												<th style="width: 30px;">#</th>
+
+												<th>Item </th>
+												<th>Qty</th>
+												<th>@</th>
+												<th>Amount</th>
+												<th>Cashier</th>
+												<th>Created on</th>
+												<th class="text-right">Action</th>
+											</tr>
+										</thead>
+										<tbody>
+											<?php $i=1; $amt=0; foreach ($shopping as $key) { $amt+=$key['amount']; ?>
 											<tr>
 												<td><?php echo $i; ?></td>
-												<td><?php echo $key['collection_date']?></td>	
-												<td><?php echo $key['morning']?></td>
-												<td><?php echo $key['evening']?></td>
-												<td><?php echo $key['rejected']?></td>				
-												<td><?php echo $key['firstname']?></td>
-												<td><?php echo date('d/m/Y', strtotime($key['created_at'])) ?></td>
+												<td><?php echo $key['itemName']?></td>
+												<td><?php echo $key['qty']?></td>
+												<td><?php echo $key['unit_cost']?></td>
+												<td><?php echo $key['amount']?></td>
+												<td><?php echo $key['firstname']." ".$key['lastname']?></td>
+												<td><?php echo $key['created_at']?></td>
+												<td class="text-right">
+													<a href="<?php echo base_url('shop/deleteShoppedItem/'.$key['id']."/".$key['farmerID'])?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+												</td>
 											</tr>
-											<?php $i++; } ?>
+											<?php $i++; }?>
 										</tbody>
+										<tfoot>
+											<tr>
+												<td colspan="4" style="text-align: right; font-weight: bold">
+													Grand Total
+												</td>
+												<td style="font-size: 16px;width: 230px">
+													<input class="form-control text-right" type="text" id="grand_total" name="" value="Ksh. <?php echo $amt; ?>" readonly>
+												</td>
+											</tr>
+										</tfoot>
 									</table>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<!-- /Collection Info Tab -->
-
-				<!-- Collection Info Tab -->
-			<div id="shop_collections" class="pro-overview tab-pane fade show active">
-				<div class="row">
-					<div class="col-md-12 d-flex">
-						<div class="card profile-box flex-fill">
-							<div class="card-body">
-								<h3 class="card-title">Shoppings </h3>
-								<table class="table table-striped custom-table mb-0 datatable">
-						<thead>
-							<tr>
-								<th style="width: 30px;">#</th>
-								
-								<th>Item </th>
-								<th>Qty</th>
-								<th>@</th>
-								<th>Amount</th>
-								<th>Cashier</th>
-								<th>Created on</th>
-								<th class="text-right">Action</th>
-							</tr>
-						</thead>
-						<tbody>
-							<?php $i=1; $amt=0; foreach ($shopping as $key) { $amt+=$key['amount']; ?>
-							<tr>
-								<td><?php echo $i; ?></td>
-								<td><?php echo $key['itemName']?></td>
-								<td><?php echo $key['qty']?></td>
-								<td><?php echo $key['unit_cost']?></td>
-								<td><?php echo $key['amount']?></td>
-								<td><?php echo $key['firstname']." ".$key['lastname']?></td>
-								<td><?php echo $key['created_at']?></td>
-								<td class="text-right">
-									<a href="<?php echo base_url('shop/deleteShoppedItem/'.$key['id']."/".$key['farmerID'])?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
-								</td>
-							</tr>
-							<?php $i++; }?>
-						</tbody>
-						<tfoot>
-							<tr>
-								<td colspan="4" style="text-align: right; font-weight: bold">
-									Grand Total
-								</td>
-								<td style="font-size: 16px;width: 230px">
-									<input class="form-control text-right" type="text" id="grand_total" name="" value="Ksh. <?php echo $amt; ?>" readonly>
-								</td>
-							</tr>
-						</tfoot>
-					</table>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- /Collection Info Tab -->
+				<!-- /Projects Tab -->
 
 				<!-- Bank Statutory Tab -->
 				<div class="tab-pane fade" id="bank_statutory">
