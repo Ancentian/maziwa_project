@@ -39,7 +39,7 @@ class Reports_model extends CI_Model{
         if($sdate != "" && $edate != ""){
             //$edate = date('d/m/Y',strtotime($edate)+86400);
             $this->db->where('milk_collections.collection_date >=',$sdate);
-            $this->db->where('milk_collections.collection_date <',$edate);
+            $this->db->where('milk_collections.collection_date <=',$edate);
             //$this->db->like('farmers_biodata.fname =', $name);
         }
         $this->db->order_by('milk_collections.id', 'DESC');

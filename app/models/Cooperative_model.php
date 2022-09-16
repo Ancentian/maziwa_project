@@ -45,13 +45,28 @@ class Cooperative_model extends CI_Model{
         return $query->result_array();
     }
 
-    public function milk_collections()
+    public function edit_milkCollection($id)
+    {
+        $this->db->where('milk_collections.id', $id);
+        $this->db->select('milk_collections.*, farmers_biodata.id as farID, farmers_biodata.fname, farmers_biodata.mname, farmers_biodata.lname, farmers_biodata.farmerID')->from('milk_collections');
+        $this->db->join('farmers_biodata', 'farmers_biodata.farmerID = milk_collections.farmerID');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function milk_collections($sdate, $edate)
     {
         $this->db->select('milk_collections.*, collection_centers.id as colID, collection_centers.centerName, users.id as userID, users.firstname, users.lastname, farmers_biodata.farmerID, farmers_biodata.fname, farmers_biodata.lname');
         $this->db->from('milk_collections');
         $this->db->join('collection_centers', 'collection_centers.id = milk_collections.center_id');
         $this->db->join('users', 'users.id = milk_collections.user_id');
         $this->db->join('farmers_biodata', 'farmers_biodata.farmerID = milk_collections.farmerID', 'left');
+         if($sdate != "" && $edate != ""){
+            //$edate = date('d/m/Y',strtotime($edate)+86400);
+            $this->db->where('milk_collections.collection_date >=',$sdate);
+            $this->db->where('milk_collections.collection_date <=',$edate);
+            //$this->db->like('farmers_biodata.fname =', $name);
+        }
         $this->db->order_by('milk_collections.id', 'DESC');
         $query = $this->db->get();
         return $query->result_array();
@@ -113,6 +128,13 @@ class Cooperative_model extends CI_Model{
         return $this->db->affected_rows();
     }
 
+    public function update_milkCollection($id, $data)// Updates Car Collected status to 0
+    {
+        $this->db->where('id', $id);
+        $this->db->update('milk_collections', $data);
+        return $this->db->affected_rows();
+    }
+
     /*
         Destroy or Remove a record in the database
     */
@@ -151,10 +173,10 @@ class Cooperative_model extends CI_Model{
         return $this->db->affected_rows();
     }
 
-    public function delete_mechanicRequest($id)
+    public function delete_collection($id)
     {
         $this->db->where('id', $id);
-        $this->db->delete('request_mechanics');
+        $this->db->delete('milk_collections');
         return $this->db->affected_rows();
     }
 

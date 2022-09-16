@@ -31,20 +31,49 @@ class Payments extends BASE_Controller {
         $this->load->view('layout/template', $this->data);
     }
 
-    public function searchDates()
+    public function searchSchedules()
     {
+        $this->data['schedules'] = $this->payments_model->fetch_paymentSchedules();
         $this->data['pg_title'] = "Search Dates";
-        $this->data['page_content'] = 'payments/searchDates';
+        $this->data['page_content'] = 'payments/searchSchedules';
+        $this->load->view('layout/template', $this->data);
+    }
+
+    public function selectSchedule()
+    {
+        $forminput = $this->input->post();
+        //var_dump($forminput);die;
+        $this->data['schedule'] = $this->payments_model->searchSchedule($forminput);
+
+        if (!$this->data['schedule']) {
+            $this->session->set_flashdata('error-msg', 'No Such Schedules found');
+            redirect('payments/searchSchedules');
+        }
+        $this->data['pg_title'] = "Select";
+        $this->data['page_content'] = 'payments/selectSchedule';
         $this->load->view('layout/template', $this->data);
     }
 
     public function addPayment()
-    {
+    {        
         $sdate = "";$edate = "";
-        //var_dump($sdate);die;
         $forminput = $this->input->get();
-        $sdate = $forminput['sdate'];
-        $edate = $forminput['edate'];
+        // $scheduleID = $this->uri->segment(3);
+        // $data = $this->payments_model->get_scheduleByID($scheduleID);
+        $sdate = $forminput['start_date'];
+        $edate = $forminput['end_date'];
+        //var_dump($sdate." ".$edate);die;
+        $this->data['milkCollection'] = $this->payments_model->monthly_milkCollections($sdate, $edate);
+        //var_dump($this->data['milkCollection'][1]);die;
+        $this->data['pg_title'] = "Payments";
+        $this->data['page_content'] = 'payments/addPayments';
+        $this->load->view('layout/template', $this->data);
+    }
+
+    public function makePayment()
+    {        
+        $sdate = date('Y-m-d', strtotime("first day of -1 month"));
+        $edate = date('Y-m-d', strtotime("last day of -1 month"));
         //var_dump($sdate." ".$edate);die;
         $this->data['milkCollection'] = $this->payments_model->monthly_milkCollections($sdate, $edate);
         //var_dump($this->data['milkCollection'][1]);die;

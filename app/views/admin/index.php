@@ -34,7 +34,7 @@
                     <div class="card-body">
                         <span class="dash-widget-icon"><i class="fa fa-usd"></i></span>
                         <div class="dash-widget-info">
-                            <h3><?php echo (int)$milkRate * (int)$totMilk?></h3>
+                            <h3><?php echo number_format((int)$milkRate['milkRate'] * (int)$totMilk)?></h3>
                             <span>Amount </span>
                         </div>
                     </div>

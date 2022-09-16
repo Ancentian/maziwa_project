@@ -31,6 +31,22 @@ class Payments_model extends CI_Model
         return $query->result_array();
     }
 
+    function searchSchedule($data)
+    {     
+        $this->db->where('id', $data['id']);
+        $query = $this->db->get('payment_schedules');
+        //var_dump($query->result_array());die;
+        return $query->result_array();
+    }
+
+    function get_scheduleByID($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->select()->from('payment_schedules');
+        $query = $this->db->get();
+        return $query->row_array();
+    }
+
     function fetch_milkRates()
     {
         $this->db->limit(1);
@@ -134,7 +150,7 @@ class Payments_model extends CI_Model
         //$this->db->join('shop_sales', 'shop_sales.farmerID = milk_collections.farmerID','LEFT');
         if($sdate != "" && $edate != ""){
             // $edate = date('d/m/Y',strtotime($edate)+86400);
-            // var_dump($edate);die;
+            //var_dump($sdate);die;
             $this->db->where('milk_collections.collection_date >=',$sdate);
             $this->db->where('milk_collections.collection_date <=',$edate);
         }
