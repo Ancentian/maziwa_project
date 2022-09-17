@@ -160,6 +160,32 @@ class Payments_model extends CI_Model
         return $query->result_array();
     }
 
+    public function make_monthylyPayments($sdate, $edate)
+    {
+        //var_dump($edate);die;
+        $this->db->select('farmers_biodata.*, milk_collections.id as milkColID, milk_collections.user_id,milk_collections.center_id,  milk_collections.collection_date,milk_collections.farmerID, SUM(milk_collections.morning) as totMorning, SUM(milk_collections.evening) as totEvening, SUM(milk_collections.rejected) as totRejected, SUM(milk_collections.total) as totalMilk,users.id as userID, users.firstname, users.lastname,collection_centers.id as colID, collection_centers.centerName, shop_sales.id as salesID, shop_sales.farmerID,SUM(shop_sales.amount) as totShopAmount');
+        $this->db->from('farmers_biodata');
+        $this->db->join('milk_collections', 'milk_collections.farmerID = farmers_biodata.farmerID','LEFT');
+        $this->db->join('users', 'users.id = milk_collections.user_id');
+        $this->db->join('collection_centers', 'collection_centers.id = milk_collections.center_id','LEFT');
+        $this->db->join('shop_sales', 'shop_sales.farmerID = farmers_biodata.farmerID','LEFT');
+        if($sdate != "" && $edate != ""){
+            //$edate = date('d/m/Y',strtotime($edate)+86400);
+            $this->db->where('milk_collections.collection_date >=',$sdate);
+            $this->db->where('milk_collections.collection_date <=',$edate);
+            $this->db->where('shop_sales.date >=',$sdate);
+            $this->db->where('shop_sales.date <=',$edate);
+        }
+        //$this->db->group_by('farmers_biodata.farmerID');
+        $this->db->group_by('shop_sales.farmerID');
+        //$this->db->group_by('farmers_biodata.farmerID');
+        $this->db->order_by('milk_collections.total', 'DESC');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+
+
     public function fetch_allMonthlyPayments()
     {
         $this->db->select('payments.*,farmers_biodata.id as farID, farmers_biodata.fname, farmers_biodata.mname, farmers_biodata.lname, farmers_biodata.center_id, collection_centers.id as colID, collection_centers.centerName, users.id as userID, users.firstname, users.lastname');

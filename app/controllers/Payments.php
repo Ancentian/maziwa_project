@@ -71,15 +71,39 @@ class Payments extends BASE_Controller {
     }
 
     public function makePayment()
-    {        
-        $sdate = date('Y-m-d', strtotime("first day of -1 month"));
-        $edate = date('Y-m-d', strtotime("last day of -1 month"));
-        //var_dump($sdate." ".$edate);die;
-        $this->data['milkCollection'] = $this->payments_model->monthly_milkCollections($sdate, $edate);
-        //var_dump($this->data['milkCollection'][1]);die;
-        $this->data['pg_title'] = "Payments";
-        $this->data['page_content'] = 'payments/addPayments';
-        $this->load->view('layout/template', $this->data);
+    {   
+        $day = date('d');
+        $month = date('m');
+        $year = date('Y');
+        $date = date($day."/".$month."/".$year);
+        $sdate = date('d/m/Y', strtotime("first day of -1 month"));
+        $edate = date('d/m/Y', strtotime("last day of -1 month"));
+        if (date('d/m/Y') == $date) {
+            $this->data['payments'] = $this->payments_model->make_monthylyPayments($sdate, $edate)[0];
+        }        
+        $data = $this->payments_model->make_monthylyPayments($sdate, $edate);
+        $rate = $this->payments_model->fetch_milkRates();
+        $milkRate = $rate['milkRate'];
+        $farmer = $data['id'];
+        var_dump($farmer);die;
+        $milk = $data['totalMilk'];
+
+        //CALCULATES THE TOTAL OF EXPENSE AMOUNT
+        $total = 0;
+        foreach ($forminput['amount'] as $key ) {
+            $total += $key;
+        }
+        //END OF CALCULATION
+        
+
+        $i=0;
+        foreach($farmer as $key)
+        {
+
+            $this->db->insert('payments', ['from_date' => $sdate, 'to_date' => $edate, 'farmerID' => $key, '']);
+            $i++;
+        }
+
     }
 
     /*
