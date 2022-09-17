@@ -1,6 +1,6 @@
 <?php $sdate = "";$edate="";
-    $sdate = $_GET['sdate'];
-    $edate = $_GET['edate'];
+$sdate = $_GET['sdate'];
+$edate = $_GET['edate'];
 ?>
 <!-- Page Wrapper -->
 <div class="page-wrapper">
@@ -31,23 +31,21 @@
 
 				<!-- Search Form -->
 				<div class="main-search">
-					<form action="<?php echo base_url('payments/searchResults'); ?>" method="GET">
+					<form action="<?php echo base_url('payments/searchResults'); ?>" method="POST">
 						<div class="row">
-							<div class="col-md-6">  
-								<div class="form-group form-focus">
-									<div class="cal-icon">
-										<input class="form-control floating datetimepicker" name="sdate" value="<?php echo $sdate;?>" type="text">
-									</div>
-									<label class="focus-label">From</label>
+							<div class="col-sm-6 col-md-10"> 
+								<div class="form-group form-focus select-focus">
+									<select class="select floating" name="" required> 
+										<option>Select Payment Schedule</option>
+										<?php foreach($schedules as $key) {?>
+											<option value="<?php echo $key['id']?>"><?php echo $key['scheduleName']?> (<?php echo $key['start_date']." to ". $key['end_date']?>)</option>
+										<?php }?>
+									</select>
+									<label class="focus-label">Select Payment Schedule</label>
+									
 								</div>
 							</div>
-							<div class="col-md-6">  
-								<div class="form-group form-focus">
-									<div class="cal-icon">
-										<input class="form-control floating datetimepicker" name="edate" value="<?php echo $edate;?>" type="text">
-									</div>
-									<label class="focus-label">To</label>
-								</div>
+							<div class="col-md-2">
 								<div class="input-group-append">
 								<button type="submit" class="btn btn-primary" type="button">Search</button>
 							</div>
@@ -60,7 +58,12 @@
 				<div class="search-result">
 					<h3>Search Result Found For: <u>Keyword</u></h3>
 					<p>
-						
+						<div class="col-sm-8">
+							<?php foreach ($schedule as $key) { ?>
+								<a href="<?php echo base_url('payments/addPayment/'.$key['id'] )?>"><?php echo strtoupper($key['scheduleName']." ".'SCHEDULE') ?>  (<?php echo $key['start_date']." to ". $key['end_date']?>)
+								</a><br>
+							<?php } ?>
+						</div>
 					</p>
 				</div>
 

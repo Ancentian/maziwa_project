@@ -35,6 +35,8 @@
         
         <!-- Main CSS -->
         <link rel="stylesheet" href="<?php echo base_url(); ?>res/assets/css/style.css">
+        <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet">
+        <link href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css" rel="stylesheet">
         
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>

@@ -15,7 +15,7 @@
 					<h3 class="page-title">Milk Collections</h3>
 					<ul class="breadcrumb">
 						<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-						<li class="breadcrumb-item active">General</li>
+						<li class="breadcrumb-item active">Report / <?php echo ucfirst($milkCollection[0]['centerName'])?></li>
 					</ul>
 				</div>
 				<div class="col-auto float-right ml-auto" hidden>
@@ -31,7 +31,7 @@
 			<div class="alert alert-danger"><?php echo $this->session->flashdata('error-msg'); ?></div>
 		<?php } ?>
 		<!-- Search Filter -->
-		<!-- <form action="<?php //echo base_url('reports/collection_centerReports/'.$milkCollection[0]['center_id'])?>" method="GET"> -->
+		<form action="<?php echo base_url('reports/collection_centerReports/'.$milkCollection[0]['center_id'])?>" method="GET">
 		<div class="row filter-row">
 			<div class="col-md-4">  
 				<div class="form-group form-focus">
@@ -50,7 +50,7 @@
 				</div>
 			</div>
 			<div class="col-md-4 ">  
-				<input type="submit" class="btn btn-success btn-block" value="FILTER" required>
+				<input type="submit" class="btn btn-success btn-block" value="Search" required>
 				<!-- <button class="btn btn-success " value="FILTER" type="submit"> Search</button>  --> 
 			</div>     
 		</div>
@@ -59,17 +59,14 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div>
-					<table class="table table-striped custom-table mb-0 datatable">
+					<table class="table table-striped custom-table mb-0" style="width:100%" id="maziwa">
 						<thead>
 							<tr>
 								<th style="width: 30px;">#</th>
-								<th>Farmer Code</th>
-								<th>Farmer Name</th>
-								<th>Center</th>
-								<th>Collection Date</th>
-								<th>Morning</th>
-								<th>Evening</th>
-								<th>Rejected</th>					
+								<th>Code</th>
+								<th>Name</th>
+								<th>Col. Date</th>						
+								<th>Total</th>					
 								<th>Recorded By</th>
 								<th>Created at</th>
 								<th class="text-right">Action</th>
@@ -81,11 +78,8 @@
 								<td><?php echo $i; ?></td>
 								<td><?php echo $key['farmerID']?></td>
 								<td><?php echo $key['fname']." ".$key['lname']?></td>
-								<td><?php echo $key['centerName']?></td>
-								<td><?php echo $key['collection_date']?></td>	
-								<td><?php echo $key['morning']?></td>
-								<td><?php echo $key['evening']?></td>
-								<td><?php echo $key['rejected']?></td>				
+								<td><?php echo $key['collection_date']?></td>		
+								<td><?php echo $key['total']?></td>				
 								<td><?php echo $key['firstname']?></td>
 								<td><?php echo date('d/m/Y', strtotime($key['created_at'])) ?></td>
 								<td class="text-right">

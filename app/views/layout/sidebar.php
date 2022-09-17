@@ -52,7 +52,7 @@
                                     <ul style="display: none;">
                                         <li><a href="<?php echo base_url('payments/salary')?>"> Farmer Salary </a></li>
                                         <li><a href="<?php echo base_url('payments/addPayment')?>"> Add Payment </a></li>
-                                        <li hidden><a href="payroll-items.html"> Payroll Items </a></li>
+                                        <li><a href="<?php echo base_url('payments/monthlyPayments')?>"> Payments </a></li>
                                     </ul>
                                 </li>
                                 <li class="submenu">
@@ -102,6 +102,7 @@
                                         </li>
                                         <li><a href="<?php echo base_url('roles/index'); ?>">Roles</a></li>
                                         <li><a href="<?php echo base_url('payments/milkRates'); ?>">Milk Rates</a></li>
+                                        <li><a href="<?php echo base_url('payments/paymentSchedules'); ?>">Payment Schedules</a></li>
                                     </ul>
                                 </li>     
                                 <li class="menu-title" hidden> 

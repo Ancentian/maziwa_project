@@ -43,6 +43,12 @@
 						</div>
 						<div class="col-sm-6 col-md-3">
 							<div class="form-group">
+								<label>ID/Passport No.</label>
+								<input class="form-control" type="text" value="<?php echo $farmer['id_number']?>" name="id_number">
+							</div>
+						</div>
+						<div class="col-sm-6 col-md-3">
+							<div class="form-group">
 								<label>FarmerID</label>
 								<input class="form-control" type="text" value="<?php echo $farmer['farmerID']?>" name="farmerID">
 							</div>
@@ -104,8 +110,31 @@
 								</select>
 							</div>
 						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Bank Name <span class="text-danger">*</span></label>
+								<input class="form-control" name="bank_name" value="<?php echo $farmer['bank_name']?>" type="text">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Branch <span class="text-danger">*</span></label>
+								<input class="form-control" value="<?php echo $farmer['bank_branch']?>" name="bank_branch" type="text">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Account Name <span class="text-danger">*</span></label>
+								<input class="form-control" value="<?php echo $farmer['acc_name']?>" name="acc_name" type="text">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Account Number <span class="text-danger">*</span></label>
+								<input class="form-control" value="<?php echo $farmer['acc_number']?>" name="acc_number" type="text">
+							</div>
+						</div>
 					</div>
-
 					<div class="submit-section">
 						<button type="submit" class="btn btn-primary submit-btn">Update</button>
 					</div>

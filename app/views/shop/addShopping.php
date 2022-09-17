@@ -38,7 +38,7 @@
 						<div class="col-sm-6 col-md-4">
 							<div class="form-group">
 								<label>Farmer Code <span class="text-danger">*</span></label>
-								<input class="form-control floating" type="text" id="farmerID" value="<?php echo $farmer['farmerID']?>" name="farmerID" required>
+								<input class="form-control floating" type="text" id="farmerID" value="<?php echo $farmer['farmerID']?>" name="farmerID" readonly required>
 								<!-- <select class="select" id="client" name="farmerID" disabled>
 									<?php //foreach($farmers as $key) {?>
 									<option value="<?php //echo $farmer['farmerID']?>"<?php //if($key['farmerID'] == $farmer['farmerID']){ //echo "selected"; }?> ><?php //echo $key['fname']." ".$key['mname']." ".$key['lname'] ?> </option>
@@ -351,14 +351,14 @@
         var sum = 0;
         $(".total").each(function () {
         sum += parseFloat($(this).val());
+        $("#grand_total").val(parseInt(sum));
         });
-        //$(".subtotal").text(sum);
+        $(".subtotal").text(sum);
         
         var amounts = sum;
-        // alert(amounts)
-        $(document).on("change keyup blur", "#qty","unit_cost", function() 
+        $(document).on("change keyup blur", "#qty", function() 
         {
-            //var qty = $("#qty").val();
+            var qty = $("#qty").val();
             //$(".total").val(amounts * qty);
             //$("#sum_total").val(amounts * qty);
             $("#grand_total").val(parseInt(amounts));

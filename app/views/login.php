@@ -36,7 +36,7 @@
 				
 					<!-- Account Logo -->
 					<div class="account-logo">
-						<a href="#"><img src="<?php echo base_url(); ?>res/assets/img/logo.png" alt="Maziwa Project"></a>
+						<a href="#"><img src="<?php echo base_url(); ?>res/assets/img/logo.png" height="60" width="60" alt="Maziwa Project"></a>
 					</div>
 					<!-- /Account Logo -->
 					

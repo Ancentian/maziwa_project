@@ -67,6 +67,7 @@ class Farmers extends BASE_Controller {
         $this->form_validation->set_rules('fname', 'First Name', 'required');
         $this->form_validation->set_rules('mname', 'Middle Name', '');
         $this->form_validation->set_rules('lname', 'Last Name', 'required');
+        $this->form_validation->set_rules('id_number', 'ID Number', 'required');
         $this->form_validation->set_rules('farmerID', 'Farmer ID', 'required|is_unique[farmers_biodata.farmerID]');
         $this->form_validation->set_rules('contact1', 'Contact 1', 'required');
         $this->form_validation->set_rules('contact2', 'Contact 2', '');
@@ -75,6 +76,10 @@ class Farmers extends BASE_Controller {
         $this->form_validation->set_rules('center_id', 'Collection Center', 'required');
         $this->form_validation->set_rules('location', 'Location', 'required');
         $this->form_validation->set_rules('marital_status', 'Marital Status', 'required');
+        $this->form_validation->set_rules('bank_name', 'Bank Name', 'required');
+        $this->form_validation->set_rules('bank_branch', 'Branch Name', 'required');
+        $this->form_validation->set_rules('acc_name', 'Account Name', 'required');
+        $this->form_validation->set_rules('acc_number', 'Account Number', 'required|is_unique[farmers_biodata.acc_number]');
 
         if ($this->form_validation->run() == FALSE) {
             $this->session->set_flashdata('error-msg', validation_errors());
@@ -84,6 +89,7 @@ class Farmers extends BASE_Controller {
                 'fname' => $this->input->post('fname'),
                 'mname' => $this->input->post('mname'),
                 'lname' => $this->input->post('lname'),
+                'id_number' => $this->input->post('id_number'),
                 'farmerID' => $this->input->post('farmerID'),
                 'contact1' => $this->input->post('contact1'),
                 'contact2' => $this->input->post('contact2'),
@@ -91,8 +97,13 @@ class Farmers extends BASE_Controller {
                 'join_date' => $this->input->post('join_date'),
                 'center_id' => $this->input->post('center_id'),
                 'location' => $this->input->post('location'),
-                'marital_status' => $this->input->post('marital_status')
+                'marital_status' => $this->input->post('marital_status'),
+                'bank_name' => $this->input->post('bank_name'),
+                'bank_branch' => $this->input->post('bank_branch'),
+                'acc_name' => $this->input->post('acc_name'),
+                'acc_number' => $this->input->post('acc_number')
             );
+
             $this->farmers->store_farmer($data);
             $this->session->set_flashdata('success-msg', 'Farmer Added Successfully');
             redirect(base_url('farmers/index'));
@@ -192,7 +203,7 @@ class Farmers extends BASE_Controller {
     public function deleteFarmer($id)
     {
         $item = $this->farmers->delete_farmer($id);
-        $this->session->set_flashdata('success', "Deleted Successfully!");
+        $this->session->set_flashdata('success', "Data Deleted Successfully!");
         redirect(base_url('farmers/index'));
     }
 

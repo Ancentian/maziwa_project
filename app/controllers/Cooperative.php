@@ -64,7 +64,11 @@ class Cooperative extends BASE_Controller {
 
     public function milkCollection()
     {
-        $this->data['milk'] = $this->cooperative_model->milk_collections();
+        $sdate = "";$edate = "";
+        $forminput = $this->input->get();
+        $sdate = $forminput['sdate'];
+        $edate = $forminput['edate'];
+        $this->data['milk'] = $this->cooperative_model->milk_collections($sdate, $edate);
         $this->data['pg_title'] = "Selected Center";
         $this->data['page_content'] = 'cooperatives/milkCollections';
         $this->load->view('layout/template', $this->data);
@@ -158,108 +162,41 @@ class Cooperative extends BASE_Controller {
         }
         return redirect('cooperative/milkCollection');  
     }
-
-    public function store()
-    {
-        $config['max_size'] = 10000;
-        $config['allowed_types'] = '*';
-        $config['upload_path'] = FCPATH . 'uploads/expenses';
-
-        $this->load->library('upload', $config);
-
-         if (isset($_FILES["file"]) && !empty($_FILES['file']['name'])) {
-            // var_dump($_FILES);die;
-
-            $fileInfo = pathinfo($_FILES["file"]["name"]);
-            $file =  time().".".$fileInfo['extension'];
-
-            // echo $file;die;
-            $this->load->library('upload', $config);
-            $this->upload->initialize($config);
-            move_uploaded_file($_FILES["file"]["tmp_name"], FCPATH . "/uploads/expenses/" . $file);
-        }
-
-        $forminput = $this->input->post();
-
-        //CALCULATES THE TOTAL OF EXPENSE AMOUNT
-        $total = 0;
-        foreach ($forminput['amount'] as $key ) {
-            $total += $key;
-        }
-        //END OF CALCULATION
-
-        if ($forminput['by'] == '1') { //Stores Self Expense
-            $data = array('user_id' => $forminput['user_id'], 'item_name' => json_encode($forminput['item_name']), 'date' => json_encode($forminput['date']), 'amount' => json_encode($forminput['amount']), 'description' => $forminput['description'], 'total_amount' => $total, 'file' => $file);
-
-        $inserted = $this->expense->storeExpense($data);
-
-        if ($inserted > 0) {
-            $this->session->set_flashdata('success-msg', 'Expense Added Successfully');
-        }else{
-            $this->sessison->set_flashdata('error-msg', 'Err! Failed Try Again');
-        }
-        return redirect('expense/index');
-
-        }else{
-            $data = array('user_id' => $forminput['user_id'], 'emp_fname' => $forminput['emp_fname'], 'emp_lname' => $forminput['emp_lname'], 'item_name' => json_encode($forminput['item_name']), 'date' => json_encode($forminput['date']), 'amount' => json_encode($forminput['amount']), 'description' => $forminput['description'], 'total_amount' => $total, 'file' => $file );
-
-        $inserted = $this->expense->storeExpense($data);
-
-        if ($inserted > 0) {
-            $this->session->set_flashdata('success-msg', 'Expense Added Successfully');
-        }else{
-            $this->sessison->set_flashdata('error-msg', 'Err! Failed Try Again');
-        }
-        return redirect('expense/index');
-        }
-     
-    }
-
-
     /*
       Edit a record page
     */
-    public function edit($id)
+    public function editCollection($id)
     {
-        $this->data['expense'] = $this->expense->get($id);
-        $this->data['pg_title'] = "Edit Leave";
-        $this->data['page_content'] = 'expenses/edit';
+        $this->data['farmers'] = $this->cooperative_model->edit_milkCollection($id);
+        $this->data['pg_title'] = "Edit Collection";
+        $this->data['page_content'] = 'cooperatives/editCollection';
         $this->load->view('layout/template', $this->data);
     }
 
     /*
       Update the submitted record
     */
-    public function updateExpense(int $id)
+    public function update_milkCollection(int $id)
     {
         $forminput = $this->input->post();
 
-        //CALCULATES THE TOTAL OF EXPENSE AMOUNT
-        $total = 0;
-        foreach ($forminput['amount'] as $key ) {
-            $total += $key;
-        }
-        //END OF CALCULATION
-
-        $data = array('user_id' => $forminput['user_id'], 'item_name' => json_encode($forminput['item_name']), 'date' => json_encode($forminput['date']), 'amount' => json_encode($forminput['amount']), 'description' => $forminput['description'], 'total_amount' => $total);
-
-        $inserted = $this->expense->update_expense($id, $data);
+        $inserted = $this->cooperative_model->update_milkCollection($id, $forminput);
 
         if ($inserted > 0) {
-            $this->session->set_flashdata('success-msg', 'Expense Updated Successfully');
+            $this->session->set_flashdata('success-msg', 'Data Updated Successfully');
         }else{
-            $this->sessison->set_flashdata('error-msg', 'Err! Failed Try Again');
+            $this->session->set_flashdata('error-msg', 'Err! Failed Try Again');
         }
-        return redirect('expense/index');
+        return redirect('cooperative/milkCollection');
     }
     /*
       Delete a record
     */
-    public function delete($id)
+    public function deleteCollection($id)
     {
-        $item = $this->expense->delete($id);
-        $this->session->set_flashdata('success', "Deleted Successfully!");
-        redirect(base_url('expense/index'));
+        $delete = $this->cooperative_model->delete_collection($id);
+        $this->session->set_flashdata('success-msg', "Data Deleted Successfully!");
+        redirect(base_url('cooperative/milkCollection'));
     }
 
 

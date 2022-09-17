@@ -12,9 +12,9 @@ $edate = $_GET['edate'];
 		<div class="page-header">
 			<div class="row align-items-center">
 				<div class="col">
-					<h3 class="page-title">Monthly Payments</h3>
+					<h3 class="page-title">Milk Collections</h3>
 					<ul class="breadcrumb">
-						<li class="breadcrumb-item"><a href="<?php echo base_url() ?>">Dashboard</a></li>
+						<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
 						<li class="breadcrumb-item active">General</li>
 					</ul>
 				</div>
@@ -57,34 +57,58 @@ $edate = $_GET['edate'];
 			<div class="col-md-12">		
 				<!-- <div> -->
 					<form action="<?php echo base_url('payments/storeMonthlyPayments')?>" method="POST">
-						
+						<input class="form-control floating datetimepicker" name="from_date" value="<?php echo $sdate;?>"  hidden>
+						<input class="form-control floating datetimepicker" name="to_date" value="<?php echo $edate;?>" type="text" hidden>
 					<table class="table table-striped custom-table mb-0 test" id="maziwa">
 						<thead>
 							<tr>
 								<th style="width: 30px;">#</th>
-								<th>Code</th>
-								<th>Name</th>
+								<th>Farmer Code</th>
+								<th>Farmer Name</th>
 								<th>Center</th>
+								<!-- <th>Collection Date</th> -->
+								<!-- <th>Morning</th>
+								<th>Evening</th>
+								<th>Rejected</th> -->
 								<th>Total Milk</th>
 								<th>Deductions</th>					
 								<th>Recorded By</th>
-								<th>Created at</th>
+								<!-- <th>Created at</th> -->
 								<!-- <th class="text-right">Action</th> -->
 							</tr>
 						</thead>
 						<tbody>
-							
-							<?php $i=1; foreach ($payments as $key) { ?>
+							<div class="form-group form-focus">
+								<!-- <div class="cal-icon"> -->
+									<input class="form-control floating rate" name="milkRate" type="number" required>
+								<!-- </div> -->
+								<label class="focus-label">Milk Rate</label>
+							</div>
+							<?php 
+							$i=1; foreach ($milkCollection as $key) {
+							$this->db->where('shop_sales.farmerID', $key['farmerID']);
+							$this->db->select('farmers_biodata.*, shop_sales.id as salesID, shop_sales.farmerID, sum(shop_sales.amount) as totShopAmount');
+							$this->db->from('farmers_biodata');
+							$this->db->join('shop_sales', 'shop_sales.farmerID = farmers_biodata.farmerID');
+							$this->db->group_by('shop_sales.farmerID');
+                            $query = $this->db->get();
+                            $center = $query->result_array();
+                            echo $center['totShopAmount'];
+							?>
 								<tr>
 									<td><?php echo $i; ?></td>
-									<td><?php echo $key['farmerID']?></td>
+									<td><input type="text" class="form-control" value="<?php echo $key['farmerID']?>" name="farmerID[]" readonly></td>
 									<td><?php echo $key['fname']." ".$key['mname']." ".$key['lname']?></td>
-									<td><?php echo ucfirst($key['centerName']) ?></td>
-									<td><?php echo $key['total_milk']?></td>
-									<td><?php echo $key['totShopAmount']?></td>				
+									<td><?php echo $key['centerName']?></td>
+									<!-- <td><?php //echo $key['collection_date']?></td> -->	
+									<!-- <td><input type="text" class="form-control" value="<?php //echo $key['totMorning']?>" name="total_morning[]" readonly></td>
+									<td><input type="text" class="form-control" name="total_evening[]" value="<?php //echo $key['totEvening']?>" readonly></td>
+									<td><input type="text" class="form-control" name="total_rejected[]" value="<?php //echo $key['totRejected']?>" readonly></td> -->
+									<td><input type="text" class="form-control totalMilk" name="total_milk[]" value="<?php echo $key['totalMilk']?>" readonly></td>
+									<td><input type="text" class="form-control" name="deductions[]" value="<?php echo $key['totShopAmount']?>" readonly></td>				
 									<td><?php echo $key['firstname']?></td>
 									<td class="text-right">
-										<a href="<?php echo base_url('payments/print_invoice/'.$key['id']) ?>" class="btn btn-info"><i class="fa fa-print"></i></a>
+										<a href="#" class="btn btn-info"><i class="fa fa-eye"></i></a>
 									</td>
 								</tr>
 								<?php $i++; } ?>
