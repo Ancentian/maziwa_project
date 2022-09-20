@@ -138,13 +138,13 @@
 												<div class="col-sm-6">
 													<div class="form-group">
 														<label class="col-form-label">Middle Name</label>
-														<input class="form-control" name="mname" type="text">
+														<input class="form-control" name="mname" value="<?php echo $mname;?>" type="text">
 													</div>
 												</div>
 												<div class="col-sm-6">
 													<div class="form-group">
 														<label class="col-form-label">Last Name</label>
-														<input class="form-control" name="lname" type="text">
+														<input class="form-control" name="lname"value="<?php echo $lname;?>" type="text">
 													</div>
 												</div>
 												<div class="col-sm-6">  
