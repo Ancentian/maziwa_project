@@ -25,7 +25,14 @@
 			</div>
 		</div>
 		<!-- /Page Header -->
-		
+
+		<!-- /Page Header -->
+		<?php if ($this->session->flashdata('success-msg')) { ?>
+			<div class="alert alert-success"><?php echo $this->session->flashdata('success-msg'); ?></div>
+		<?php } ?>
+		<?php if ($this->session->flashdata('error-msg')) { ?>
+			<div class="alert alert-danger"><?php echo $this->session->flashdata('error-msg'); ?></div>
+		<?php } ?>
 		<!-- Search Filter -->
 		<div class="row filter-row">
 			<div class="col-sm-6 col-md-3">  
@@ -44,10 +51,9 @@
 				<div class="form-group form-focus select-focus">
 					<select class="select floating"> 
 						<option>Select Designation</option>
-						<option>Web Developer</option>
-						<option>Web Designer</option>
-						<option>Android Developer</option>
-						<option>Ios Developer</option>
+						<?php foreach($roles as $key) {?>
+						<option value="<?php echo $key['id']?>"><?php echo $key['roleName']?></option>
+						<?php }?>
 					</select>
 					<label class="focus-label">Designation</label>
 				</div>
@@ -61,15 +67,14 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="table-responsive">
-					<table class="table table-striped custom-table datatable">
+					<table class="table table-striped custom-table" id="maziwa">
 						<thead>
 							<tr>
 								<th>#</th>
 								<th>Name</th>
-								<th>Employee ID</th>
 								<th>Email</th>
-								<th>Mobile</th>
-								<th class="text-nowrap">Join Date</th>
+								
+								<!-- <th class="text-nowrap">Join Date</th> -->
 								<th>Role</th>
 								<th class="text-right no-sort">Action</th>
 							</tr>
@@ -80,23 +85,16 @@
 									<td><?php echo $i;?></td>
 								<td>
 									<h2 class="table-avatar">
-										<a href="<?php echo base_url()?>" class="avatar"><img alt="" src="assets/img/profiles/avatar-02.jpg"></a>
+										<a href="<?php echo base_url()?>" class="avatar"><img alt="" src="<?php echo base_url()?>res/assets/img/profiles/avatar-02.jpg"></a>
 										<a href="<?php echo base_url()?>"><?php echo $key['firstname']." ".$key['lastname'] ?> <span><?php echo $key['roleName']?></span></a>
 									</h2>
 								</td>
-								<td>FT-0001</td>
+								
 								<td><?php echo $key['email']?></td>
-								<td>9876543210</td>
-								<td>1 Jan 2013</td>
-								<td></td>
+								<td><?php echo $key['roleName']?></td>
 								<td class="text-right">
-									<div class="dropdown dropdown-action">
-										<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-										<div class="dropdown-menu dropdown-menu-right">
-											<a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-											<a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_employee"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-										</div>
-									</div>
+									<a href="<?php echo base_url('employee/editStaff/'.$key['id'])?>" class="btn btn-success"><i class="fa fa-pencil"></i></a>
+									<a href="<?php echo base_url('employee/deleteStaff/'.$key['id'])?>" class="btn btn-danger"><i class="fa fa-trash-o"></i></a>
 								</td>
 							</tr>
 							<?php $i++; }?>

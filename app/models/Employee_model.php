@@ -79,8 +79,10 @@ class Employee_model extends CI_Model{
 
     function fetch_byId($id)
     {
-        $this->db->where('id', $id);
-        $this->db->select()->from('users');
+        $this->db->where('users.id', $id);
+        $this->db->select('users.*, roles.id as roleID, roles.roleName');
+        $this->db->from('users');
+        $this->db->join('roles','roles.id = users.role_id');
         $query = $this->db->get();
         return $query->result_array()[0];
     }
@@ -103,7 +105,7 @@ class Employee_model extends CI_Model{
     /*
         Delete a record in the database
     */
-    public function deleteemployee($id)
+    public function delete_staff($id)
     {
         $this->db->where('id', $id);
         $this->db->delete('users');

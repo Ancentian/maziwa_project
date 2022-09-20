@@ -20,6 +20,7 @@ class Employee extends BASE_Controller {
 
     public function staffList()
     {
+        $this->data['roles'] = $this->roles->fetch_roles();
         $this->data['employees'] = $this->employee_model->fetch_allEmployees();
         $this->data['pg_title'] = "Dashboard";
         $this->data['page_content'] = 'employees/empList';
@@ -135,36 +136,19 @@ class Employee extends BASE_Controller {
     /*
       Edit a record page
     */
-    public function editstaff(int $id) 
+    function editStaff($id)
     {
-        $this->data['employee'] = $this->employee_model->fetch_byId($id);
-        $this->data['id'] = $id;
-        $this->data['pg_title'] = "Edit Staff";
-        $this->data['page_content'] = 'staff/edit-staff';
-        $this->load->view('layout/template', $this->data);
-    }
-
-    public function editMechanic(int $id) 
-    {
-        $this->data['mechanic'] = $this->employee_model->fetch_MechanicbyId($id);
-        $this->data['id'] = $id;
-        $this->data['pg_title'] = "Edit Staff";
-        $this->data['page_content'] = 'staff/edit-mechanic';
-        $this->load->view('layout/template', $this->data);
-    }
-
-    public function showMechanic(int $id) 
-    {
-        $this->data['mechanic'] = $this->employee_model->fetch_MechanicbyId($id);
-        $this->data['id'] = $id;
-        $this->data['pg_title'] = "Edit Staff";
-        $this->data['page_content'] = 'staff/show-mechanic';
+        $this->data['roles'] = $this->roles->fetch_roles();
+        $this->data['staff'] = $this->employee_model->fetch_byId($id);
+        //var_dump($this->data['staff']);die;
+        $this->data['pg_title'] = "Update Profile";
+        $this->data['page_content'] = 'employees/editStaff';
         $this->load->view('layout/template', $this->data);
     }
     /*
       update a record page
     */
-    public function update(int $id)
+    public function updateStaff(int $id)
     {
         $forminput = $this->input->post();
 
@@ -174,7 +158,7 @@ class Employee extends BASE_Controller {
         } else {
             $this->session->set_flashdata('error-msg', 'Failed, please try again');
         }
-        redirect('employee/employees');
+        redirect('employee/staffList');
     }
     /*
       update employee Profile
@@ -200,15 +184,15 @@ class Employee extends BASE_Controller {
     /*
       Delete a record
     */
-    public function deletestaff(int $id)
+    public function deleteStaff(int $id)
     {
-        $inserted = $this->employee_model->deleteemployee($id);
+        $data = $this->employee_model->delete_staff($id);
         if ($inserted > 0) {
-            $this->session->set_flashdata('success-msg', 'Employee deleted successfully');
+            $this->session->set_flashdata('success-msg', 'User deleted successfully');
         } else {
             $this->session->set_flashdata('error-msg', 'Failed, please try again');
         }
-        redirect('employee/employees');
+        redirect('employee/staffList');
     }
 
 

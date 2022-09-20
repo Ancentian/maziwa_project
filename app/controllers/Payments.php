@@ -79,31 +79,37 @@ class Payments extends BASE_Controller {
         $sdate = date('d/m/Y', strtotime("first day of -1 month"));
         $edate = date('d/m/Y', strtotime("last day of -1 month"));
         if (date('d/m/Y') == $date) {
-            $this->data['payments'] = $this->payments_model->make_monthylyPayments($sdate, $edate)[0];
+            $this->data['payments'] = $this->payments_model->make_monthylyPayments($sdate, $edate);
         }        
         $data = $this->payments_model->make_monthylyPayments($sdate, $edate);
         $rate = $this->payments_model->fetch_milkRates();
         $milkRate = $rate['milkRate'];
-        $farmer = $data['id'];
-        var_dump($farmer);die;
-        $milk = $data['totalMilk'];
 
-        //CALCULATES THE TOTAL OF EXPENSE AMOUNT
-        $total = 0;
-        foreach ($forminput['amount'] as $key ) {
-            $total += $key;
-        }
-        //END OF CALCULATION
-        
-
-        $i=0;
-        foreach($farmer as $key)
+        foreach($data as $fardata)
         {
-
-            $this->db->insert('payments', ['from_date' => $sdate, 'to_date' => $edate, 'farmerID' => $key, '']);
+            $farmerid = $fardata['farmerID'];
+            $totmilk = $fardata['totalMilk'];
+            $totshop = $fardata['totShopAmount'];
+            $i=0;
+            //var_dump($totshop);die;
+            foreach ($farmerid as $key) 
+            {
+                $tot_milk = $totmilk[$i];
+                $tot_shop = $totshop[$i];
+                $this->db->insert('payments', ['from_date' => $sdate, 'to_date' => $edate, 'farmerID' => $key, 'milkRate' => $milkRate, 'total_milk' => $tot_milk, 'shop_total' => $tot_shop]);
             $i++;
+            }
+             //var_dump($key);die;
         }
+        $inserted = $this->db->affected_rows();
+        //var_dump($inserted);die;
 
+        if ($inserted > 0) {
+            $this->session->set_flashdata('success-msg', 'Payments Added Successfully');
+        }else{
+            $this->session->set_flashdata('error-msg', 'Err! Failed Try Again');
+        }
+        return redirect('payments/monthlyPayments');
     }
 
     /*
