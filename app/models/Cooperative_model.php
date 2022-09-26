@@ -9,9 +9,9 @@ class Cooperative_model extends CI_Model{
     /*
         Get all the records from the database
     */
-    function fetch_allCooperatives()
+    function fetch_allDeductions()
     {
-        $this->db->select()->from('cooperatives');
+        $this->db->select()->from('deductions');
         $this->db->order_by('id', 'DESC');
         $query = $this->db->get();
         return $query->result_array();

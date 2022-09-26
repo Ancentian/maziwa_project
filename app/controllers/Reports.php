@@ -36,4 +36,28 @@ class Reports extends BASE_Controller
         $this->load->view('layout/template', $this->data);
     }
 
+    function allProductsReport()
+    {
+        $sdate = "";$edate = "";
+        $forminput = $this->input->get();
+        $sdate = $forminput['sdate'];
+        $edate = $forminput['edate'];
+        $this->data['items'] = $this->reports->allProductReports($sdate, $edate);
+        $this->data['pg_title'] = "Reports";
+        $this->data['page_content'] = 'reports/allProductsReport';
+        $this->load->view('layout/template', $this->data);
+    }
+
+    function product_Reports($id)
+    {
+        $sdate = "";$edate = "";
+        $forminput = $this->input->get();
+        $sdate = $forminput['sdate'];
+        $edate = $forminput['edate'];
+        $this->data['items'] = $this->reports->product_ReportsByID($id, $sdate, $edate);
+        $this->data['pg_title'] = "Reports";
+        $this->data['page_content'] = 'reports/productReports';
+        $this->load->view('layout/template', $this->data);
+    }
+
 }

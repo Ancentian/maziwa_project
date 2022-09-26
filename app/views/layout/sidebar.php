@@ -76,6 +76,16 @@
                                     </ul>
                                 </li> 
                                 <li class="submenu">
+                                    <a href="#"><i class="la la-pie-chart"></i> <span> Deductions </span> <span class="menu-arrow"></span></a>
+                                    <ul style="display: none;">
+                                        <li><a href="<?php echo base_url('deductions/index')?>">Deductions Types</a></li>
+                                        <li><a href="<?php echo base_url('deductions/individualDeduction')?>"> Individual Deductions</a></li>
+                                        <li><a href="<?php echo base_url('deductions/generalDeductions')?>">General Deductions</a></li>
+                                        <li><a href="<?php echo base_url('deductions/allFarmerDeductions')?>"> All Deductions </a></li>
+                                        
+                                    </ul>
+                                </li>
+                                <li class="submenu">
                                     <a href="#"><i class="la la-table"></i> <span>Col. Center Reports </span> <span class="menu-arrow"></span></a>
                                     <ul style="display: none;">
                                         <?php 
@@ -84,6 +94,20 @@
                                         $center = $query->result_array();
                                         foreach($center as $key) {?>
                                         <li><a href="<?php echo base_url('reports/collection_centerReports/'.$key['id'])?>"><?php echo ucfirst($key['centerName'])?> </a></li>
+                                        <?php }?>
+                                        
+                                    </ul>
+                                </li>
+                                <li class="submenu">
+                                    <a href="#"><i class="la la-table"></i> <span>products Reports </span> <span class="menu-arrow"></span></a>
+                                    <ul style="display: none;">
+                                        <li><a href="<?php echo base_url('reports/allProductsReport')?>">All Products Report</a></li>
+                                        <?php 
+                                        $this->db->select()->from('inventory');
+                                        $query = $this->db->get();
+                                        $center = $query->result_array();
+                                        foreach($center as $key) {?>
+                                        <li><a href="<?php echo base_url('reports/Product_Reports/'.$key['id'])?>"><?php echo ucfirst($key['itemName'])?> </a></li>
                                         <?php }?>
                                         
                                     </ul>

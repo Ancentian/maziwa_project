@@ -47,6 +47,29 @@ class Reports_model extends CI_Model{
         return $query->result_array();
     }
 
+    public function allProductReports()
+    {
+        $this->db->select('inventory.*, shop_sales.id as salesID, shop_sales.farmerID,shop_sales.itemID, SUM(shop_sales.qty) as totQty, SUM(shop_sales.amount) as totAmount');
+        $this->db->from('inventory');
+        $this->db->join('shop_sales', 'shop_sales.itemID = inventory.id');
+        $this->db->group_by('inventory.id');
+        $this->db->order_by('SUM(shop_sales.qty)', 'DESC');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function product_ReportsByID($id)
+    {
+        $this->db->where('shop_sales.itemID', $id);
+        $this->db->select('shop_sales.*, inventory.id as invID, inventory.itemName,farmers_biodata.id as farID, farmers_biodata.fname, farmers_biodata.mname, farmers_biodata.lname, farmers_biodata.farmerID');
+        $this->db->from('shop_sales');
+        $this->db->join('inventory', 'inventory.id = shop_sales.itemID');
+        $this->db->join('farmers_biodata', 'farmers_biodata.farmerID = shop_sales.farmerID');
+        $this->db->order_by('shop_sales.qty', 'DESC');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
 
     public function fetch_todaysIncome()//Used in Reporting Module and Gives a List
     {

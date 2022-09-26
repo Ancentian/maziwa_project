@@ -335,8 +335,6 @@ class Payments extends BASE_Controller {
     {
         $forminput = $this->input->post();
 
-        //var_dump($forminput);die;
-
         $inserted = $this->payments_model->edit_schedule($id, $forminput);
 
         if ($inserted > 0) {
