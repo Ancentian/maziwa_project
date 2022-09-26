@@ -1,6 +1,6 @@
 <?php
 
-class Cooperative_model extends CI_Model{
+class Deductions_model extends CI_Model{
 
     public function __construct()
     {
@@ -9,30 +9,23 @@ class Cooperative_model extends CI_Model{
     /*
         Get all the records from the database
     */
-    function fetch_allCooperatives()
+    function fetch_deductions()
     {
-        $this->db->select()->from('cooperatives');
+        $this->db->select()->from('deductions');
         $this->db->order_by('id', 'DESC');
         $query = $this->db->get();
         return $query->result_array();
     }
 
-    function fetch_allCollectionCenters()
+    function fetch_allFarmerDeductions()
     {
-        $this->db->select('collection_centers.*, cooperatives.id as CoopID, cooperatives.cooperativeName,users.id as userID, users.firstname, users.lastname');
-        $this->db->from('collection_centers');
-        $this->db->join('cooperatives', 'cooperatives.id = collection_centers.cooperative_id');
-        $this->db->join('users', 'users.id = collection_centers.clerk_id');
-        $this->db->order_by('collection_centers.id', 'DESC');
+        $this->db->select('farmer_deductions.*, farmers_biodata.id as farID,farmers_biodata.fname, farmers_biodata.mname, farmers_biodata.lname, farmers_biodata.farmerID, deductions.id as dedID, deductions.deductionType, deductions.deductionName,users.id as userID, users.firstname, users.lastname');
+        $this->db->from('farmer_deductions');
+        $this->db->join('farmers_biodata', 'farmers_biodata.farmerID = farmer_deductions.farmerID');
+        $this->db->join('deductions', 'deductions.id = farmer_deductions.deduction_id');
+        $this->db->join('users', 'users.id = farmer_deductions.user_id');
+        $this->db->order_by('farmer_deductions.date', 'DESC');
         $query = $this->db->get();
-        return $query->result_array();
-    }
-
-    function searchCollectionCenter($data)
-    {     
-        $this->db->like('centerName', $data['centerName']);
-        $query = $this->db->get('collection_centers');
-        //var_dump($query->result_array());die;
         return $query->result_array();
     }
 
@@ -41,15 +34,6 @@ class Cooperative_model extends CI_Model{
         $this->db->where('collection_centers.id', $id);
         $this->db->select('collection_centers.*, farmers_biodata.id as keyID, farmers_biodata.fname, farmers_biodata.lname, farmers_biodata.farmerID, farmers_biodata.center_id')->from('collection_centers');
         $this->db->join('farmers_biodata', 'farmers_biodata.center_id = collection_centers.id');
-        $query = $this->db->get();
-        return $query->result_array();
-    }
-
-    public function edit_milkCollection($id)
-    {
-        $this->db->where('milk_collections.id', $id);
-        $this->db->select('milk_collections.*, farmers_biodata.id as farID, farmers_biodata.fname, farmers_biodata.mname, farmers_biodata.lname, farmers_biodata.farmerID')->from('milk_collections');
-        $this->db->join('farmers_biodata', 'farmers_biodata.farmerID = milk_collections.farmerID');
         $query = $this->db->get();
         return $query->result_array();
     }
@@ -67,19 +51,6 @@ class Cooperative_model extends CI_Model{
             $this->db->where('milk_collections.collection_date <=',$edate);
             //$this->db->like('farmers_biodata.fname =', $name);
         }
-        $this->db->order_by('milk_collections.id', 'DESC');
-        $query = $this->db->get();
-        return $query->result_array();
-    }
-
-    public function fetch_farmerMilkCollectionByID($id)
-    {
-        $this->db->where('milk_collections.farmerID', $id);
-        $this->db->select('milk_collections.*, collection_centers.id as colID, collection_centers.centerName, users.id as userID, users.firstname, users.lastname, farmers_biodata.farmerID, farmers_biodata.fname, farmers_biodata.lname');
-        $this->db->from('milk_collections');
-        $this->db->join('collection_centers', 'collection_centers.id = milk_collections.center_id');
-        $this->db->join('users', 'users.id = milk_collections.user_id');
-        $this->db->join('farmers_biodata', 'farmers_biodata.farmerID = milk_collections.farmerID', 'left');
         $this->db->order_by('milk_collections.id', 'DESC');
         $query = $this->db->get();
         return $query->result_array();
@@ -104,7 +75,7 @@ class Cooperative_model extends CI_Model{
        return $this->db->affected_rows();
     }
 
-    public function store_deductions($data)
+    public function store_deduction($data)
     {
        $this->db->insert('deductions', $data);
        return $this->db->affected_rows();
@@ -173,10 +144,17 @@ class Cooperative_model extends CI_Model{
         return $this->db->affected_rows();
     }
 
-    public function delete_collection($id)
+    public function delete_deduction($id)
     {
         $this->db->where('id', $id);
-        $this->db->delete('milk_collections');
+        $this->db->delete('deductions');
+        return $this->db->affected_rows();
+    }
+
+    public function delete_farmerDeduction($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('farmer_deductions');
         return $this->db->affected_rows();
     }
 

@@ -12,7 +12,7 @@
 					<h3 class="page-title">Farmers</h3>
 					<ul class="breadcrumb">
 						<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-						<li class="breadcrumb-item active"><?php echo $farmers[0]['centerName']?> Collection Center</li>
+						<li class="breadcrumb-item active"><?php //echo $farmers[0]['centerName']?> General Deductions</li>
 					</ul>
 				</div>
 				<div class="col-auto float-right ml-auto">
@@ -32,15 +32,15 @@
 		<?php } ?>		
 		<div class="row">
 			<div class="col-sm-12">
-				<form action="<?php echo base_url('deductions/storeIndividualDeduction')?>" method="POST">
+				<form action="<?php echo base_url('deductions/storeGeneralDeductions')?>" method="POST">
 					<div class="row">
-						<div class="col-sm-6 col-md-4">
-							<div class="form-group">
-								<label>Farmer Code <span class="text-danger">*</span></label>
-								<input class="form-control floating" type="text" id="farmerID" value="<?php echo $farmer['farmerID']?>" name="farmerID" readonly required>
-								
-							</div>
-						</div> 
+						<table >
+							<tbody hidden>
+								<?php foreach($farmers as $far) {?>		
+										<td><input type="text" class="form-control" name="farmerID[]" value="<?php echo $far['farmerID']?>"></td>		
+								<?php }?>
+							</tbody>
+						</table> 
 						<div class="col-sm-6 col-md-8">
 							<div class="form-group">
 								<label>Date <span class="text-danger">*</span></label>
@@ -50,6 +50,7 @@
 							</div>
 						</div>
 					</div>
+					
 					<div class="row">
 						<div class="col-md-12 col-sm-12">
 							<div class="table-responsive">
@@ -57,30 +58,26 @@
 									<thead>
 										<tr>
 											<th style="width: 20px">#</th>
+											<th hidden></th>
 											<th class="col-sm-3">Deduction</th>
 											<th class="col-md-6">Description</th>
 											<th style="width:100px;">Amount</th>	
 											<th>Amount</th>
-											<th> </th>
+											
 										</tr>
 									</thead>
 									<tbody>
+										<?php $i=1; foreach($deductions as $key) { ?>
 										<tr>
-											<td>1</td>
-											<td>
-												<select name="deduction_id[]" style="min-width:150px" class="form-control" required>
-													<option>Select --</option>
-													<?php foreach($deductions as $key) { if($key['deductionType'] == '1') {?>
-														<option value="<?php echo $key['id']?>"><?php echo $key['deductionName']?></option>
-													<?php } }?>
-												</select>
-											</td>
+											<td><?php echo $i; ?></td>
+											<td hidden>
+												<input class="form-control"style="min-width:150px" type="text" name="deduction_id[]" value="<?php echo $key['id']?>"></td>
+											<td><input class="form-control"style="min-width:150px" type="text" id="description" value="<?php echo $key['deductionName']?>" readonly></td>
 											<td><input class="form-control"style="min-width:150px" type="text" id="description" name="description[]"></td>
 											<td><input class="form-control unit_price" style="width:100px" type="text" id="unit_cost" required></td>
-											
 											<td><input class="form-control total" style="width:120px" type="text" id="amount" name="amount[]" value="0" readonly></td>
-											<td><a href="javascript:void(0)" class="text-success font-18" title="Add" id="addBtn"><i class="fa fa-plus"></i></a></td>
 										</tr>
+										<?php $i++; }?>	
 									</tbody>
 								</table>
 							</div>
@@ -114,35 +111,35 @@
 <!-- /Main Wrapper -->
 
 <!-- jQuery -->
-	<script src="<?php echo base_url(); ?>res/assets/js/jquery-3.5.1.min.js"></script>
-	<!-- Bootstrap Core JS -->
-	<script src="<?php echo base_url(); ?>res/assets/js/popper.min.js"></script>
-	<script src="<?php echo base_url(); ?>res/assets/js/bootstrap.min.js"></script>
-	<!-- Chart JS -->
-	<!-- Jquery -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<!-- End Jquery -->
-	<script src="<?php echo base_url(); ?>res/assets/plugins/morris/morris.min.js"></script>
-	<script src="<?php echo base_url(); ?>res/assets/plugins/raphael/raphael.min.js"></script>
-	<script src="<?php echo base_url(); ?>res/assets/js/chart.js"></script>
-	<!-- Slimscroll JS -->
-	<script src="<?php echo base_url(); ?>res/assets/js/jquery.slimscroll.min.js"></script>
-	<!-- Select2 JS -->
-	<script src="<?php echo base_url(); ?>res/assets/js/select2.min.js"></script>
-	<!-- Datetimepicker JS -->
-	<!-- <script src="<?php //echo base_url(); ?>res/assets/js/moment.js"></script> -->
-	<script src="<?php echo base_url(); ?>res/assets/js/moment.min.js"></script>
-	<script src="<?php echo base_url(); ?>res/assets/js/bootstrap-datetimepicker.min.js"></script>
-	
-	<!-- Datatable JS -->
-	<script src="<?php echo base_url(); ?>res/assets/js/jquery.dataTables.min.js"></script>
-	<script src="<?php echo base_url(); ?>res/assets/js/dataTables.bootstrap4.min.js"></script>
-	<!-- Multiselect JS -->
-	<script src="<?php echo base_url(); ?>res/assets/js/multiselect.min.js"></script>		
-	<!-- Custom JS -->
-	<script src="<?php echo base_url(); ?>res/assets/js/app.js"></script>
+<script src="<?php echo base_url(); ?>res/assets/js/jquery-3.5.1.min.js"></script>
+<!-- Bootstrap Core JS -->
+<script src="<?php echo base_url(); ?>res/assets/js/popper.min.js"></script>
+<script src="<?php echo base_url(); ?>res/assets/js/bootstrap.min.js"></script>
+<!-- Chart JS -->
+<!-- Jquery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- End Jquery -->
+<script src="<?php echo base_url(); ?>res/assets/plugins/morris/morris.min.js"></script>
+<script src="<?php echo base_url(); ?>res/assets/plugins/raphael/raphael.min.js"></script>
+<script src="<?php echo base_url(); ?>res/assets/js/chart.js"></script>
+<!-- Slimscroll JS -->
+<script src="<?php echo base_url(); ?>res/assets/js/jquery.slimscroll.min.js"></script>
+<!-- Select2 JS -->
+<script src="<?php echo base_url(); ?>res/assets/js/select2.min.js"></script>
+<!-- Datetimepicker JS -->
+<!-- <script src="<?php //echo base_url(); ?>res/assets/js/moment.js"></script> -->
+<script src="<?php echo base_url(); ?>res/assets/js/moment.min.js"></script>
+<script src="<?php echo base_url(); ?>res/assets/js/bootstrap-datetimepicker.min.js"></script>
 
-	<script type="text/javascript">
+<!-- Datatable JS -->
+<script src="<?php echo base_url(); ?>res/assets/js/jquery.dataTables.min.js"></script>
+<script src="<?php echo base_url(); ?>res/assets/js/dataTables.bootstrap4.min.js"></script>
+<!-- Multiselect JS -->
+<script src="<?php echo base_url(); ?>res/assets/js/multiselect.min.js"></script>		
+<!-- Custom JS -->
+<script src="<?php echo base_url(); ?>res/assets/js/app.js"></script>
+
+<script type="text/javascript">
 
     // Start Add Multiple Shop Items
     var rowIdx = 1;
@@ -150,21 +147,21 @@
     {
         // Adding a row inside the tbody.
         $("#tableEstimate tbody").append(`
-        <tr id="R${++rowIdx}">
-            <td class="row-index text-center"><p> ${rowIdx}</p></td>
-            <td>
-					<select name="deduction_id[]" class="form-control">
-						<option>Select --</option>
-						<?php foreach($deduction as $key) { if($key['deductionType'] == '1') {?>
-							<option value="<?php echo $key['id']?>"><?php echo $key['deductionName']?></option>
-						<?php } }?>
-					</select>
-				</td>
-            <td><input class="form-control" type="text" style="min-width:150px" id="description" name="description[]"></td>
-            <td><input class="form-control unit_price" style="width:100px" type="text" id="unit_cost"></td>
-            <td><input class="form-control total" style="width:120px" type="text" id="amount" name="amount[]" value="0" readonly></td>
-            <td><a href="javascript:void(0)" class="text-danger font-18 remove" title="Remove"><i class="fa fa-trash-o"></i></a></td>
-        </tr>`);
+        	<tr id="R${++rowIdx}">
+        	<td class="row-index text-center"><p> ${rowIdx}</p></td>
+        	<td>
+        	<select name="deduction_id[]" class="form-control">
+        	<option>Select --</option>
+        	<?php foreach($deductions as $key) {?>
+        		<option value="<?php echo $key['id']?>"><?php echo $key['deductionName']?></option>
+        	<?php }?>
+        	</select>
+        	</td>
+        	<td><input class="form-control" type="text" style="min-width:150px" id="description" name="description[]"></td>
+        	<td><input class="form-control unit_price" style="width:100px" type="text" id="unit_cost"></td>
+        	<td><input class="form-control total" style="width:120px" type="text" id="amount" name="amount[]" value="0" readonly></td>
+        	<td><a href="javascript:void(0)" class="text-danger font-18 remove" title="Remove"><i class="fa fa-trash-o"></i></a></td>
+        	</tr>`);
     });
     $("#tableEstimate tbody").on("click", ".remove", function ()
     {
@@ -198,30 +195,30 @@
     });
 
     $("#tableEstimate tbody").on("input", ".unit_price", function () {
-        var unit_price = parseFloat($(this).val());
-        var total = $(this).closest("tr").find(".total");
-        total.val(unit_price);
-        calc_total();
+    	var unit_price = parseFloat($(this).val());
+    	var total = $(this).closest("tr").find(".total");
+    	total.val(unit_price);
+    	calc_total();
     }); 
 
     function calc_total() {
-        var sum = 0;
-        $(".total").each(function () {
-        sum += parseFloat($(this).val());
-        $("#grand_total").val(parseInt(sum));
-        });
-        $(".subtotal").text(sum);
-        
-        var amounts = sum;
-        $(document).on("change keyup blur", "#qty", function() 
-        {
-            var qty = $("#qty").val();
-            $("#grand_total").val(parseInt(amounts));
-        }); 
+    	var sum = 0;
+    	$(".total").each(function () {
+    		sum += parseFloat($(this).val());
+    		$("#grand_total").val(parseInt(sum));
+    	});
+    	$(".subtotal").text(sum);
+
+    	var amounts = sum;
+    	$(document).on("change keyup blur", "#qty", function() 
+    	{
+    		var qty = $("#qty").val();
+    		$("#grand_total").val(parseInt(amounts));
+    	}); 
     }
     // End of Multiple Shop Items
-    </script>
-	
+</script>
+
 </body>
 </html>
 

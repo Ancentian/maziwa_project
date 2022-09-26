@@ -7,11 +7,11 @@ class Deductions extends BASE_Controller {
         if(!$this->session->userdata('user_aob')){
             $this->session->set_flashdata('error-msg', 'You Must Login to Continue');
         }
-        $this->load->model('cooperative_model');
         $this->load->model('employee_model');
         $this->load->model('deductions_model');
         $this->load->model('farmers_model', 'farmers');
-        $this->load->model('cooperative_model', 'cooperative');
+        $this->load->model('cooperative_model');
+        $this->load->model('shop_model');
         //$this->load->library('form_validation');
     }
 
@@ -20,79 +20,50 @@ class Deductions extends BASE_Controller {
     */
     public function index()
     {
-        $this->data['deductions'] = $this->deductions_model->fetch_allDeductions();
-        $this->data['pg_title'] = "Cooperatives";
+        $this->data['deductions'] = $this->deductions_model->fetch_deductions();
+        $this->data['pg_title'] = "Deductions";
         $this->data['page_content'] = 'deductions/index';
         $this->load->view('layout/template', $this->data);
     }
 
-    public function addDeduction()
+    public function addDeduction($id)
     {
-        $this->data['deductions'] = $this->deductions_model->fetch_allDeductions();
-        $this->data['pg_title'] = "Cooperatives";
+        $this->data['deductions'] = $this->deductions_model->fetch_deductions();
+        $this->data['farmer'] = $this->shop_model->fetch_farmerByID($id);
+        $this->data['farmers'] = $this->farmers->fetch_farmers();
+        $this->data['pg_title'] = "All Deductions";
         $this->data['page_content'] = 'deductions/addDeduction';
         $this->load->view('layout/template', $this->data);
     }
 
-    public function farmerDeduction()
+    public function individualDeduction()
     {
         $this->data['farmers'] = $this->farmers->fetch_farmers();
-        $this->data['collectionCenter'] = $this->cooperative->fetch_allCollectionCenters();
-        $this->data['pg_title'] = "Deductions";
-        $this->data['page_content'] = 'deductions/farmerDeduction';
-        $this->load->view('layout/template', $this->data);
-    }
-
-    public function collectionCentre()
-    {
+        //var_dump($this->data['farmers']);die;
         $this->data['collectionCenter'] = $this->cooperative_model->fetch_allCollectionCenters();
-        $this->data['cooperative'] = $this->cooperative_model->fetch_allCooperatives();
-        $this->data['clerk'] = $this->employee_model->fetch_allEmployees();
-        $this->data['pg_title'] = "Cooperatives";
-        $this->data['page_content'] = 'col_centers/index';
+        $this->data['pg_title'] = "Deductions";
+        $this->data['page_content'] = 'deductions/individualDeductions';
         $this->load->view('layout/template', $this->data);
     }
 
-    public function searchCollectionCenter()
+    public function generalDeductions()
     {
-        $this->data['pg_title'] = "Search";
-        $this->data['page_content'] = 'col_centers/search';
+        $this->data['farmers'] = $this->farmers->fetch_farmers();
+        $this->data['deductions'] = $this->deductions_model->fetch_deductions();
+        $this->data['collectionCenter'] = $this->cooperative_model->fetch_allCollectionCenters();
+        $this->data['pg_title'] = "Deductions";
+        $this->data['page_content'] = 'deductions/generalDeductions';
         $this->load->view('layout/template', $this->data);
     }
 
-    public function selectCollectionCenter()
+    public function allFarmerDeductions()
     {
-        $forminput = $this->input->post();
-        $this->data['center'] = $this->cooperative_model->searchCollectionCenter($forminput);
-
-        if (!$this->data['center']) {
-            $this->session->set_flashdata('error-msg', 'No records found');
-            redirect('cooperative/searchCollectionCenter');
-        }
-        $this->data['pg_title'] = "Select";
-        $this->data['page_content'] = 'col_centers/select';
+        $this->data['deductions'] = $this->deductions_model->fetch_allFarmerDeductions();
+        $this->data['pg_title'] = "Deductions";
+        $this->data['page_content'] = 'deductions/farmerDeductions';
         $this->load->view('layout/template', $this->data);
     }
 
-    public function centerMembers($id)
-    {
-        $this->data['farmers'] = $this->cooperative_model->center_members($id);
-        $this->data['pg_title'] = "Selected Center";
-        $this->data['page_content'] = 'col_centers/centerMembers';
-        $this->load->view('layout/template', $this->data);
-    }
-
-    public function milkCollection()
-    {
-        $sdate = "";$edate = "";
-        $forminput = $this->input->get();
-        $sdate = $forminput['sdate'];
-        $edate = $forminput['edate'];
-        $this->data['milk'] = $this->cooperative_model->milk_collections($sdate, $edate);
-        $this->data['pg_title'] = "Selected Center";
-        $this->data['page_content'] = 'cooperatives/milkCollections';
-        $this->load->view('layout/template', $this->data);
-    }
     
     /*
       Display a record
@@ -112,18 +83,18 @@ class Deductions extends BASE_Controller {
 
     public function storeDeduction()
     {
-        $this->form_validation->set_rules('deductionName', 'Deduction Name', 'required|is_unique[deductions.deductionName]'); 
-        $this->form_validation->set_rules('amount', 'Amount', 'required');
+        $this->form_validation->set_rules('deductionType', 'Deduction Type', 'required');
+        $this->form_validation->set_rules('deductionName', 'Deduction Name', 'required|is_unique[deductions.deductionName]');
         if ($this->form_validation->run() == FALSE) {
             $this->session->set_flashdata('error-msg', validation_errors());
             //return redirect()->back()->withInput()->with('error-msg', $this->validator->getErrors()); 
             redirect(base_url('deductions/index'));
         } else {
             $data = array(
-                'deductionName' => $this->input->post('deductionName'),
-                'amount' => $this->input->post('amount')
+                'deductionType' => $this->input->post('deductionType'),
+                'deductionName' => $this->input->post('deductionName')
             );
-            $this->deduction_model->store_deduction($data);
+            $this->deductions_model->store_deduction($data);
             $this->session->set_flashdata('success-msg', 'Deduction Added Successfully');
             redirect(base_url('deductions/index'));
         }
@@ -151,38 +122,62 @@ class Deductions extends BASE_Controller {
         }
     }
 
-    public function storeMilkCollection()
+    public function storeIndividualDeduction()
     {
         $forminput = $this->input->post();
-        //var_dump($forminput);die;
 
-        $farmer     =     $forminput['farmerID'];
-        $morning    =     $forminput['morning'];
-        $evening    =     $forminput['evening'];
-        $rejected   =     $forminput['rejected'];
-        $total      =     $forminput['total'];
-        $userID     =     $this->session->userdata('user_aob')->id; 
+        $farmer     =         $forminput['farmerID'];
+        $date =               $forminput['date'];
+        $deduction_id    =  $forminput['deduction_id'];
+        $description    =     $forminput['description'];
+        $amount   =           $forminput['amount'];
+        $userID     =         $this->session->userdata('user_aob')->id; 
+        //var_dump($total);die;      
+        $i = 0;
+        foreach($deduction_id as $key)
+        {
+            //$type = $deduction_type[$i];
+            $descrptn = $description[$i];
+            $amnt = $amount[$i];
+            $this->db->insert('farmer_deductions', ['farmerID' => $farmer, 'date' => $date, 'deduction_id' => $key, 'description' => $descrptn, 'amount' => $amnt, 'user_id' => $userID]);
+            $i++;
+        }
+        $inserted = $this->db->affected_rows();
+        if ($inserted > 0) {
+            $this->session->set_flashdata('success-msg', 'Deductions Added Successfully');
+        }else{
+            $this->session->set_flashdata('error-msg', 'Err! Failed Try Again');
+        }
+        return redirect('deductions/allFarmerDeductions');  
+    }
+
+    public function storeGeneralDeductions()
+    {
+        $forminput = $this->input->post();
+            //var_dump($forminput);die;
+        $farmer     =         $forminput['farmerID'];
+        $date =               $forminput['date'];
+        $deduction_id    =    $forminput['deduction_id'];
+        $description    =     $forminput['description'];
+        $amount   =           $forminput['amount'];
+        $userID     =         $this->session->userdata('user_aob')->id; 
         //var_dump($total);die;      
         $i = 0;
         foreach($farmer as $key)
         {
-            $mrg = $forminput['morning'][$i];
-            $evng = $evening[$i];
-            $reject = $rejected[$i];
-            $tot = $total[$i];
-            //var_dump($tot);die;
-            $this->db->insert('milk_collections', ['user_id' => $userID, 'center_id' => $forminput['center_id'], 'collection_date' => $forminput['collection_date'], 'farmerID' => $key, 'morning' => $mrg, 'evening' => $evng, 'rejected' => $reject, 'total' => $tot]);
+            $deduction = $deduction_id[$i];
+            $descrptn = $description[$i];
+            $amnt = $amount[$i];
+            $this->db->insert('farmer_deductions', ['farmerID' => $key, 'date' => $date, 'deduction_id' => $deduction, 'description' => $descrptn, 'amount' => $amnt, 'user_id' => $userID]);
             $i++;
         }
-        //var_dump($evng);die;
         $inserted = $this->db->affected_rows();
-        //var_dump($inserted);die;
         if ($inserted > 0) {
-            $this->session->set_flashdata('success-msg', 'Collection Added Successfully');
+            $this->session->set_flashdata('success-msg', 'Deductions Added Successfully');
         }else{
             $this->session->set_flashdata('error-msg', 'Err! Failed Try Again');
         }
-        return redirect('cooperative/milkCollection');  
+        return redirect('deductions/allFarmerDeductions');  
     }
     /*
       Edit a record page
@@ -214,11 +209,18 @@ class Deductions extends BASE_Controller {
     /*
       Delete a record
     */
-    public function deleteCollection($id)
+    public function deleteDeduction($id)
     {
-        $delete = $this->cooperative_model->delete_collection($id);
+        $delete = $this->deductions_model->delete_deduction($id);
         $this->session->set_flashdata('success-msg', "Data Deleted Successfully!");
-        redirect(base_url('cooperative/milkCollection'));
+        redirect(base_url('deductions/index'));
+    }
+
+    public function delete_farmerDeduction($id)
+    {
+        $delete = $this->deductions_model->delete_farmerDeduction($id);
+        $this->session->set_flashdata('success-msg', "Data Deleted Successfully!");
+        redirect(base_url('deductions/allFarmerDeductions'));
     }
 
 

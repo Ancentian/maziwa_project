@@ -1,6 +1,6 @@
 <?php
 
-class Deduction_model extends CI_Model{
+class Cooperative_model extends CI_Model{
 
     public function __construct()
     {

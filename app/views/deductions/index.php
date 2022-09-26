@@ -34,109 +34,123 @@
 							<tr>
 								<th style="width: 30px;">#</th>
 								<th>Deduction Name</th>
+								<th>Deduction Type</th>
 								<th>Created on</th>
 								<th class="text-right">Action</th>
 							</tr>
 						</thead>
 						<tbody>
-							<?php $i=1; foreach ($deduction as $key) { ?>
+							<?php $i=1; foreach ($deductions as $key) { ?>
 								<tr>
-								<td><?php echo $i; ?></td>
-								<td><?php echo $key['deductionName']?></td>
-								<td><?php echo date('d/m/Y H:i', strtotime($key['created_at'])) ?></td>
-								<td class="text-right">
-									<a href="<?php echo base_url('deductions/editDeduction/'.$key['id'])?>" class="btn btn-success"><i class="fa fa-pencil"></a>
-                                    <a href="<?php echo base_url('deductions/deleteDeduction/'.$key['id'])?>" class="btn btn-danger"><i class="fa fa-trash"></a>
-								</td>
-							</tr>
-							<?php $i++; } ?>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- /Page Content -->
-
-	<!-- Add Department Modal -->
-	<div id="add_deduction" class="modal custom-modal fade" role="dialog">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Add Deduction</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<form action="<?php echo base_url('deduction/storeDeduction') ?>"method="POST" >
-						<div class="form-group">
-							<label>Deduction Name <span class="text-danger">*</span></label>
-							<input class="form-control" name="deductionName" type="text">
-						</div>
-						<div class="submit-section">
-							<button type="submit" class="btn btn-primary submit-btn">Submit</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- /Add Department Modal -->
-
-	<!-- Edit Department Modal -->
-	<div id="edit_department" class="modal custom-modal fade" role="dialog">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Edit Department</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<form>
-						<div class="form-group">
-							<label>Department Name <span class="text-danger">*</span></label>
-							<input class="form-control" value="IT Management" type="text">
-						</div>
-						<div class="submit-section">
-							<button class="btn btn-primary submit-btn">Save</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- /Edit Department Modal -->
-
-	<!-- Delete Department Modal -->
-	<div class="modal custom-modal fade" id="delete_department" role="dialog">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content">
-				<div class="modal-body">
-					<div class="form-header">
-						<h3>Delete Department</h3>
-						<p>Are you sure want to delete?</p>
-					</div>
-					<div class="modal-btn delete-action">
-						<div class="row">
-							<div class="col-6">
-								<a href="javascript:void(0);" class="btn btn-primary continue-btn">Delete</a>
-							</div>
-							<div class="col-6">
-								<a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
-							</div>
-						</div>
+									<td><?php echo $i; ?></td>
+									<td><?php echo $key['deductionName']?></td>
+									<?php if($key['deductionType'] == '1'){?>
+										<td><?php echo "Individual";?></td>
+									<?php }elseif ($key['deductionType'] == '2') {?>
+										<td><?php echo "General";?></td>
+									<?php }?>
+									<td><?php echo date('d/m/Y H:i', strtotime($key['created_at'])) ?></td>
+									<td class="text-right">
+										<a href="<?php echo base_url('deductions/editDeduction/'.$key['id'])?>" class="btn btn-success"><i class="fa fa-pencil"></i></a>
+										<a href="<?php echo base_url('deductions/deleteDeduction/'.$key['id'])?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+									</td>
+								</tr>
+								<?php $i++; } ?>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<!-- /Delete Department Modal -->
+		<!-- /Page Content -->
 
-</div>
-<!-- /Page Wrapper -->
+		<!-- Add Department Modal -->
+		<div id="add_deduction" class="modal custom-modal fade" role="dialog">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Add Deduction</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form action="<?php echo base_url('deductions/storeDeduction') ?>"method="POST" >
+							<div class="form-group form-focus select-focus">
+								<select name="deductionType" class="select floating" required> 
+									<option value="">Select Type</option>
+									<option value="1">Individual</option>
+									<option value="2">General</option>
+								</select>
+								<label class="focus-label">Dedection Type</label>
+							</div>
+							<div class="form-group">
+								<label>Deduction Name <span class="text-danger">*</span></label>
+								<input class="form-control" name="deductionName" type="text">
+							</div>
+							<div class="submit-section">
+								<button type="submit" class="btn btn-primary submit-btn">Submit</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /Add Department Modal -->
+
+		<!-- Edit Department Modal -->
+		<div id="edit_department" class="modal custom-modal fade" role="dialog">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Edit Department</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="form-group">
+								<label>Department Name <span class="text-danger">*</span></label>
+								<input class="form-control" value="IT Management" type="text">
+							</div>
+							<div class="submit-section">
+								<button class="btn btn-primary submit-btn">Save</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /Edit Department Modal -->
+
+		<!-- Delete Department Modal -->
+		<div class="modal custom-modal fade" id="delete_department" role="dialog">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-body">
+						<div class="form-header">
+							<h3>Delete Department</h3>
+							<p>Are you sure want to delete?</p>
+						</div>
+						<div class="modal-btn delete-action">
+							<div class="row">
+								<div class="col-6">
+									<a href="javascript:void(0);" class="btn btn-primary continue-btn">Delete</a>
+								</div>
+								<div class="col-6">
+									<a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /Delete Department Modal -->
+
+	</div>
+	<!-- /Page Wrapper -->
 
 </div>
 <!-- /Main Wrapper -->

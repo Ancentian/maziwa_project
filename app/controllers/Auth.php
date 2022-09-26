@@ -23,13 +23,13 @@ class Auth extends CI_Controller {
         $this->session->unset_userdata('user_aob');
         $this->session->sess_destroy();
         $this->session->set_flashdata('error-msg','You are logged out!');
-        redirect('auth/index');
+        redirect(base_url('auth/index'));
     }
 
     function login_post()
     {
         if ($this->session->userdata('user_aob')) {
-            redirect('main/index');
+            redirect(base_url('main/index'));
         }
         $formInput = $this->input->post();
         $email = $formInput['email'];
@@ -47,7 +47,7 @@ class Auth extends CI_Controller {
         } else {
 
             $this->session->set_flashdata('error-msg', $loginresponse->message);
-            redirect('auth/index');
+            redirect(base_url('auth/index'));
         }
 
     }
