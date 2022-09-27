@@ -103,13 +103,13 @@
 												<input type="text" name="farmerID[]" value="<?php echo $key['farmerID']?>" class="form-control" readonly> 
 											</td>
 											<td>
-												<input type="number" name="morning[]" id="value1" class="form-control  morning" placeholder="Enter first value" required />
+												<input type="number" name="morning[]" id="value1" class="form-control  morning" value="0" placeholder="Enter first value" required />
 											</td>
 											<td>
-												<input type="number" name="evening[]" id="value2" class="form-control  evening" placeholder="Enter second value" required />
+												<input type="number" name="evening[]" id="value2" class="form-control  evening" value="0" placeholder="Enter second value" required />
 											</td>
 											<td>
-												<input type="number" name="rejected[]" id="value3" class="form-control  rejected" placeholder="Enter second value" required />
+												<input type="number" name="rejected[]" id="value3" class="form-control  rejected" value="0" placeholder="Enter second value" required />
 											</td>
 											<td>
 												<input type="number" name="total[]" id="sum" class="form-control total"readonly />

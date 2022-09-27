@@ -20,6 +20,8 @@ class Main extends BASE_Controller {
         $this->data['collectionCenters'] = $this->reports_model->all_collectionCenters();
         $this->data['allFarmers'] = $this->reports_model->all_farmers();
         $this->data['milkRate'] = $this->payments_model->fetch_milkRates();
+        $this->data['bestProducers'] = $this->reports_model->best_milkProducers();
+        $this->data['bestCenters'] = $this->reports_model->best_collectionCenters();
 		$this->data['pg_title'] = "Dashboard";
 		$this->data['page_content'] = 'admin/index';
 		$this->load->view('layout/template', $this->data);

@@ -85,7 +85,7 @@
 									<td><?php echo $i;?></td>
 								<td>
 									<h2 class="table-avatar">
-										<a href="<?php echo base_url()?>" class="avatar"><img alt="" src="<?php echo base_url()?>res/assets/img/profiles/avatar-02.jpg"></a>
+										<a href="<?php echo base_url()?>" class="avatar"><img alt="" src="<?php echo base_url()?>res/assets/img/profiles/user.png"></a>
 										<a href="<?php echo base_url()?>"><?php echo $key['firstname']." ".$key['lastname'] ?> <span><?php echo $key['roleName']?></span></a>
 									</h2>
 								</td>

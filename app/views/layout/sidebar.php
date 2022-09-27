@@ -63,18 +63,7 @@
                                         <li ><a href="<?php echo base_url('shop/inventory')?>"> Inventory </a></li>
                                     </ul>
                                 </li>
-                                <li class="submenu">
-                                    <a href="#"><i class="la la-pie-chart"></i> <span> Reports </span> <span class="menu-arrow"></span></a>
-                                    <ul style="display: none;">
-                                        <li><a href="<?php echo base_url('reports/milk_CollectionReports')?>"> Milk Collection Report </a></li>
-                                        <li><a href="invoice-reports.html"> Invoice Report </a></li>
-                                        <li><a href="payments-reports.html"> Payments Report </a></li>
-                                        <li><a href="user-reports.html"> User Report </a></li>
-                                        <li><a href="employee-reports.html"> Employee Report </a></li>
-                                        <li><a href="payslip-reports.html"> Payslip Report </a></li>
-                                        <li><a href="daily-reports.html"> Daily Report </a></li>
-                                    </ul>
-                                </li> 
+                                
                                 <li class="submenu">
                                     <a href="#"><i class="la la-pie-chart"></i> <span> Deductions </span> <span class="menu-arrow"></span></a>
                                     <ul style="display: none;">
@@ -86,8 +75,21 @@
                                     </ul>
                                 </li>
                                 <li class="submenu">
+                                    <a href="#"><i class="la la-pie-chart"></i> <span> Reports </span> <span class="menu-arrow"></span></a>
+                                    <ul style="display: none;">
+                                        <li><a href="<?php echo base_url('reports/milk_CollectionReports')?>"> Milk Collection Report </a></li>
+                                        <li><a href="<?php echo base_url('reports/allFarmersProductionReport')?>"> All Farmers Report </a></li>
+                                        <li><a href="#"> Payments Report </a></li>
+                                        <li><a href="#"> User Report </a></li>
+                                        <li><a href="#"> Employee Report </a></li>
+                                        <li><a href="#"> Payslip Report </a></li>
+                                        <li><a href="#"> Daily Report </a></li>
+                                    </ul>
+                                </li> 
+                                <li class="submenu">
                                     <a href="#"><i class="la la-table"></i> <span>Col. Center Reports </span> <span class="menu-arrow"></span></a>
                                     <ul style="display: none;">
+                                        <li><a href="<?php echo base_url('reports/allCollectionCentersReport')?>">All Centers Report</a></li>
                                         <?php 
                                         $this->db->select()->from('collection_centers');
                                         $query = $this->db->get();
@@ -99,7 +101,7 @@
                                     </ul>
                                 </li>
                                 <li class="submenu">
-                                    <a href="#"><i class="la la-table"></i> <span>products Reports </span> <span class="menu-arrow"></span></a>
+                                    <a href="#"><i class="la la-table"></i> <span>Products Reports </span> <span class="menu-arrow"></span></a>
                                     <ul style="display: none;">
                                         <li><a href="<?php echo base_url('reports/allProductsReport')?>">All Products Report</a></li>
                                         <?php 

@@ -64,7 +64,6 @@
 							<tr>
 								<th style="width: 30px;">#</th>
 								<th>Name</th>
-								<th>Item</th>
 								<th>Quantity</th>					
 								<th>Total</th>
 								<th>Date</th>					
@@ -76,7 +75,7 @@
 								<tr>
 								<td><?php echo $i; ?></td>
 								<td><?php echo $key['fname']." ".$key['mname']." ".$key['lname']?></td>
-								<td><?php echo $key['itemName']?></td>
+								<!-- <td><?php //echo $key['itemName']?></td> -->
 								<td><?php echo $key['qty']?></td>		
 								<td><?php echo $key['amount']?></td>
 								<td><?php echo $key['date']?></td>				

@@ -63,13 +63,9 @@ $edate = $_GET['edate'];
 						<thead>
 							<tr>
 								<th style="width: 30px;">#</th>
-								<th>Farmer Code</th>
-								<th>Farmer Name</th>
+								<th>Code</th>
+								<th>Name</th>
 								<th>Center</th>
-								<!-- <th>Collection Date</th> -->
-								<!-- <th>Morning</th>
-								<th>Evening</th>
-								<th>Rejected</th> -->
 								<th>Total Milk</th>
 								<th>Deductions</th>					
 								<th>Recorded By</th>
@@ -104,8 +100,10 @@ $edate = $_GET['edate'];
 									<!-- <td><input type="text" class="form-control" value="<?php //echo $key['totMorning']?>" name="total_morning[]" readonly></td>
 									<td><input type="text" class="form-control" name="total_evening[]" value="<?php //echo $key['totEvening']?>" readonly></td>
 									<td><input type="text" class="form-control" name="total_rejected[]" value="<?php //echo $key['totRejected']?>" readonly></td> -->
-									<td><input type="text" class="form-control totalMilk" name="total_milk[]" value="<?php echo $key['totalMilk']?>" readonly></td>
-									<td><input type="text" class="form-control" name="deductions[]" value="<?php echo $key['totShopAmount']?>" readonly></td>				
+									<td>
+										<input type="text" class="form-control totalMilk" name="total_milk[]" value="<?php echo $key['totalMilk']?>" readonly></td>
+									<td>
+										<input type="text" class="form-control" name="deductions[]" value="<?php echo $key['totShopAmount']?>" readonly></td>				
 									<td><?php echo $key['firstname']?></td>
 									<td class="text-right">
 										<a href="#" class="btn btn-info"><i class="fa fa-eye"></i></a>
