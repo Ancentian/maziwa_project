@@ -25,7 +25,7 @@
 						<div class="profile-view">
 							<div class="profile-img-wrap">
 								<div class="profile-img">
-									<a href="#"><img alt="" src="<?php echo base_url()?>res/assets/img/profiles/avatar-02.jpg"></a>
+									<a href="#"><img alt="" src="<?php echo base_url()?>res/assets/img/profiles/user.png"></a>
 								</div>
 							</div>
 							<div class="profile-basic">
@@ -49,12 +49,7 @@
 											<li>
 												<div class="title">Email:</div>
 												<div class="text"><a href="">email@example.com</a></div>
-											</li>
-											<li>
-												<div class="title">Birthday:</div>
-												<div class="text">24th July</div>
-											</li>
-											
+											</li>						
 											<li>
 												<div class="title">Gender:</div>
 												<div class="text"><?php echo $farmer['gender']?></div>
@@ -89,8 +84,9 @@
 					<ul class="nav nav-tabs nav-tabs-bottom">
 						<li class="nav-item"><a href="#emp_profile" data-toggle="tab" class="nav-link active">Profile</a></li>
 						<li class="nav-item"><a href="#milk_collections" data-toggle="tab" class="nav-link">Milk Collections</a></li>
-						<li class="nav-item"><a href="#shop_collections" data-toggle="tab" class="nav-link">Shop Collections</a></li>
-						<li class="nav-item"><a href="#bank_statutory" data-toggle="tab" class="nav-link">Bank & Statutory <small class="text-danger">(Admin Only)</small></a></li>
+						<li class="nav-item"><a href="#shop_collections" data-toggle="tab" class="nav-link">Shop Deductions</a></li>
+						<li class="nav-item"><a href="#other_deductions" data-toggle="tab" class="nav-link">Other Deductions</a></li>
+						<li class="nav-item"><a href="#bank_statutory" data-toggle="tab" class="nav-link">Payments <small class="text-danger">(Admin Only)</small></a></li>
 					</ul>
 				</div>
 			</div>
@@ -109,10 +105,6 @@
 									<li>
 										<div class="title">ID/Passport No.</div>
 										<div class="text"><?php echo $farmer['id_number']?></div>
-									</li>
-									<li>
-										<div class="title">Passport Exp Date.</div>
-										<div class="text">9876543210</div>
 									</li>
 									<li>
 										<div class="title">Tel</div>
@@ -318,6 +310,46 @@
 					</div>
 				</div>
 				<!-- /Projects Tab -->
+				<!-- Other Deductions Tab -->
+				<div class="tab-pane fade" id="other_deductions">
+					<div class="row">
+						<div class="col-md-12 ">
+							<div class="card">
+								<div class="card-body">
+									<h3 class="card-title">Milk Production</h3>
+									<table class="table table-striped custom-table mb-0" id="maziwa">
+										<thead>
+											<tr>
+												<th style="width: 30px;">#</th>
+												<th>Collection Date</th>
+												<th>Morning</th>
+												<th>Evening</th>
+												<th>Rejected</th>					
+												<th>Recorded By</th>
+												<th>Created at</th>
+											</tr>
+										</thead>
+										<tbody>
+											<?php $i=1; foreach ($milk as $key) { ?>
+												<tr>
+													<td><?php echo $i; ?></td>
+													<td><?php echo $key['collection_date']?></td>	
+													<td><?php echo $key['morning']?></td>
+													<td><?php echo $key['evening']?></td>
+													<td><?php echo $key['rejected']?></td>				
+													<td><?php echo $key['firstname']?></td>
+													<td><?php echo date('d/m/Y', strtotime($key['created_at'])) ?></td>
+												</tr>
+												<?php $i++; } ?>
+											</tbody>
+										</table>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /Other Deductions Tab -->
 
 				<!-- Bank Statutory Tab -->
 				<div class="tab-pane fade" id="bank_statutory">

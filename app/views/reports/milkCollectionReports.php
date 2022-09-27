@@ -58,13 +58,13 @@
 		<!-- /Search Filter -->	
 		<div class="row">
 			<div class="col-md-12">
-				<div>
-					<table class="table table-striped custom-table mb-0 datatable">
+				<div class="table-responsive">
+					<table class="table table-striped custom-table mb-0" id="maziwa">
 						<thead>
 							<tr>
 								<th style="width: 30px;">#</th>
-								<th>Farmer Code</th>
-								<th>Farmer Name</th>
+								<th>Code</th>
+								<th>Name</th>
 								<th>Center</th>
 								<th>Collection Date</th>
 								<th>Morning</th>

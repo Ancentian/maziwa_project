@@ -76,8 +76,8 @@
 							<?php $i=1; foreach ($milkCollection as $key) { ?>
 								<tr>
 								<td><?php echo $i; ?></td>
-								<td><?php echo $key['farmerID']?></td>
-								<td><?php echo $key['fname']." ".$key['lname']?></td>
+								<td><a href="<?php echo base_url('reports/singleFarmerProduction/'.$key['farmerID'])?>"><?php echo $key['farmerID']?></a></td>
+								<td><?php echo $key['fname']." ".$key['mname']." ".$key['lname']?></td>
 								<td><?php echo $key['collection_date']?></td>		
 								<td><?php echo $key['total']?></td>				
 								<td><?php echo $key['firstname']?></td>

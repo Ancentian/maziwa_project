@@ -70,9 +70,8 @@
 						<thead>
 							<tr>
 								<th>#</th>
-								<th>Farmer Code</th>
+								<th>Code</th>
 								<th>Name</th>
-								
 								<th>Contact</th>
 								<th>Collection Center</th>
 								<th class="text-nowrap">Join Date</th>
@@ -87,15 +86,15 @@
 								<td><?php echo $key['farmerID']?></td>
 								<td>
 									<h2 class="table-avatar">
-										<a href="<?php echo base_url('farmers/farmerProfile/'. $key['farmerID'] )?>" class="avatar"><img alt="" src="<?php echo base_url()?>res/assets/img/profiles/avatar-02.jpg"></a>
+										<a href="<?php echo base_url('farmers/farmerProfile/'. $key['farmerID'] )?>" class="avatar"><img alt="" src="<?php echo base_url()?>res/assets/img/profiles/user.png"></a>
 										<a href="<?php echo base_url('farmers/farmerProfile/'. $key['farmerID'] )?>"><?php echo $key['fname']." ". $key['lname']?> <span><?php echo $key['location']?></span></a>
 									</h2>
 								</td>
 								
 								<td><?php echo $key['contact1']?></td>
-								<td><?php echo $key['centerName']?></td>
+								<td><?php echo ucfirst($key['centerName'])?></td>
 								<td><?php echo date('d/m/Y', strtotime($key['join_date']))?></td>
-								<td><?php echo $key['gender']?></td>
+								<td><?php echo ucfirst($key['gender'])?></td>
 								
 								<td class="text-right">
 									<a href="<?php echo base_url('deductions/addDeduction/'.$key['farmerID']) ?>" class="btn btn-warning"><i class="fa fa-plus"></i></a>

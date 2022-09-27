@@ -51,8 +51,8 @@
 									<?php }?>
 									<td><?php echo date('d/m/Y H:i', strtotime($key['created_at'])) ?></td>
 									<td class="text-right">
-										<a href="<?php echo base_url('deductions/editDeduction/'.$key['id'])?>" class="btn btn-success"><i class="fa fa-pencil"></i></a>
-										<a href="<?php echo base_url('deductions/deleteDeduction/'.$key['id'])?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+										<a href="<?php echo base_url('deductions/editDeduction/'.$key['id'])?>" class="btn btn-success btn-sm"><i class="fa fa-pencil"></i></a>
+										<a href="<?php echo base_url('deductions/deleteDeduction/'.$key['id'])?>" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
 									</td>
 								</tr>
 								<?php $i++; } ?>

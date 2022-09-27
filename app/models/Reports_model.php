@@ -160,20 +160,69 @@ class Reports_model extends CI_Model{
         return $no;
     }
 
-    function fetch_repairRounds()
+    function best_milkProducers()
     {
-        //$where = "name='Joe' AND status='boss' OR status='active'";
-        //$this->db->where($where);
-        $status != '1';
-        //$where = "status = 0 OR status = '2' ";
+        $this->db->select('farmers_biodata.*, milk_collections.id as milkColID, milk_collections.center_id, milk_collections.farmerID, SUM(milk_collections.total) as totalMilk,collection_centers.id as colID, collection_centers.centerName');
+        $this->db->from('farmers_biodata');
+        $this->db->join('milk_collections', 'milk_collections.farmerID = farmers_biodata.farmerID');
+        $this->db->join('collection_centers', 'collection_centers.id = milk_collections.center_id');
+        $this->db->group_by('farmers_biodata.farmerID');
+        $this->db->order_by('SUM(milk_collections.total)', 'DESC');
+        $this->db->limit(5);
+        $query = $this->db->get();
+        return $query->result_array();
+    }  
 
-        $query = $this->db->query('select * from car_repairs WHERE(repair_status="'.$status.'")');
-        $info = $query->result_array();
+    function best_collectionCenters()//Best Five(5)
+    {
+        $this->db->select('collection_centers.*, milk_collections.id as milkColID, milk_collections.center_id, SUM(milk_collections.total) as totalMilk');
+        $this->db->from('collection_centers');
+        $this->db->join('milk_collections', 'milk_collections.center_id = collection_centers.id');
+        $this->db->group_by('collection_centers.id');
+        $this->db->order_by('SUM(milk_collections.total)', 'DESC');
+        $this->db->limit(5);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 
-        $no = 0;
-        $no = sizeof($info);
-        return $no;
-    }   
+    function all_collectionCentersProduction()
+    {
+        $this->db->select('collection_centers.*, milk_collections.id as milkColID, milk_collections.center_id,SUM(milk_collections.morning) as totMorning,SUM(milk_collections.evening) as totEvening,SUM(milk_collections.rejected) as totRejected, SUM(milk_collections.total) as totalMilk,users.id as userID, users.firstname, users.lastname');
+        $this->db->from('collection_centers');
+        $this->db->join('milk_collections', 'milk_collections.center_id = collection_centers.id','LEFT');
+        $this->db->join('users', 'users.id = collection_centers.clerk_id');
+        $this->db->group_by('collection_centers.id');
+        $this->db->order_by('SUM(milk_collections.total)', 'DESC');
+        //$this->db->limit(5);
+        $query = $this->db->get();
+        return $query->result_array();
+    } 
+
+    function all_farmerProduction()
+    {
+        $this->db->select('farmers_biodata.*, milk_collections.id as milkColID, milk_collections.center_id,SUM(milk_collections.morning) as totMorning,SUM(milk_collections.evening) as totEvening,SUM(milk_collections.rejected) as totRejected, SUM(milk_collections.total) as totalMilk,collection_centers.id as colID, collection_centers.centerName,users.id as userID, users.firstname, users.lastname');
+        $this->db->from('farmers_biodata');
+        $this->db->join('milk_collections', 'milk_collections.farmerID = farmers_biodata.farmerID');
+        $this->db->join('collection_centers', 'collection_centers.id = farmers_biodata.center_id');
+        $this->db->join('users', 'users.id = collection_centers.clerk_id');
+        $this->db->group_by('farmers_biodata.farmerID');
+        $this->db->order_by('SUM(milk_collections.total)', 'DESC');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    function single_farmerProduction($id)
+    {
+        $this->db->where('milk_collections.farmerID', $id);
+        $this->db->select('milk_collections.*, farmers_biodata.id as farID, farmers_biodata.fname, farmers_biodata.mname, farmers_biodata.lname, farmers_biodata.farmerID,farmers_biodata.center_id,collection_centers.id as colID, collection_centers.centerName,users.id as userID, users.firstname, users.lastname');
+        $this->db->from('milk_collections');
+        $this->db->join('farmers_biodata', 'farmers_biodata.farmerID = milk_collections.farmerID');
+        $this->db->join('collection_centers', 'collection_centers.id = farmers_biodata.center_id');
+        $this->db->join('users', 'users.id = collection_centers.clerk_id');
+        $this->db->order_by('milk_collections.total', 'DESC');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 
 }
 ?>

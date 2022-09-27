@@ -40,3 +40,6 @@ ERROR - 2022-09-26 21:57:50 --> 404 Page Not Found: Main/assets
 ERROR - 2022-09-26 21:57:50 --> 404 Page Not Found: Main/assets
 ERROR - 2022-09-26 21:57:50 --> 404 Page Not Found: Main/assets
 ERROR - 2022-09-26 21:57:50 --> 404 Page Not Found: Main/assets
+ERROR - 2022-09-26 22:29:59 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\maziwa\html\app\controllers\Payments.php 95
+ERROR - 2022-09-26 22:29:59 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\maziwa\html\app\controllers\Payments.php 95
+ERROR - 2022-09-26 22:29:59 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\maziwa\html\app\controllers\Payments.php 95

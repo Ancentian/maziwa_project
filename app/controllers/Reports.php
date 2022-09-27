@@ -60,4 +60,29 @@ class Reports extends BASE_Controller
         $this->load->view('layout/template', $this->data);
     }
 
+    function allCollectionCentersReport()
+    {
+        $this->data['allCenters'] = $this->reports->all_collectionCentersProduction();
+        $this->data['pg_title'] = "All Centers Reports";
+        $this->data['page_content'] = 'reports/allCollectionCenterReports';
+        $this->load->view('layout/template', $this->data);
+
+    }
+
+    function allFarmersProductionReport()
+    {
+        $this->data['allFarmers'] = $this->reports->all_farmerProduction();
+        $this->data['pg_title'] = "All Centers Reports";
+        $this->data['page_content'] = 'reports/allFarmerProductionReport';
+        $this->load->view('layout/template', $this->data);
+    }
+
+    function singleFarmerProduction($id)
+    {
+        $this->data['singleFarmer'] = $this->reports->single_farmerProduction($id);
+        $this->data['pg_title'] = "Farmer Reports";
+        $this->data['page_content'] = 'reports/singleFarmerProduction';
+        $this->load->view('layout/template', $this->data);
+    }
+
 }
