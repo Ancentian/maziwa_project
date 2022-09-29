@@ -43,7 +43,7 @@
 					<p>
 						<div class="col-sm-8">
 							<?php foreach ($center as $key) { ?>
-								<a href="<?php echo base_url('cooperative/centerMembers/') . $key['id']; ?>"><?php echo $key['centerName']; ?>
+								<a href="<?php echo base_url('cooperative/centerMembers/') . $key['id']; ?>"><?php echo strtoupper($key['centerName']); ?>
 								</a><br>
 							<?php } ?>
 						</div>

@@ -93,7 +93,7 @@
 						</tbody>
 						<tfoot>
 							<tr>
-								<td colspan="3"></td>
+								<td colspan="2"></td>
 								<td><?php echo $totQty;?></td>
 								<td><?php echo $amt;?></td>
 								<td colspan="2"></td>

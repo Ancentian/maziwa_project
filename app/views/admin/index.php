@@ -249,7 +249,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <a href="clients.html">View all Production</a>
+                        <a href="<?php echo base_url('reports/singleFarmerProduction/'.$key['farmerID'])?>">View all Production</a>
                     </div>
                 </div>
             </div>

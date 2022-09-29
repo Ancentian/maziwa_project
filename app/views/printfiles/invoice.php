@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Print Invoice</title>
+    <title>Print Payslip</title>
     <style>
         html, body {
             margin: 0;
@@ -49,7 +49,7 @@
         }
     </style>
 </head>
-<body  dir="<?= LTR ?>">
+<body >
 
 <div id='printbox'>
      <h3 style="margin-top:0" class="text-center">I N V O I C E<br><b style="font-size: 10px;"></b></b>

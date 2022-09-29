@@ -316,28 +316,30 @@
 						<div class="col-md-12 ">
 							<div class="card">
 								<div class="card-body">
-									<h3 class="card-title">Milk Production</h3>
+									<h3 class="card-title">Other Deductions</h3>
 									<table class="table table-striped custom-table mb-0" id="maziwa">
 										<thead>
 											<tr>
 												<th style="width: 30px;">#</th>
-												<th>Collection Date</th>
-												<th>Morning</th>
-												<th>Evening</th>
-												<th>Rejected</th>					
-												<th>Recorded By</th>
+												<th>Deduction</th>
+												<th>Type</th>
+												<th>Amount</th>
+												<th class="text-nowrap">Date</th>
 												<th>Created at</th>
 											</tr>
 										</thead>
 										<tbody>
-											<?php $i=1; foreach ($milk as $key) { ?>
+											<?php $i=1; foreach ($deductions as $key) { ?>
 												<tr>
 													<td><?php echo $i; ?></td>
-													<td><?php echo $key['collection_date']?></td>	
-													<td><?php echo $key['morning']?></td>
-													<td><?php echo $key['evening']?></td>
-													<td><?php echo $key['rejected']?></td>				
-													<td><?php echo $key['firstname']?></td>
+													<td><?php echo $key['deductionName']?></td>		
+													<?php if($key['deductionType'] == '1'){?>
+														<td><?php echo "Individual";?></td>
+													<?php }elseif ($key['deductionType'] == '2') {?>
+														<td><?php echo "General";?></td>
+													<?php }?>
+													<td><?php echo $key['amount']?></td>
+													<td><?php echo $key['date'] ?></td>				
 													<td><?php echo date('d/m/Y', strtotime($key['created_at'])) ?></td>
 												</tr>
 												<?php $i++; } ?>

@@ -348,6 +348,9 @@ class Payments extends BASE_Controller {
     public function print_invoice($id)
     {     
         $data['payments'] = $this->payments_model->fetch_allMonthlyPaymentsByID($id); 
+        //$data['general'] = $this->deductions_model->fetch_generalFarmerDeductions();
+        //$data['individual'] = $this->payments_model->fetch_individualFarmerDeductions($id);
+        
         // boost the memory limit if it's low ;)
         ini_set('memory_limit', '64M');
         // load library
