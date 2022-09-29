@@ -17,6 +17,14 @@ class Cooperative_model extends CI_Model{
         return $query->result_array();
     }
 
+    function fetch_allCooperatives()
+    {
+       $this->db->select()->from('cooperatives');
+        $this->db->order_by('id', 'DESC');
+        $query = $this->db->get();
+        return $query->result_array(); 
+    }
+
     function fetch_allCollectionCenters()
     {
         $this->db->select('collection_centers.*, cooperatives.id as CoopID, cooperatives.cooperativeName,users.id as userID, users.firstname, users.lastname');

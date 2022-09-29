@@ -93,7 +93,7 @@
 
 									<td><?php echo $key['contact1']?></td>
 									<td><?php echo ucfirst($key['centerName'])?></td>
-									<td><?php echo date('d/m/Y', strtotime($key['join_date']))?></td>
+									<td><?php echo $key['join_date']?></td>
 									<td><?php echo $key['gender']?></td>
 
 									<td class="text-right">

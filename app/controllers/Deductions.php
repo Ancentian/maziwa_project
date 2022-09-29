@@ -58,9 +58,10 @@ class Deductions extends BASE_Controller {
 
     public function allFarmerDeductions()
     {
-        $this->data['deductions'] = $this->deductions_model->fetch_allFarmerDeductions();
+        $this->data['deductions'] = $this->deductions_model->fetch_individualFarmerDeductions();
+        $this->data['general'] = $this->deductions_model->fetch_generalFarmerDeductions();
         $this->data['pg_title'] = "Deductions";
-        $this->data['page_content'] = 'deductions/farmerDeductions';
+        $this->data['page_content'] = 'deductions/allDeductions';
         $this->load->view('layout/template', $this->data);
     }
 
@@ -139,7 +140,7 @@ class Deductions extends BASE_Controller {
             //$type = $deduction_type[$i];
             $descrptn = $description[$i];
             $amnt = $amount[$i];
-            $this->db->insert('farmer_deductions', ['farmerID' => $farmer, 'date' => $date, 'deduction_id' => $key, 'description' => $descrptn, 'amount' => $amnt, 'user_id' => $userID]);
+            $this->db->insert('individual_deductions', ['farmerID' => $farmer, 'date' => $date, 'deduction_id' => $key, 'description' => $descrptn, 'amount' => $amnt, 'user_id' => $userID]);
             $i++;
         }
         $inserted = $this->db->affected_rows();
@@ -154,21 +155,17 @@ class Deductions extends BASE_Controller {
     public function storeGeneralDeductions()
     {
         $forminput = $this->input->post();
-            //var_dump($forminput);die;
-        $farmer     =         $forminput['farmerID'];
         $date =               $forminput['date'];
         $deduction_id    =    $forminput['deduction_id'];
         $description    =     $forminput['description'];
         $amount   =           $forminput['amount'];
-        $userID     =         $this->session->userdata('user_aob')->id; 
-        //var_dump($total);die;      
+        $userID     =         $this->session->userdata('user_aob')->id;      
         $i = 0;
-        foreach($farmer as $key)
+        foreach($deduction_id as $key)
         {
-            $deduction = $deduction_id[$i];
             $descrptn = $description[$i];
             $amnt = $amount[$i];
-            $this->db->insert('farmer_deductions', ['farmerID' => $key, 'date' => $date, 'deduction_id' => $deduction, 'description' => $descrptn, 'amount' => $amnt, 'user_id' => $userID]);
+            $this->db->insert('general_deductions', ['deduction_id' => $key, 'description' => $descrptn, 'amount' => $amnt, 'date' => $date, 'user_id' => $userID]);
             $i++;
         }
         $inserted = $this->db->affected_rows();

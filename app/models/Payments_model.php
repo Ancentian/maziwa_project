@@ -124,10 +124,10 @@ class Payments_model extends CI_Model
         //var_dump($edate);die;
         $this->db->select('farmers_biodata.*, milk_collections.id as milkColID, milk_collections.user_id,milk_collections.center_id,  milk_collections.collection_date,milk_collections.farmerID, SUM(milk_collections.morning) as totMorning, SUM(milk_collections.evening) as totEvening, SUM(milk_collections.rejected) as totRejected, SUM(milk_collections.total) as totalMilk, users.id as userID, users.firstname, users.lastname,collection_centers.id as colID, collection_centers.centerName, shop_sales.id as salesID, shop_sales.farmerID, sum(shop_sales.amount) as totShopAmount');
         $this->db->from('farmers_biodata');
-        $this->db->join('milk_collections', 'milk_collections.farmerID = farmers_biodata.farmerID','LEFT');
+        $this->db->join('milk_collections', 'milk_collections.farmerID = farmers_biodata.farmerID');
         $this->db->join('users', 'users.id = milk_collections.user_id');
         $this->db->join('collection_centers', 'collection_centers.id = milk_collections.center_id');
-        $this->db->join('shop_sales', 'shop_sales.farmerID = farmers_biodata.farmerID','LEFT');
+        $this->db->join('shop_sales', 'shop_sales.farmerID = farmers_biodata.farmerID');
         if($sdate != "" && $edate != ""){
             $edate = date('d/m/Y',strtotime($edate)+86400);
             $this->db->where('milk_collections.collection_date >=',$sdate);
@@ -135,11 +135,11 @@ class Payments_model extends CI_Model
             // $this->db->where('shop_sales.date >=',$sdate);
             // $this->db->where('shop_sales.date <',$edate);
         }
+        //var_dump($edate);die;
         $this->db->group_by('farmers_biodata.farmerID');
         $this->db->order_by('SUM(milk_collections.total)', 'DESC');
         $query = $this->db->get();
-        return $query->result_array();
-        //var_dump($edate);die;
+        return $query->result_array(); 
         // $this->db->select('milk_collections.id as milkColID, milk_collections.user_id,milk_collections.center_id,  milk_collections.collection_date,milk_collections.farmerID, SUM(milk_collections.total) as totalMilk, collection_centers.id as colID, collection_centers.centerName, users.id as userID, users.firstname, users.lastname, farmers_biodata.id as farID, farmers_biodata.farmerID, farmers_biodata.fname, farmers_biodata.lname');
         // $this->db->from('milk_collections');
         // $this->db->join('collection_centers', 'collection_centers.id = milk_collections.center_id', 'LEFT');
@@ -209,6 +209,19 @@ class Payments_model extends CI_Model
         //$this->db->order_by('payments.created_at');
         $query = $this->db->get();
         return $query->row_array();
+    }
+
+    function fetch_individualFarmerDeductions($id) //Individual Deductions
+    {
+        $this->db->where('individual_deductions.farmerID', $id);
+        $this->db->select('individual_deductions.id, individual_deductions.deduction_id, individual_deductions.amount, individual_deductions.date, farmers_biodata.id as farID,farmers_biodata.fname, farmers_biodata.mname, farmers_biodata.lname, farmers_biodata.farmerID, deductions.id as dedID, deductions.deductionType, deductions.deductionName,users.id as userID, users.firstname, users.lastname');
+        $this->db->from('individual_deductions');
+        $this->db->join('farmers_biodata', 'farmers_biodata.farmerID = individual_deductions.farmerID');
+        $this->db->join('deductions', 'deductions.id = individual_deductions.deduction_id');
+        $this->db->join('users', 'users.id = individual_deductions.user_id');
+        $this->db->order_by('individual_deductions.date', 'DESC');
+        $query = $this->db->get();
+        return $query->result_array();
     }
 
     public function store_paymentsSchedules($data)

@@ -15,12 +15,6 @@
 						<li class="breadcrumb-item active"><?php //echo $farmers[0]['centerName']?> General Deductions</li>
 					</ul>
 				</div>
-				<div class="col-auto float-right ml-auto">
-					<div class="view-icons" hidden>
-						<a href="employees.html" class="grid-view btn btn-link"><i class="fa fa-th"></i></a>
-						<a href="employees-list.html" class="list-view btn btn-link active"><i class="fa fa-bars"></i></a>
-					</div>
-				</div>
 			</div>
 		</div>
 		<!-- /Page Header -->
@@ -34,13 +28,6 @@
 			<div class="col-sm-12">
 				<form action="<?php echo base_url('deductions/storeGeneralDeductions')?>" method="POST">
 					<div class="row">
-						<table >
-							<tbody hidden>
-								<?php foreach($farmers as $far) {?>		
-										<td><input type="text" class="form-control" name="farmerID[]" value="<?php echo $far['farmerID']?>"></td>		
-								<?php }?>
-							</tbody>
-						</table> 
 						<div class="col-sm-6 col-md-8">
 							<div class="form-group">
 								<label>Date <span class="text-danger">*</span></label>
@@ -62,21 +49,24 @@
 											<th class="col-sm-3">Deduction</th>
 											<th class="col-md-6">Description</th>
 											<th style="width:100px;">Amount</th>	
-											<th>Amount</th>
+											<th>Total</th>
 											
 										</tr>
 									</thead>
 									<tbody>
 										<?php $i=1; foreach($deductions as $key) { ?>
+											<?php if($key['deductionType'] == '2') {?>
 										<tr>
 											<td><?php echo $i; ?></td>
 											<td hidden>
-												<input class="form-control"style="min-width:150px" type="text" name="deduction_id[]" value="<?php echo $key['id']?>"></td>
+												<input class="form-control"style="min-width:150px" type="text" name="deduction_id[]" value="<?php echo $key['id']?>">
+											</td>
 											<td><input class="form-control"style="min-width:150px" type="text" id="description" value="<?php echo $key['deductionName']?>" readonly></td>
 											<td><input class="form-control"style="min-width:150px" type="text" id="description" name="description[]"></td>
 											<td><input class="form-control unit_price" style="width:100px" type="text" id="unit_cost" required></td>
 											<td><input class="form-control total" style="width:120px" type="text" id="amount" name="amount[]" value="0" readonly></td>
 										</tr>
+									<?php }?>
 										<?php $i++; }?>	
 									</tbody>
 								</table>
