@@ -77,8 +77,9 @@ class Reports extends BASE_Controller
         $this->load->view('layout/template', $this->data);
     }
 
-    function singleFarmerProduction($id)
+    function singleFarmerProduction()
     {
+        $id = $this->input->get('fid');
         $this->data['singleFarmer'] = $this->reports->single_farmerProduction($id);
         $this->data['pg_title'] = "Farmer Reports";
         $this->data['page_content'] = 'reports/singleFarmerProduction';

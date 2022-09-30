@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Print Invoice</title>
+    <title>Print Payslip</title>
     <style>
         html, body {
             margin: 0;

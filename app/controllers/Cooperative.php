@@ -135,6 +135,7 @@ class Cooperative extends BASE_Controller {
         //var_dump($forminput);die;
 
         $farmer     =     $forminput['farmerID'];
+        $date =           date('Y-m-d',strtotime(str_replace("/","-",$forminput['collection_date'])));
         $morning    =     $forminput['morning'];
         $evening    =     $forminput['evening'];
         $rejected   =     $forminput['rejected'];
@@ -149,7 +150,7 @@ class Cooperative extends BASE_Controller {
             $reject = $rejected[$i];
             $tot = $total[$i];
             //var_dump($tot);die;
-            $this->db->insert('milk_collections', ['user_id' => $userID, 'center_id' => $forminput['center_id'], 'collection_date' => $forminput['collection_date'], 'farmerID' => $key, 'morning' => $mrg, 'evening' => $evng, 'rejected' => $reject, 'total' => $tot]);
+            $this->db->insert('milk_collections', ['user_id' => $userID, 'center_id' => $forminput['center_id'], 'collection_date' => $date, 'farmerID' => $key, 'morning' => $mrg, 'evening' => $evng, 'rejected' => $reject, 'total' => $tot]);
             $i++;
         }
         //var_dump($evng);die;

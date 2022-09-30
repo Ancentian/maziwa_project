@@ -29,6 +29,7 @@ class Farmers_model extends CI_Model{
 
     public function farmer_profile($id)
     {
+        // echo $id;die;
         $this->db->where('farmers_biodata.farmerID', $id);
         $this->db->select('farmers_biodata.*, collection_centers.id as colID,collection_centers.centerName');
         $this->db->from('farmers_biodata');
@@ -39,6 +40,7 @@ class Farmers_model extends CI_Model{
 
     public function fetch_farmerByID($id)
     {
+
         $this->db->where('farmers_biodata.farmerID', $id);
         $this->db->select('farmers_biodata.*, collection_centers.id as colID,collection_centers.centerName');
         $this->db->from('farmers_biodata');

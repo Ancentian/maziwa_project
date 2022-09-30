@@ -121,43 +121,100 @@ class Payments_model extends CI_Model
 
     public function monthly_milkCollections($sdate, $edate)
     {
-        //var_dump($edate);die;
-        $this->db->select('farmers_biodata.*, milk_collections.id as milkColID, milk_collections.user_id,milk_collections.center_id,  milk_collections.collection_date,milk_collections.farmerID, SUM(milk_collections.morning) as totMorning, SUM(milk_collections.evening) as totEvening, SUM(milk_collections.rejected) as totRejected, SUM(milk_collections.total) as totalMilk, users.id as userID, users.firstname, users.lastname,collection_centers.id as colID, collection_centers.centerName, shop_sales.id as salesID, shop_sales.farmerID, sum(shop_sales.amount) as totShopAmount');
+        // echo $sdate;die;
+      $this->db->select('farmers_biodata.*,sum(milk_collections.total) as milktotal,collection_centers.centerName')->from('farmers_biodata');
+      $this->db->join('milk_collections','farmers_biodata.farmerID=milk_collections.farmerID');
+      $this->db->join('collection_centers','collection_centers.id=milk_collections.center_id');
+       if($sdate != "" && $edate != ""){
+            $edate = date('Y-m-d',strtotime($edate)+86400);
+            $this->db->where('milk_collections.collection_date >=',$sdate);
+            $this->db->where('milk_collections.collection_date <',$edate);
+        }
+
+        $this->db->group_by('milk_collections.farmerID');
+        $this->db->order_by('milktotal', 'DESC');
+        $query = $this->db->get();
+        return $query->result_array(); 
+    }
+    public function select_deductions($fid,$sdate,$edate){
+        // echo $sdate;die;
+        $this->db->where('farmerID',$fid);
+        $this->db->select('sum(amount) as total')->from('shop_sales');
+        if($sdate != "" && $edate != ""){
+            $edate = date('Y-m-d',strtotime($edate)+86400);
+            $this->db->where('shop_sales.date >=',$sdate);
+            $this->db->where('shop_sales.date <',$edate);
+        }
+
+         $this->db->group_by('shop_sales.farmerID');
+         $query = $this->db->get();
+         if($query->row_array()['total']){
+            return $query->row_array()['total'];
+         } else{
+            return 0;
+         }
+        
+    }
+
+    public function select_individualDeductions($fid,$sdate,$edate){
+        // echo $sdate;die;
+        $this->db->where('farmerID',$fid);
+        $this->db->select('sum(amount) as totalIndividual')->from('individual_deductions');
+        if($sdate != "" && $edate != ""){
+            $edate = date('Y-m-d',strtotime($edate)+86400);
+            $this->db->where('individual_deductions.date >=',$sdate);
+            $this->db->where('individual_deductions.date <',$edate);
+        }
+
+         $this->db->group_by('individual_deductions.farmerID');
+         $query = $this->db->get();
+         if($query->row_array()['totalIndividual']){
+            return $query->row_array()['totalIndividual'];
+         } else{
+            return 0;
+         }
+        
+    }
+
+    public function select_generalDeductions($sdate,$edate){
+        // echo $sdate;die;
+        //$this->db->where('farmerID',$fid);
+        $this->db->select('sum(amount) as totalGeneral')->from('general_deductions');
+        if($sdate != "" && $edate != ""){
+            $edate = date('Y-m-d',strtotime($edate)+86400);
+            $this->db->where('general_deductions.date >=',$sdate);
+            $this->db->where('general_deductions.date <',$edate);
+        }
+
+         $this->db->group_by('general_deductions.date');
+         $query = $this->db->get();
+         if($query->row_array()['totalGeneral']){
+            return $query->row_array()['totalGeneral'];
+         } else{
+            return 0;
+         }
+        
+    }
+
+    function monthly_shopCollections()
+    {
+        $this->db->select('farmers_biodata.*, shop_sales.id as salesID, shop_sales.farmerID, SUM(shop_sales.amount) as totShopAmount');
         $this->db->from('farmers_biodata');
-        $this->db->join('milk_collections', 'milk_collections.farmerID = farmers_biodata.farmerID');
-        $this->db->join('users', 'users.id = milk_collections.user_id');
-        $this->db->join('collection_centers', 'collection_centers.id = milk_collections.center_id');
+        //$this->db->join('users', 'users.id = milk_collections.user_id');
+        //$this->db->join('collection_centers', 'collection_centers.id = milk_collections.center_id');
         $this->db->join('shop_sales', 'shop_sales.farmerID = farmers_biodata.farmerID');
         if($sdate != "" && $edate != ""){
             $edate = date('d/m/Y',strtotime($edate)+86400);
-            $this->db->where('milk_collections.collection_date >=',$sdate);
-            $this->db->where('milk_collections.collection_date <',$edate);
-            // $this->db->where('shop_sales.date >=',$sdate);
-            // $this->db->where('shop_sales.date <',$edate);
+            // $this->db->where('milk_collections.collection_date >=',$sdate);
+            // $this->db->where('milk_collections.collection_date <',$edate);
+            $this->db->where('shop_sales.date >=',$sdate);
+            $this->db->where('shop_sales.date <',$edate);
         }
         //var_dump($edate);die;
-        $this->db->group_by('farmers_biodata.farmerID');
-        $this->db->order_by('SUM(milk_collections.total)', 'DESC');
+        $this->db->group_by('shop_sales.farmerID');
+        //$this->db->order_by('SUM(milk_collections.total)', 'DESC');
         $query = $this->db->get();
         return $query->result_array(); 
-        // $this->db->select('milk_collections.id as milkColID, milk_collections.user_id,milk_collections.center_id,  milk_collections.collection_date,milk_collections.farmerID, SUM(milk_collections.total) as totalMilk, collection_centers.id as colID, collection_centers.centerName, users.id as userID, users.firstname, users.lastname, farmers_biodata.id as farID, farmers_biodata.farmerID, farmers_biodata.fname, farmers_biodata.lname');
-        // $this->db->from('milk_collections');
-        // $this->db->join('collection_centers', 'collection_centers.id = milk_collections.center_id', 'LEFT');
-        // $this->db->join('users', 'users.id = milk_collections.user_id');
-        // $this->db->join('farmers_biodata', 'farmers_biodata.farmerID = milk_collections.farmerID', 'LEFT');
-        // //$this->db->join('shop_sales', 'shop_sales.farmerID = milk_collections.farmerID','LEFT');
-        // if($sdate != "" && $edate != ""){
-        //     // $edate = date('d/m/Y',strtotime($edate)+86400);
-        //     //var_dump($sdate);die;
-        //     $this->db->where('milk_collections.collection_date >=',$sdate);
-        //     $this->db->where('milk_collections.collection_date <=',$edate);
-        // }
-        // $this->db->group_by('farmers_biodata.farmerID');
-        // $this->db->order_by('milk_collections.total', 'DESC');
-        // $query = $this->db->get();
-        // return $query->result_array();
-
-        //$this->db->select('milk_collections.*,')
     }
 
     public function make_monthylyPayments($sdate, $edate)
@@ -186,13 +243,19 @@ class Payments_model extends CI_Model
 
 
 
-    public function fetch_allMonthlyPayments()
+    public function fetch_allMonthlyPayments($sdate, $edate)
     {
         $this->db->select('payments.*,farmers_biodata.id as farID, farmers_biodata.fname, farmers_biodata.mname, farmers_biodata.lname, farmers_biodata.center_id, collection_centers.id as colID, collection_centers.centerName, users.id as userID, users.firstname, users.lastname');
         $this->db->from('payments');
         $this->db->join('farmers_biodata', 'farmers_biodata.farmerID = payments.farmerID');
         $this->db->join('collection_centers', 'collection_centers.id = farmers_biodata.center_id');
         $this->db->join('users', 'users.id = payments.created_by');
+        if($sdate != "" && $edate != ""){
+            $edate = date('Y-m-d',strtotime($edate)+86400);
+            $this->db->where('payments.from_date >=',$sdate);
+            $this->db->where('payments.to_date <=',$edate);
+        }
+        //$this->db->group_by('payments.from_date');
         $this->db->order_by('payments.created_at');
         $query = $this->db->get();
         return $query->result_array();

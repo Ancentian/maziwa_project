@@ -29,8 +29,9 @@ class Farmers extends BASE_Controller {
         $this->load->view('layout/template', $this->data);
     }
 
-    public function farmerProfile($id)
+    public function farmerProfile()
     {
+        $id=$this->input->get('fid');
         $this->data['farmer'] = $this->farmers->farmer_profile($id);
         $this->data['milk'] = $this->cooperative->fetch_farmerMilkCollectionByID($id);
         $this->data['shopping'] = $this->shop->fetch_shoppingByFarmerID($id);

@@ -28,7 +28,7 @@ $edate = $_GET['edate'];
 			<div class="alert alert-danger"><?php echo $this->session->flashdata('error-msg'); ?></div>
 		<?php } ?>
 		<!-- Search Filter -->
-		<form action="<?php echo base_url('payments/addPayment')?>" method="GET"> 
+		<form action="<?php echo base_url('payments/monthlyPayments')?>" method="GET"> 
 		<div class="row filter-row">
 			<div class="col-md-4">  
 				<div class="form-group form-focus">
@@ -55,7 +55,7 @@ $edate = $_GET['edate'];
 		<!-- /Search Filter -->	
 		<div class="row">
 			<div class="col-md-12">		
-				<!-- <div> -->
+				<div class="table-responsive">
 					<form action="<?php echo base_url('payments/storeMonthlyPayments')?>" method="POST">
 						
 					<table class="table table-striped custom-table mb-0 test" id="maziwa">
@@ -66,7 +66,11 @@ $edate = $_GET['edate'];
 								<th>Name</th>
 								<th>Center</th>
 								<th>Total Milk</th>
-								<th>Deductions</th>					
+								<th>Shop</th>
+								<th>Individual</th>	
+								<th>General</th>
+								<th>Deductions</th>	
+								<th>Gross</th>			
 								<th>Recorded By</th>
 								<th>Created at</th>
 								<!-- <th class="text-right">Action</th> -->
@@ -75,26 +79,27 @@ $edate = $_GET['edate'];
 						<tbody>
 							
 							<?php $i=1; foreach ($payments as $key) { ?>
-								<tr>
+								<tr <?php if()?>>
 									<td><?php echo $i; ?></td>
 									<td><?php echo $key['farmerID']?></td>
 									<td><?php echo $key['fname']." ".$key['mname']." ".$key['lname']?></td>
 									<td><?php echo ucfirst($key['centerName']) ?></td>
 									<td><?php echo $key['total_milk']?></td>
-									<td><?php echo $key['totShopAmount']?></td>				
+									<td><?php echo number_format($key['shopDeductions'])?></td>
+									<td><?php echo number_format($key['individualDeductions'])?></td>
+									<td><?php echo number_format($key['generalDeductions'])?></td>	
+									<td><?php echo number_format($key['shopDeductions'] + $key['individualDeductions'] + $key['generalDeductions'])?></td>
+									<td><?php echo number_format(($key['total_milk']*$key['milkRate']) - ($key['shopDeductions'] + $key['individualDeductions'] + $key['generalDeductions']))?></td>
 									<td><?php echo $key['firstname']?></td>
 									<td class="text-right">
-										<a href="<?php echo base_url('payments/print_invoice/'.$key['id']) ?>" class="btn btn-info"><i class="fa fa-print"></i></a>
+										<a href="<?php echo base_url('payments/print_invoice/'.$key['id']) ?>" class="btn btn-info btn-sm"><i class="fa fa-print"></i></a>
 									</td>
 								</tr>
 								<?php $i++; } ?>
 							</tbody>
 						</table>
-						<!-- </div> -->
-						<div class="submit-section">
-							<!-- <button class="btn btn-primary submit-btn m-r-10" hidden>Save & Send</button> -->
-							<button type="submit" class="btn btn-primary submit-btn">Save</button>
 						</div>
+						
 						</form>
 					</div>
 				</div>

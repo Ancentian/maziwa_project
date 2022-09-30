@@ -230,7 +230,7 @@
 												<th>Morning</th>
 												<th>Evening</th>
 												<th>Rejected</th>					
-												<th>Recorded By</th>
+												<th>Clerk</th>
 												<th>Created at</th>
 											</tr>
 										</thead>
@@ -238,7 +238,7 @@
 											<?php $i=1; foreach ($milk as $key) { ?>
 												<tr>
 													<td><?php echo $i; ?></td>
-													<td><?php echo $key['collection_date']?></td>	
+													<td><?php echo date('d/m/Y', strtotime($key['collection_date']))?></td>	
 													<td><?php echo $key['morning']?></td>
 													<td><?php echo $key['evening']?></td>
 													<td><?php echo $key['rejected']?></td>				
@@ -286,7 +286,7 @@
 												<td><?php echo $key['unit_cost']?></td>
 												<td><?php echo $key['amount']?></td>
 												<td><?php echo $key['firstname']." ".$key['lastname']?></td>
-												<td><?php echo $key['created_at']?></td>
+												<td><?php echo date('d/m/Y', strtotime($key['created_at']))?></td>
 												<td class="text-right">
 													<a href="<?php echo base_url('shop/deleteShoppedItem/'.$key['id']."/".$key['farmerID'])?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
 												</td>
@@ -339,7 +339,7 @@
 														<td><?php echo "General";?></td>
 													<?php }?>
 													<td><?php echo $key['amount']?></td>
-													<td><?php echo $key['date'] ?></td>				
+													<td><?php echo date('d/m/Y', strtotime($key['date'])) ?></td>				
 													<td><?php echo date('d/m/Y', strtotime($key['created_at'])) ?></td>
 												</tr>
 												<?php $i++; } ?>

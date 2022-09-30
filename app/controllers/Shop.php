@@ -49,8 +49,11 @@ class Shop extends BASE_Controller {
         $this->load->view('layout/template', $this->data);
     }
 
-    public function addShopping($id)
+    public function addShopping()
     {
+        $id = $this->input->get('fid');
+        //echo $id;die;
+        //$this->data['farmerID'] = $id;
         $this->data['farmer'] = $this->shop->fetch_farmerByID($id);
         //var_dump($this->data['farmer']);die;
         $this->data['farmers'] = $this->farmers->fetch_farmers();
@@ -112,7 +115,7 @@ class Shop extends BASE_Controller {
         $forminput = $this->input->post();
 
         $farmer = $forminput['farmerID'];
-        $date = $forminput['date'];
+        $date = date('Y-m-d',strtotime(str_replace("/","-",$forminput['date'])));
         $itemid = $forminput['itemID'];
         $description = $forminput['description'];
         $qty = $forminput['qty'];

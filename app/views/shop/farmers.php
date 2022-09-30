@@ -98,7 +98,7 @@
 								<td><?php echo $key['gender']?></td>
 								
 								<td class="text-right">
-									<a href="<?php echo base_url('shop/addShopping/'.$key['farmerID']) ?>" class="btn btn-warning"><i class="fa fa-plus"></i></a>
+									<a href="<?php echo base_url('shop/addShopping?fid='.$key['farmerID']) ?>" class="btn btn-warning"><i class="fa fa-plus"></i></a>
 								</td>
 							</tr>
 

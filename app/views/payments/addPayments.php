@@ -55,7 +55,7 @@ $edate = $_GET['edate'];
 		<!-- /Search Filter -->	
 		<div class="row">
 			<div class="col-md-12">		
-				<!-- <div> -->
+				<div class="table-responsive">
 					<form action="<?php echo base_url('payments/storeMonthlyPayments')?>" method="POST">
 						<input class="form-control floating datetimepicker" name="from_date" value="<?php echo $sdate;?>"  hidden>
 						<input class="form-control floating datetimepicker" name="to_date" value="<?php echo $edate;?>" type="text" hidden>
@@ -67,9 +67,9 @@ $edate = $_GET['edate'];
 								<th>Name</th>
 								<th>Center</th>
 								<th>Total Milk</th>
-								<th>Deductions</th>					
-								<th>Recorded By</th>
-								<!-- <th>Created at</th> -->
+								<th>Shop</th>					
+								<th>Individ</th>
+								<th>General</th>
 								<!-- <th class="text-right">Action</th> -->
 							</tr>
 						</thead>
@@ -80,39 +80,32 @@ $edate = $_GET['edate'];
 								<!-- </div> -->
 								<label class="focus-label">Milk Rate</label>
 							</div>
-							<?php 
-							$i=1; foreach ($milkCollection as $key) {
-							$this->db->where('shop_sales.farmerID', $key['farmerID']);
-							$this->db->select('farmers_biodata.*, shop_sales.id as salesID, shop_sales.farmerID, sum(shop_sales.amount) as totShopAmount');
-							$this->db->from('farmers_biodata');
-							$this->db->join('shop_sales', 'shop_sales.farmerID = farmers_biodata.farmerID');
-							$this->db->group_by('shop_sales.farmerID');
-                            $query = $this->db->get();
-                            $center = $query->result_array();
-                            echo $center['totShopAmount'];
-							?>
+							<?php $i=1; foreach ($milkCollection as $key) {
+									$total = $this->payments_model->select_deductions($key['farmerID'],$startdate,$enddate);
+									$individualDeduction = $this->payments_model->select_individualDeductions($key['farmerID'],$startdate,$enddate);
+									$generalDeduction = $this->payments_model->select_generalDeductions($startdate,$enddate);
+							 ?>
 								<tr>
 									<td><?php echo $i; ?></td>
 									<td><input type="text" class="form-control" value="<?php echo $key['farmerID']?>" name="farmerID[]" readonly></td>
 									<td><?php echo $key['fname']." ".$key['mname']." ".$key['lname']?></td>
 									<td><?php echo $key['centerName']?></td>
-									<!-- <td><?php //echo $key['collection_date']?></td> -->	
-									<!-- <td><input type="text" class="form-control" value="<?php //echo $key['totMorning']?>" name="total_morning[]" readonly></td>
-									<td><input type="text" class="form-control" name="total_evening[]" value="<?php //echo $key['totEvening']?>" readonly></td>
-									<td><input type="text" class="form-control" name="total_rejected[]" value="<?php //echo $key['totRejected']?>" readonly></td> -->
 									<td>
-										<input type="text" class="form-control totalMilk" name="total_milk[]" value="<?php echo $key['totalMilk']?>" readonly></td>
-									<td>
-										<input type="text" class="form-control" name="deductions[]" value="<?php echo $key['totShopAmount']?>" readonly></td>				
-									<td><?php echo $key['firstname']?></td>
-									<td class="text-right">
-										<a href="#" class="btn btn-info"><i class="fa fa-eye"></i></a>
+										<input type="text" class="form-control totalMilk" name="total_milk[]" value="<?php echo $key['milktotal']?>" readonly>
 									</td>
+									<td>
+										<input type="text" class="form-control" name="shopDeductions[]" value="<?php echo $total?>" readonly>
+									</td>				
+									<td><input type="text" class="form-control" name="individualDeductions[]" value="<?php echo $individualDeduction?>" readonly></td>
+									<td>
+										<input type="text" class="form-control" name="generalDeductions[]" value="<?php echo $generalDeduction?>" readonly>
+									</td>
+									
 								</tr>
 								<?php $i++; } ?>
 							</tbody>
 						</table>
-						<!-- </div> -->
+						</div>
 						<div class="submit-section">
 							<!-- <button class="btn btn-primary submit-btn m-r-10" hidden>Save & Send</button> -->
 							<button type="submit" class="btn btn-primary submit-btn">Save</button>

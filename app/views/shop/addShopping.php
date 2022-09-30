@@ -39,11 +39,6 @@
 							<div class="form-group">
 								<label>Farmer Code <span class="text-danger">*</span></label>
 								<input class="form-control floating" type="text" id="farmerID" value="<?php echo $farmer['farmerID']?>" name="farmerID" readonly required>
-								<!-- <select class="select" id="client" name="farmerID" disabled>
-									<?php //foreach($farmers as $key) {?>
-									<option value="<?php //echo $farmer['farmerID']?>"<?php //if($key['farmerID'] == $farmer['farmerID']){ //echo "selected"; }?> ><?php //echo $key['fname']." ".$key['mname']." ".$key['lname'] ?> </option>
-									<?php //}?>
-								</select> -->
 							</div>
 						</div> 
 						<div class="col-sm-6 col-md-8">

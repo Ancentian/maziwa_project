@@ -29,6 +29,26 @@ class Deductions_model extends CI_Model{
         return $query->result_array();
     }
 
+    public function select_individualDeductions($fid,$sdate,$edate){
+        // echo $sdate;die;
+        $this->db->where('farmerID',$fid);
+        $this->db->select('sum(amount) as totalDed')->from('individual_deductions');
+        if($sdate != "" && $edate != ""){
+            $edate = date('Y-m-d',strtotime($edate)+86400);
+            $this->db->where('individual_deductions.date >=',$sdate);
+            $this->db->where('individual_deductions.date <',$edate);
+        }
+
+         $this->db->group_by('individual_deductions.farmerID');
+         $query = $this->db->get();
+         if($query->row_array()['totalDed']){
+            return $query->row_array()['totalDed'];
+         } else{
+            return 0;
+         }
+        
+    }
+
     function fetch_generalFarmerDeductions() //General Deductions
     {
         $this->db->select('general_deductions.*, deductions.id as dedID, deductions.deductionType, deductions.deductionName,users.id as userID, users.firstname, users.lastname');
