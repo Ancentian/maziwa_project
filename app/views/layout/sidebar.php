@@ -53,6 +53,7 @@
                                         <li><a href="<?php echo base_url('payments/salary')?>"> Farmer Salary </a></li>
                                         <li><a href="<?php echo base_url('payments/addPayment')?>"> Add Payment </a></li>
                                         <li><a href="<?php echo base_url('payments/monthlyPayments')?>"> Payments </a></li>
+                                        <li><a href="<?php echo base_url('payments/overallPayments')?>">Overall Payments </a></li>
                                     </ul>
                                 </li>
                                 <li class="submenu">

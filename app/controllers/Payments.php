@@ -183,6 +183,20 @@ class Payments extends BASE_Controller {
         $this->load->view('layout/payslip', $this->data);
     }
 
+    public function overallPayments()
+    {
+        $sdate = "";$edate ="";
+        $forminput = $this->input->get();
+        $sdate = date('Y-m-d',strtotime(str_replace("/","-",$forminput['sdate'])));
+        $edate = date('Y-m-d',strtotime(str_replace("/","-",$forminput['edate'])));
+        //echo $forminput;die; 
+        $this->data['payments'] = $this->payments_model->fetch_allMonthlyPayments($sdate, $edate);      
+        $this->data['pg_title'] = "Salary";
+        $this->data['page_content'] = 'payments/overallPayments';
+        $this->load->view('layout/template', $this->data);
+    }
+    
+
     /*
       Save the submitted record
     */

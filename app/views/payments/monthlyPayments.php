@@ -73,13 +73,15 @@ $edate = $_GET['edate'];
 								<th>Gross</th>			
 								<th>Recorded By</th>
 								<th>Created at</th>
+								<th>*</th>
 								<!-- <th class="text-right">Action</th> -->
 							</tr>
 						</thead>
 						<tbody>
 							
 							<?php $i=1; foreach ($payments as $key) { ?>
-								<tr <?php if()?>>
+								
+								<tr <?php if(($key['total_milk']*$key['milkRate']) - ($key['shopDeductions'] + $key['individualDeductions'] + $key['generalDeductions']) < 0) {?> class="table-danger" <?php }?>>
 									<td><?php echo $i; ?></td>
 									<td><?php echo $key['farmerID']?></td>
 									<td><?php echo $key['fname']." ".$key['mname']." ".$key['lname']?></td>
@@ -91,6 +93,7 @@ $edate = $_GET['edate'];
 									<td><?php echo number_format($key['shopDeductions'] + $key['individualDeductions'] + $key['generalDeductions'])?></td>
 									<td><?php echo number_format(($key['total_milk']*$key['milkRate']) - ($key['shopDeductions'] + $key['individualDeductions'] + $key['generalDeductions']))?></td>
 									<td><?php echo $key['firstname']?></td>
+									<td><?php echo date('d/m/y H:i', strtotime($key['created_at']))?></td>
 									<td class="text-right">
 										<a href="<?php echo base_url('payments/print_invoice/'.$key['id']) ?>" class="btn btn-info btn-sm"><i class="fa fa-print"></i></a>
 									</td>

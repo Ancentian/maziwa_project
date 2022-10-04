@@ -64,10 +64,10 @@ class Cooperative extends BASE_Controller {
 
     public function milkCollection()
     {
-        $sdate = "";$edate = "";
+        $sdate = "";$edate ="";
         $forminput = $this->input->get();
-        $sdate = $forminput['sdate'];
-        $edate = $forminput['edate'];
+        $sdate = date('Y-m-d',strtotime(str_replace("/","-",$forminput['sdate'])));
+        $edate = date('Y-m-d',strtotime(str_replace("/","-",$forminput['edate'])));
         $this->data['milk'] = $this->cooperative_model->milk_collections($sdate, $edate);
         $this->data['pg_title'] = "Selected Center";
         $this->data['page_content'] = 'cooperatives/milkCollections';

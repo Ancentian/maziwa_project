@@ -34,7 +34,7 @@ class Deductions extends BASE_Controller {
         $this->data['farmers'] = $this->farmers->fetch_farmers();
         $this->data['pg_title'] = "All Deductions";
         $this->data['page_content'] = 'deductions/addDeduction';
-        $this->load->view('layout/template', $this->data);
+        $this->load->view('layout/deductions', $this->data);
     }
 
     public function individualDeduction()
@@ -54,7 +54,7 @@ class Deductions extends BASE_Controller {
         $this->data['collectionCenter'] = $this->cooperative_model->fetch_allCollectionCenters();
         $this->data['pg_title'] = "Deductions";
         $this->data['page_content'] = 'deductions/generalDeductions';
-        $this->load->view('layout/template', $this->data);
+        $this->load->view('layout/deductions', $this->data);
     }
 
     public function allFarmerDeductions()

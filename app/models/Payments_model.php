@@ -241,8 +241,6 @@ class Payments_model extends CI_Model
         return $query->result_array();
     }
 
-
-
     public function fetch_allMonthlyPayments($sdate, $edate)
     {
         $this->db->select('payments.*,farmers_biodata.id as farID, farmers_biodata.fname, farmers_biodata.mname, farmers_biodata.lname, farmers_biodata.center_id, collection_centers.id as colID, collection_centers.centerName, users.id as userID, users.firstname, users.lastname');
