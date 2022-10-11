@@ -83,7 +83,7 @@
 								<td><?php echo $key['farmerID']?></td>
 								<td><?php echo $key['fname']." ".$key['mname']." ".$key['lname']?></td>
 								<td><?php echo ucfirst($key['centerName'])?></td>
-								<td><?php echo $key['collection_date']?></td>	
+								<td><?php echo date('d/m/Y', strtotime($key['collection_date']))?></td>	
 								<td><?php echo $key['morning']?></td>
 								<td><?php echo $key['evening']?></td>
 								<td><?php echo $key['rejected']?></td>	

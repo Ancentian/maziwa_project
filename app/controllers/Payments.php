@@ -58,15 +58,29 @@ class Payments extends BASE_Controller {
     {        
         $sdate = "";$edate = "";
         $forminput = $this->input->get();
-        // $scheduleID = $this->uri->segment(3);
-        // $data = $this->payments_model->get_scheduleByID($scheduleID);
-        $sdate = $forminput['start_date'];
-        $edate = $forminput['end_date'];
+        $sdate = date('Y-m-d',strtotime(str_replace("/","-",$forminput['sdate'])));
+        $edate = date('Y-m-d',strtotime(str_replace("/","-",$forminput['edate'])));
+        $this->data['startdate'] = $sdate;
+        $this->data['enddate'] = $edate;
         //var_dump($sdate." ".$edate);die;
         $this->data['milkCollection'] = $this->payments_model->monthly_milkCollections($sdate, $edate);
-        //var_dump($this->data['milkCollection'][1]);die;
         $this->data['pg_title'] = "Payments";
         $this->data['page_content'] = 'payments/addPayments';
+        $this->load->view('layout/template', $this->data);
+    }
+
+    public function addMonthPayment()
+    {        
+        $sdate = "";$edate = "";
+        $forminput = $this->input->get();
+        $sdate = date('Y-m-d', strtotime("first day of -1 month"));
+        $edate = date('Y-m-d', strtotime("last day of -1 month"));
+        $this->data['startdate'] = $sdate;
+        $this->data['enddate'] = $edate;
+        //var_dump($sdate." ".$edate);die;
+        $this->data['milkCollection'] = $this->payments_model->monthly_milkCollections($sdate, $edate);
+        $this->data['pg_title'] = "Payments";
+        $this->data['page_content'] = 'payments/generatePayments';
         $this->load->view('layout/template', $this->data);
     }
 
@@ -161,7 +175,12 @@ class Payments extends BASE_Controller {
 
     public function monthlyPayments()
     {
-        $this->data['payments'] = $this->payments_model->fetch_allMonthlyPayments();      
+        $sdate = "";$edate ="";
+        $forminput = $this->input->get();
+        $sdate = date('Y-m-d',strtotime(str_replace("/","-",$forminput['sdate'])));
+        $edate = date('Y-m-d',strtotime(str_replace("/","-",$forminput['edate'])));
+        //echo $forminput;die; 
+        $this->data['payments'] = $this->payments_model->fetch_allMonthlyPayments($sdate, $edate);      
         $this->data['pg_title'] = "Salary";
         $this->data['page_content'] = 'payments/monthlyPayments';
         $this->load->view('layout/template', $this->data);
@@ -178,6 +197,20 @@ class Payments extends BASE_Controller {
         $this->data['page_content'] = 'payments/payslip';
         $this->load->view('layout/payslip', $this->data);
     }
+
+    public function overallPayments()
+    {
+        $sdate = "";$edate ="";
+        $forminput = $this->input->get();
+        $sdate = date('Y-m-d',strtotime(str_replace("/","-",$forminput['sdate'])));
+        $edate = date('Y-m-d',strtotime(str_replace("/","-",$forminput['edate'])));
+        //echo $forminput;die; 
+        $this->data['payments'] = $this->payments_model->fetch_allMonthlyPayments($sdate, $edate);      
+        $this->data['pg_title'] = "Salary";
+        $this->data['page_content'] = 'payments/overallPayments';
+        $this->load->view('layout/template', $this->data);
+    }
+    
 
     /*
       Save the submitted record
@@ -203,27 +236,25 @@ class Payments extends BASE_Controller {
     {
         $forminput = $this->input->post();
         //var_dump($forminput);die;
-        $start = $forminput['from_date'];
-        $end = $forminput['to_date'];
+        $start = date('Y-m-d',strtotime(str_replace("/","-",$forminput['from_date'])));
+        $end = date('Y-m-d',strtotime(str_replace("/","-",$forminput['to_date'])));
         $milkRate = $forminput['milkRate'];
         $farmer = $forminput['farmerID'];
-        // $morning = $forminput['total_morning'];
-        // $evening = $forminput['total_evening'];
-        // $rejected = $forminput['total_rejected'];
         $total = $forminput['total_milk'];
+        $shop = $forminput['shopDeductions'];
+        $individual = $forminput['individualDeductions'];
+        $general = $forminput['generalDeductions'];
         //$amountEarned = ((int)$milkRate * (int)$total);
         //var_dump($total);die;
         $user = $this->session->userdata('user_aob')->id;
 
         $i = 0;
         foreach ($farmer as $key) {
-            // $mrng = $morning[$i];
-            // $evng = $evening[$i];
-            // $rjcted = $rejected[$i];
             $tot = $total[$i];
-            //$amnt = $amountEarned[$i];
-            //'total_morning' => $mrng, 'total_evening' => $evng, 'total_rejected' => $rjcted,
-            $this->db->insert('payments', ['from_date' => $start, 'to_date' => $end, 'milkRate' => $milkRate, 'farmerID' => $key, 'total_milk' => $tot, 'created_by' => $user]);
+            $shopDed = $shop[$i];
+            $indDed = $individual[$i];
+            $genDed = $general[$i];
+            $this->db->insert('payments', ['from_date' => $start, 'to_date' => $end, 'milkRate' => $milkRate, 'farmerID' => $key, 'total_milk' => $tot, 'shopDeductions' => $shopDed, 'individualDeductions' => $indDed, 'generalDeductions' => $genDed, 'created_by' => $user]);
             $i++;
         }
         $inserted = $this->db->affected_rows();

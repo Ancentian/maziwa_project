@@ -29,12 +29,15 @@ class Farmers extends BASE_Controller {
         $this->load->view('layout/template', $this->data);
     }
 
-    public function farmerProfile($id)
+    public function farmerProfile()
     {
+        $id=$this->input->get('fid');
         $this->data['farmer'] = $this->farmers->farmer_profile($id);
         $this->data['milk'] = $this->cooperative->fetch_farmerMilkCollectionByID($id);
         $this->data['shopping'] = $this->shop->fetch_shoppingByFarmerID($id);
         $this->data['deductions'] = $this->deductions->farmer_deductionsByID($id);
+        $this->data['next_of_kin'] = $this->farmers->fetch_next_of_kin($id);
+        $this->data['payments'] = $this->farmers->farmer_paymentByID($id);
         //var_dump($this->farmers->farmer_profile($id));die;
         $this->data['pg_title'] = "Cooperatives";
         $this->data['page_content'] = 'farmers/profile';
@@ -166,6 +169,19 @@ class Farmers extends BASE_Controller {
         return redirect('expense/index');
         }
      
+    }
+
+    public function store_next_of_kin()
+    {
+        $forminput = $this->input->post();
+
+        $inserted = $this->farmers->store_next_of_kin($forminput);
+        if ($inserted > 0) {
+            $this->session->set_flashdata('success-msg', 'Next Of Kin Added');
+        } else {
+            $this->session->set_flashdata('error-msg', 'Failed, please try again');
+        }
+        redirect('farmers/farmerProfile?fid='.$forminput['farmerID']);
     }
 
 

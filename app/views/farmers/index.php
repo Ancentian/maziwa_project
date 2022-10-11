@@ -86,8 +86,8 @@
 									<td><?php echo $key['farmerID']?></td>
 									<td>
 										<h2 class="table-avatar">
-											<a href="<?php echo base_url('farmers/farmerProfile/'. $key['farmerID'] )?>" class="avatar"><img alt="" src="<?php echo base_url()?>res/assets/img/profiles/user.png"></a>
-											<a href="<?php echo base_url('farmers/farmerProfile/'. $key['farmerID'] )?>"><?php echo $key['fname']." ". $key['lname']?> <span><?php echo $key['location']?></span></a>
+											<a href="<?php echo base_url('farmers/farmerProfile?fid='. $key['farmerID'] )?>" class="avatar"><img alt="" src="<?php echo base_url()?>res/assets/img/profiles/user.png"></a>
+											<a href="<?php echo base_url('farmers/farmerProfile?fid='. $key['farmerID'] )?>"><?php echo $key['fname']." ". $key['lname']?> <span><?php echo $key['location']?></span></a>
 										</h2>
 									</td>
 
@@ -132,7 +132,7 @@
 												<div class="col-sm-6">
 													<div class="form-group">
 														<label class="col-form-label">First Name <span class="text-danger">*</span></label>
-														<input class="form-control" name="fname" type="text">
+														<input class="form-control" name="fname" type="text" required>
 													</div>
 												</div>
 												<div class="col-sm-6">
@@ -144,25 +144,25 @@
 												<div class="col-sm-6">
 													<div class="form-group">
 														<label class="col-form-label">Last Name</label>
-														<input class="form-control" name="lname"value="<?php echo $lname;?>" type="text">
+														<input class="form-control" name="lname"value="<?php echo $lname;?>" type="text" required>
 													</div>
 												</div>
 												<div class="col-sm-6">  
 													<div class="form-group">
 														<label class="col-form-label">ID/Passport No. <span class="text-danger">*</span></label>
-														<input type="text" name="id_number" class="form-control">
+														<input type="text" name="id_number" class="form-control" required>
 													</div>
 												</div>
 												<div class="col-sm-6">  
 													<div class="form-group">
 														<label class="col-form-label">Farmer ID <span class="text-danger">*</span></label>
-														<input type="text" name="farmerID" class="form-control">
+														<input type="text" name="farmerID" class="form-control" required>
 													</div>
 												</div>
 												<div class="col-sm-6">
 													<div class="form-group">
 														<label class="col-form-label">Contact 1<span class="text-danger">*</span></label>
-														<input class="form-control" name="contact1" type="number">
+														<input class="form-control" name="contact1" type="number" required>
 													</div>
 												</div>
 												<div class="col-sm-6">
@@ -174,7 +174,7 @@
 												<div class="col-md-6">
 													<div class="form-group">
 														<label>Gender <span class="text-danger">*</span></label>
-														<select name="gender" class="select">
+														<select name="gender" class="select" required>
 															<option value="">Select Gender</option>
 															<option value="male">Male</option>
 															<option value="female">Female</option>
@@ -187,7 +187,7 @@
 													<div class="form-group">
 														<label class="col-form-label">Joining Date <span class="text-danger">*</span></label>
 														<div class="cal-icon">
-															<input class="form-control datetimepicker" name="join_date" type="text">
+															<input class="form-control datetimepicker" name="join_date" type="text" required>
 														</div>
 													</div>
 												</div>
@@ -205,13 +205,13 @@
 												<div class="col-sm-6">  
 													<div class="form-group">
 														<label class="col-form-label">Location <span class="text-danger">*</span></label>
-														<input type="text" name="location" class="form-control">
+														<input type="text" name="location" class="form-control" required>
 													</div>
 												</div>
 												<div class="col-md-6">
 													<div class="form-group">
 														<label>Marital Status <span class="text-danger">*</span></label>
-														<select name="marital_status" class="select">
+														<select name="marital_status" class="select" required>
 															<option>Select Marital Status</option>
 															<option value="single">Single</option>
 															<option value="married">Married</option>
@@ -233,25 +233,25 @@
 												<div class="col-md-6">
 													<div class="form-group">
 														<label>Bank Name <span class="text-danger">*</span></label>
-														<input class="form-control" name="bank_name" type="text">
+														<input class="form-control" name="bank_name" type="text"  required>
 													</div>
 												</div>
 												<div class="col-md-6">
 													<div class="form-group">
 														<label>Branch <span class="text-danger">*</span></label>
-														<input class="form-control" name="bank_branch" type="text">
+														<input class="form-control" name="bank_branch" type="text"  required>
 													</div>
 												</div>
 												<div class="col-md-6">
 													<div class="form-group">
 														<label>Account Name <span class="text-danger">*</span></label>
-														<input class="form-control" name="acc_name" type="text">
+														<input class="form-control" name="acc_name" type="text" required>
 													</div>
 												</div>
 												<div class="col-md-6">
 													<div class="form-group">
 														<label>Account Number <span class="text-danger">*</span></label>
-														<input class="form-control" name="acc_number" type="text">
+														<input class="form-control" name="acc_number" type="text" required>
 													</div>
 												</div>
 											</div>

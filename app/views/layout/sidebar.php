@@ -29,13 +29,12 @@
                                     <span>HR</span>
                                 </li>
                                 <li class="submenu">
-                                    <a href="#"><i class="la la-files-o"></i> <span> Sales </span> <span class="menu-arrow"></span></a>
+                                    <a href="#"><i class="la la-files-o"></i> <span> Milk Collection </span> <span class="menu-arrow"></span></a>
                                     <ul style="display: none;">
-                                        <li><a href="<?php echo base_url('cooperative/searchCollectionCenter')?>">Add Collection</a></li>
-                                        <li><a href="<?php echo base_url('cooperative/milkCollection')?>">Milk Collections</a></li>
-                                        <li><a href="<?php echo base_url('payments/invoices')?>">Invoices</a></li>
-                                        <li><a href="<?php echo base_url('payments/index')?>">Payments</a></li>
-                                        <li><a href="#">Expenses</a></li>
+                                        <li><a href="<?php echo base_url('cooperative/searchCollectionCenter')?>">Add New Collection</a></li>
+                                        <li><a href="<?php echo base_url('cooperative/milkCollection')?>">All Collections</a></li>
+                                        <li hidden><a href="<?php echo base_url('payments/invoices')?>">Invoices</a></li>
+                                        <li hidden><a href="<?php echo base_url('payments/index')?>">Payments</a></li>
                                     </ul>
                                 </li>
                                 <li class="submenu" hidden>
@@ -48,11 +47,13 @@
                                     </ul>
                                 </li>
                                 <li class="submenu">
-                                    <a href="#"><i class="la la-money"></i> <span> Payroll </span> <span class="menu-arrow"></span></a>
+                                    <a href="#"><i class="la la-money"></i> <span> Payment Schedule </span> <span class="menu-arrow"></span></a>
                                     <ul style="display: none;">
                                         <li><a href="<?php echo base_url('payments/salary')?>"> Farmer Salary </a></li>
-                                        <li><a href="<?php echo base_url('payments/addPayment')?>"> Add Payment </a></li>
+                                        <li><a href="<?php echo base_url('payments/addPayment')?>"> Generate Payment </a></li>
+                                        <li><a href="<?php echo base_url('payments/addMonthPayment')?>"> Previous Month Payment </a></li>
                                         <li><a href="<?php echo base_url('payments/monthlyPayments')?>"> Payments </a></li>
+                                        <li><a href="<?php echo base_url('payments/overallPayments')?>">Overall Payments </a></li>
                                     </ul>
                                 </li>
                                 <li class="submenu">

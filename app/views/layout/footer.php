@@ -44,6 +44,28 @@
             ],
             stateSave: true,
         });
+    	$('#shopDeductions').DataTable({
+    		dom: 'Bfrtip',
+            buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+            ],
+            stateSave: true,
+    	});
+    	$('#otherDeductions').DataTable({
+    		dom: 'Bfrtip',
+            buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+            ],
+            stateSave: true,
+    	});
+    	$('#payments').DataTable({
+    		dom: 'Bfrtip',
+            buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+            ],
+            stateSave: true,
+    	});
+
     });
 
 		//Datatable Search
@@ -79,14 +101,22 @@
         //calc_total();
     });
 
+    function getcube(){  
+var rate = document.getElementById("rate").value;  
+  alert(rate);
+}  
+
     //Payments
-    $("#cmaziwa tbody").on("input", ".rate", function () {
+    $("#cmaziwa tbody").on("input", "rate", function () {
         var rate = parseFloat($(this).val());
         var totalMilk = parseFloat($(this).closest("tr").find(".totalMilk").val());
-        //var rejected = parseFloat($(this).closest("tr").find(".rejected").val());
-        var earned = $(this).closest("tr").find(".earned");
-        earned.val(rate * totalMilk);
+        var shop = parseFloat($(this).closest("tr").find(".shop").val());
+        var individual = parseFloat($(this).closest("tr").find(".individual").val());
+        var general = parseFloat($(this).closest("tr").find(".general").val());
+        var gross = $(this).closest("tr").find(".gross");
+        gross.val((rate * totalMilk)- (shop + individual + general));
         //calc_total();
+        
     });
     </script>
 	

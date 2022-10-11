@@ -70,10 +70,10 @@
 						<thead>
 							<tr>
 								<th>#</th>
-								<th>Farmer Code</th>
+								<th>Code</th>
 								<th>Name</th>	
 								<th>Contact</th>
-								<th>Collection Center</th>
+								<th>Center</th>
 								<th>Gender</th>
 								<th>Amount</th>
 								<th class="text-right no-sort">Action</th>
@@ -86,8 +86,8 @@
 								<td><?php echo $key['farmerID']?></td>
 								<td>
 									<h2 class="table-avatar">
-										<a href="<?php echo base_url('farmers/farmerProfile/'. $key['id'] )?>" class="avatar"><img alt="" src="<?php echo base_url()?>res/assets/img/profiles/user.png"></a>
-										<a href="<?php echo base_url('farmers/farmerProfile/'. $key['id'] )?>"><?php echo $key['fname']." ". $key['lname']?> <span><?php echo $key['location']?></span></a>
+										<a href="<?php echo base_url('farmers/farmerProfile?fid='. $key['farmerID'] )?>" class="avatar"><img alt="" src="<?php echo base_url()?>res/assets/img/profiles/user.png"></a>
+										<a href="<?php echo base_url('farmers/farmerProfile?fid='. $key['farmerID'] )?>"><?php echo $key['fname']." ". $key['lname']?> <span><?php echo $key['location']?></span></a>
 									</h2>
 								</td>
 								
@@ -97,7 +97,7 @@
 								<td><?php echo ucfirst($key['gender'])?></td>
 								<td><?php echo $key['amount']?></td>
 								<td class="text-right">
-									<a href="<?php echo base_url('shop/viewShopping/'.$key['farmerID']) ?>" title="View Shoppings" class="btn btn-info"><i class="fa fa-eye"></i></a>
+									<a href="<?php echo base_url('shop/viewShopping?fid='.$key['farmerID']) ?>" title="View Shoppings" class="btn btn-info"><i class="fa fa-eye"></i></a>
 								</td>
 							</tr>
 

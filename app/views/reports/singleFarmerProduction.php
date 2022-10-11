@@ -64,7 +64,7 @@
 								<th>Morning</th>
 								<th>Evening</th>
 								<th>Rejected</th>
-								<th>Total</th>
+								<th>Total Milk</th>
 								<td>Date</td>					
 								<th>Recorded By</th>
 								<th class="text-right">Action</th>
@@ -74,12 +74,12 @@
 							<?php $i=1; foreach ($singleFarmer as $key) { ?>
 								<tr>
 								<td><?php echo $i; ?></td>
-								<td><a href="<?php echo base_url('farmers/farmerProfile/'. $key['farmerID'] )?>"><?php echo $key['farmerID']?></a></td>	
+								<td><a href="<?php echo base_url('farmers/farmerProfile?fid='. $key['farmerID'] )?>"><?php echo $key['farmerID']?></a></td>	
 								<td><?php echo $key['morning']?></td>
 								<td><?php echo $key['evening']?></td>
 								<td><?php echo $key['rejected']?></td>	
 								<td><?php echo $key['total']?></td>
-								<td><?php echo $key['collection_date']?></td>			
+								<td><?php echo date('d/m/Y', strtotime($key['collection_date']))?></td>	
 								<td><?php echo $key['firstname']." ".$key['lastname']?></td>
 								<td class="text-right">	
 									<a href="<?php echo base_url('reports/singleFarmerProduction/'.$key['farmerID'])?>" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>	

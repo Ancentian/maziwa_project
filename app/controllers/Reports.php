@@ -71,14 +71,19 @@ class Reports extends BASE_Controller
 
     function allFarmersProductionReport()
     {
-        $this->data['allFarmers'] = $this->reports->all_farmerProduction();
+        $sdate= ""; $edate="";
+        $forminput = $this->input->get();
+        // $sdate = date('Y-m-d', strtotime(str_replace("/","-",$forminput['sdate'])));
+        // $edate = date('Y-m-d', strtotime(str_replace("/","-",$forminput['edate'])));
+        $this->data['allFarmers'] = $this->reports->all_farmerProduction($sdate, $edate);
         $this->data['pg_title'] = "All Centers Reports";
         $this->data['page_content'] = 'reports/allFarmerProductionReport';
         $this->load->view('layout/template', $this->data);
     }
 
-    function singleFarmerProduction($id)
+    function singleFarmerProduction()
     {
+        $id = $this->input->get('fid');
         $this->data['singleFarmer'] = $this->reports->single_farmerProduction($id);
         $this->data['pg_title'] = "Farmer Reports";
         $this->data['page_content'] = 'reports/singleFarmerProduction';

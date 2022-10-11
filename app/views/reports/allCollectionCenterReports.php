@@ -67,7 +67,7 @@
 								<th>Morning</th>
 								<th>Evening</th>						
 								<th>Rejected</th>
-								<th>Total</th>					
+								<th>Total Milk</th>					
 								<th>Clerk</th>
 								<th class="text-right">Action</th>
 							</tr>

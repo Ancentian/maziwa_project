@@ -12,9 +12,9 @@ $edate = $_GET['edate'];
 		<div class="page-header">
 			<div class="row align-items-center">
 				<div class="col">
-					<h3 class="page-title">Milk Collections</h3>
+					<h3 class="page-title">Overall Payments</h3>
 					<ul class="breadcrumb">
-						<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+						<li class="breadcrumb-item"><a href="<?php echo base_url() ?>">Dashboard</a></li>
 						<li class="breadcrumb-item active">General</li>
 					</ul>
 				</div>
@@ -28,7 +28,7 @@ $edate = $_GET['edate'];
 			<div class="alert alert-danger"><?php echo $this->session->flashdata('error-msg'); ?></div>
 		<?php } ?>
 		<!-- Search Filter -->
-		<form action="<?php echo base_url('payments/addPayment')?>" method="GET"> 
+		<form action="<?php echo base_url('payments/overallPayments')?>" method="GET"> 
 		<div class="row filter-row">
 			<div class="col-md-4">  
 				<div class="form-group form-focus">
@@ -57,8 +57,7 @@ $edate = $_GET['edate'];
 			<div class="col-md-12">		
 				<div class="table-responsive">
 					<form action="<?php echo base_url('payments/storeMonthlyPayments')?>" method="POST">
-						<input class="form-control floating datetimepicker" name="from_date" value="<?php echo $sdate;?>"  hidden>
-						<input class="form-control floating datetimepicker" name="to_date" value="<?php echo $edate;?>" type="text" hidden>
+						
 					<table class="table table-striped custom-table mb-0 test" id="maziwa">
 						<thead>
 							<tr>
@@ -67,51 +66,41 @@ $edate = $_GET['edate'];
 								<th>Name</th>
 								<th>Center</th>
 								<th>Total Milk</th>
-								<th>Shop</th>					
-								<th>Individ</th>
+								<th>Shop</th>
+								<th>Individual</th>	
 								<th>General</th>
-								<th hidden>Gross</th>
+								<th>Deductions</th>	
+								<th>Gross</th>			
+								<th>Recorded By</th>
+								<th>Created at</th>
 								<!-- <th class="text-right">Action</th> -->
 							</tr>
 						</thead>
 						<tbody>
-							<div class="form-group form-focus">
-								<!-- <div class="cal-icon"> -->
-									<input class="form-control floating rate" name="milkRate" type="number" required>
-								<!-- </div> -->
-								<label class="focus-label">Milk Rate</label>
-							</div>
-							<?php $i=1; foreach ($milkCollection as $key) {
-									$total = $this->payments_model->select_deductions($key['farmerID'],$startdate,$enddate);
-									$individualDeduction = $this->payments_model->select_individualDeductions($key['farmerID'],$startdate,$enddate);
-									$generalDeduction = $this->payments_model->select_generalDeductions($startdate,$enddate);
-							 ?>
-								<tr>
+							
+							<?php $i=1; foreach ($payments as $key) { ?>
+								
+								<tr <?php if(($key['total_milk']*$key['milkRate']) - ($key['shopDeductions'] + $key['individualDeductions'] + $key['generalDeductions']) < 0) {?> class="table-danger" <?php }?>>
 									<td><?php echo $i; ?></td>
-									<td><input type="text" class="form-control" value="<?php echo $key['farmerID']?>" name="farmerID[]" readonly></td>
+									<td><?php echo $key['farmerID']?></td>
 									<td><?php echo $key['fname']." ".$key['mname']." ".$key['lname']?></td>
-									<td><?php echo $key['centerName']?></td>
-									<td>
-										<input type="text" class="form-control totalMilk" name="total_milk[]" value="<?php echo $key['milktotal']?>" readonly>
+									<td><?php echo ucfirst($key['centerName']) ?></td>
+									<td><?php echo $key['total_milk']?></td>
+									<td><?php echo number_format($key['shopDeductions'])?></td>
+									<td><?php echo number_format($key['individualDeductions'])?></td>
+									<td><?php echo number_format($key['generalDeductions'])?></td>	
+									<td><?php echo number_format($key['shopDeductions'] + $key['individualDeductions'] + $key['generalDeductions'])?></td>
+									<td><?php echo number_format(($key['total_milk']*$key['milkRate']) - ($key['shopDeductions'] + $key['individualDeductions'] + $key['generalDeductions']))?></td>
+									<td><?php echo $key['firstname']?></td>
+									<td class="text-right">
+										<a href="<?php echo base_url('payments/print_invoice/'.$key['id']) ?>" class="btn btn-info btn-sm"><i class="fa fa-print"></i></a>
 									</td>
-									<td>
-										<input type="text" class="form-control" id="shop" name="shopDeductions[]" value="<?php echo number_format($total)?>" readonly>
-									</td>				
-									<td><input type="text" class="form-control" name="individualDeductions[]" id="individual" value="<?php echo number_format($individualDeduction)?>" readonly></td>
-									<td>
-										<input type="text" class="form-control" id="general" name="generalDeductions[]" value="<?php echo $generalDeduction?>" readonly>
-									</td>
-									<td hidden><input type="text" class="form-control" id="gross" name="generalDeductions[]" value="" readonly></td>
-									
 								</tr>
 								<?php $i++; } ?>
 							</tbody>
 						</table>
 						</div>
-						<div class="submit-section">
-							<!-- <button class="btn btn-primary submit-btn m-r-10" hidden>Save & Send</button> -->
-							<button type="submit" class="btn btn-primary submit-btn">Save</button>
-						</div>
+						
 						</form>
 					</div>
 				</div>

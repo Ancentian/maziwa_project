@@ -15,13 +15,6 @@
 						<li class="breadcrumb-item active"><?php echo $farmers[0]['centerName']?> Collection Center</li>
 					</ul>
 				</div>
-				<div class="col-auto float-right ml-auto">
-					<a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee"><i class="fa fa-plus"></i> Add Farmer</a>
-					<div class="view-icons" hidden>
-						<a href="employees.html" class="grid-view btn btn-link"><i class="fa fa-th"></i></a>
-						<a href="employees-list.html" class="list-view btn btn-link active"><i class="fa fa-bars"></i></a>
-					</div>
-				</div>
 			</div>
 		</div>
 		<!-- /Page Header -->
@@ -39,11 +32,6 @@
 							<div class="form-group">
 								<label>Farmer Code <span class="text-danger">*</span></label>
 								<input class="form-control floating" type="text" id="farmerID" value="<?php echo $farmer['farmerID']?>" name="farmerID" readonly required>
-								<!-- <select class="select" id="client" name="farmerID" disabled>
-									<?php //foreach($farmers as $key) {?>
-									<option value="<?php //echo $farmer['farmerID']?>"<?php //if($key['farmerID'] == $farmer['farmerID']){ //echo "selected"; }?> ><?php //echo $key['fname']." ".$key['mname']." ".$key['lname'] ?> </option>
-									<?php //}?>
-								</select> -->
 							</div>
 						</div> 
 						<div class="col-sm-6 col-md-8">

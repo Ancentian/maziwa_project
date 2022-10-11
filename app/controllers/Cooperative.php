@@ -35,6 +35,7 @@ class Cooperative extends BASE_Controller {
 
     public function searchCollectionCenter()
     {
+        $this->data['collectionCenter'] = $this->cooperative_model->fetch_allCollectionCenters();
         $this->data['pg_title'] = "Search";
         $this->data['page_content'] = 'col_centers/search';
         $this->load->view('layout/template', $this->data);
@@ -64,10 +65,10 @@ class Cooperative extends BASE_Controller {
 
     public function milkCollection()
     {
-        $sdate = "";$edate = "";
+        $sdate = "";$edate ="";
         $forminput = $this->input->get();
-        $sdate = $forminput['sdate'];
-        $edate = $forminput['edate'];
+        $sdate = date('Y-m-d',strtotime(str_replace("/","-",$forminput['sdate'])));
+        $edate = date('Y-m-d',strtotime(str_replace("/","-",$forminput['edate'])));
         $this->data['milk'] = $this->cooperative_model->milk_collections($sdate, $edate);
         $this->data['pg_title'] = "Selected Center";
         $this->data['page_content'] = 'cooperatives/milkCollections';
@@ -135,6 +136,7 @@ class Cooperative extends BASE_Controller {
         //var_dump($forminput);die;
 
         $farmer     =     $forminput['farmerID'];
+        $date =           date('Y-m-d',strtotime(str_replace("/","-",$forminput['collection_date'])));
         $morning    =     $forminput['morning'];
         $evening    =     $forminput['evening'];
         $rejected   =     $forminput['rejected'];
@@ -149,7 +151,7 @@ class Cooperative extends BASE_Controller {
             $reject = $rejected[$i];
             $tot = $total[$i];
             //var_dump($tot);die;
-            $this->db->insert('milk_collections', ['user_id' => $userID, 'center_id' => $forminput['center_id'], 'collection_date' => $forminput['collection_date'], 'farmerID' => $key, 'morning' => $mrg, 'evening' => $evng, 'rejected' => $reject, 'total' => $tot]);
+            $this->db->insert('milk_collections', ['user_id' => $userID, 'center_id' => $forminput['center_id'], 'collection_date' => $date, 'farmerID' => $key, 'morning' => $mrg, 'evening' => $evng, 'rejected' => $reject, 'total' => $tot]);
             $i++;
         }
         //var_dump($evng);die;

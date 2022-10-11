@@ -69,11 +69,11 @@ class Cooperative_model extends CI_Model{
         $this->db->join('collection_centers', 'collection_centers.id = milk_collections.center_id');
         $this->db->join('users', 'users.id = milk_collections.user_id');
         $this->db->join('farmers_biodata', 'farmers_biodata.farmerID = milk_collections.farmerID', 'left');
-         if($sdate != "" && $edate != ""){
-            //$edate = date('d/m/Y',strtotime($edate)+86400);
+        if($sdate != "" && $edate != ""){
+            //var_dump($sdate);die;
+            $edate = date('Y-m-d',strtotime($edate)+86400);
             $this->db->where('milk_collections.collection_date >=',$sdate);
             $this->db->where('milk_collections.collection_date <=',$edate);
-            //$this->db->like('farmers_biodata.fname =', $name);
         }
         $this->db->order_by('milk_collections.id', 'DESC');
         $query = $this->db->get();

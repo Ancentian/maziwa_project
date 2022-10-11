@@ -28,7 +28,7 @@
 			<div class="alert alert-danger"><?php echo $this->session->flashdata('error-msg'); ?></div>
 		<?php } ?>
 		<!-- Search Filter -->
-		<form action="<?php echo base_url('reports/milk_CollectionReports')?>" method="GET">
+		<form action="<?php echo base_url('reports/allFarmersProductionReport')?>" method="GET">
 		<div class="row filter-row">
 			<div class="col-md-4">  
 				<div class="form-group form-focus">
@@ -75,7 +75,7 @@
 							<?php $i=1; foreach ($allFarmers as $key) { ?>
 								<tr>
 								<td><?php echo $i; ?></td>
-								<td><a href="<?php echo base_url('reports/singleFarmerProduction/'.$key['farmerID'])?>"><?php echo $key['farmerID']?></a></td>
+								<td><a href="<?php echo base_url('reports/singleFarmerProduction?fid='.$key['farmerID'])?>"><?php echo $key['farmerID']?></a></td>
 								<td><?php echo $key['fname']." ".$key['mname']." ".$key['lname']?></td>
 								<td><?php echo $key['centerName']?></td>	
 								<td><?php echo $key['totMorning']?></td>
@@ -84,7 +84,7 @@
 								<td><?php echo $key['totalMilk']?></td>			
 								<td><?php echo $key['firstname']." ".$key['lastname']?></td>
 								<td class="text-right">	
-									<a href="<?php echo base_url('reports/singleFarmerProduction/'.$key['farmerID'])?>" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>	
+									<a href="<?php echo base_url('reports/singleFarmerProduction?fid='.$key['farmerID'])?>" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>	
 								</td>
 							</tr>
 							<?php $i++; } ?>

@@ -26,14 +26,15 @@ class Deductions extends BASE_Controller {
         $this->load->view('layout/template', $this->data);
     }
 
-    public function addDeduction($id)
+    public function addDeduction()
     {
+        $id = $this->input->get('fid');
         $this->data['deductions'] = $this->deductions_model->fetch_deductions();
         $this->data['farmer'] = $this->shop_model->fetch_farmerByID($id);
         $this->data['farmers'] = $this->farmers->fetch_farmers();
         $this->data['pg_title'] = "All Deductions";
         $this->data['page_content'] = 'deductions/addDeduction';
-        $this->load->view('layout/template', $this->data);
+        $this->load->view('layout/deductions', $this->data);
     }
 
     public function individualDeduction()
@@ -53,7 +54,7 @@ class Deductions extends BASE_Controller {
         $this->data['collectionCenter'] = $this->cooperative_model->fetch_allCollectionCenters();
         $this->data['pg_title'] = "Deductions";
         $this->data['page_content'] = 'deductions/generalDeductions';
-        $this->load->view('layout/template', $this->data);
+        $this->load->view('layout/deductions', $this->data);
     }
 
     public function allFarmerDeductions()
@@ -128,7 +129,7 @@ class Deductions extends BASE_Controller {
         $forminput = $this->input->post();
 
         $farmer     =         $forminput['farmerID'];
-        $date =               $forminput['date'];
+        $date =               date('Y-m-d',strtotime(str_replace("/","-",$forminput['date'])));
         $deduction_id    =  $forminput['deduction_id'];
         $description    =     $forminput['description'];
         $amount   =           $forminput['amount'];
@@ -155,7 +156,7 @@ class Deductions extends BASE_Controller {
     public function storeGeneralDeductions()
     {
         $forminput = $this->input->post();
-        $date =               $forminput['date'];
+        $date =               date('Y-m-d',strtotime(str_replace("/","-",$forminput['date'])));
         $deduction_id    =    $forminput['deduction_id'];
         $description    =     $forminput['description'];
         $amount   =           $forminput['amount'];

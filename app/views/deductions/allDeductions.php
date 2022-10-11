@@ -55,8 +55,8 @@
 											<td><?php echo $key['farmerID']?></td>
 											<td>
 												<h2 class="table-avatar">
-													<a href="<?php echo base_url('farmers/farmerProfile/'. $key['farmerID'] )?>" class="avatar"><img alt="" src="<?php echo base_url()?>res/assets/img/profiles/user.png"></a>
-													<a href="<?php echo base_url('farmers/farmerProfile/'. $key['farmerID'] )?>"><?php echo $key['fname']." ". $key['lname']?> <span><?php echo $key['location']?></span></a>
+													<a href="<?php echo base_url('farmers/farmerProfile?fid='. $key['farmerID'] )?>" class="avatar"><img alt="" src="<?php echo base_url()?>res/assets/img/profiles/user.png"></a>
+													<a href="<?php echo base_url('farmers/farmerProfile?fid='. $key['farmerID'] )?>"><?php echo $key['fname']." ". $key['lname']?> <span><?php echo $key['location']?></span></a>
 												</h2>
 											</td>	
 											<td><?php echo $key['deductionName']?></td>
@@ -67,7 +67,7 @@
 											<?php }?>
 											<td><?php echo $key['centerName']?></td>
 											<td><?php echo $key['amount']?></td>
-											<td><?php echo $key['date']?></td>		
+											<td><?php echo date('d/m/Y', strtotime($key['date']))?></td>		
 											<td class="text-right">
 												<a href="<?php echo base_url('deductions/addDeduction/'.$key['farmerID']) ?>" title="Add Deduction" class="btn btn-success"><i class="fa fa-pencil"></i></a>
 												<a href="<?php echo base_url('deductions/delete_farmerDeduction/'.$key['id']) ?>" title="Delete Deduction" class="btn btn-danger"><i class="fa fa-trash"></i></a>
@@ -106,7 +106,7 @@
 											<?php }?>
 											<td><?php echo $key['centerName']?></td>
 											<td><?php echo $key['amount']?></td>
-											<td><?php echo $key['date']?></td>		
+											<td><?php echo date('d/m/Y', strtotime($key['date']))?></td>		
 											<td class="text-right">
 												<a href="<?php echo base_url('deductions/addDeduction/'.$key['farmerID']) ?>" title="Add Deduction" class="btn btn-success"><i class="fa fa-pencil"></i></a>
 												<a href="<?php echo base_url('deductions/delete_farmerDeduction/'.$key['id']) ?>" title="Delete Deduction" class="btn btn-danger"><i class="fa fa-trash"></i></a>
