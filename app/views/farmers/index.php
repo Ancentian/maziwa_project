@@ -150,7 +150,7 @@
 												<div class="col-sm-6">  
 													<div class="form-group">
 														<label class="col-form-label">ID/Passport No. <span class="text-danger">*</span></label>
-														<input type="text" name="id_number" class="form-control">
+														<input type="text" name="id_number" class="form-control" required>
 													</div>
 												</div>
 												<div class="col-sm-6">  

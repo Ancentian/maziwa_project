@@ -28,7 +28,7 @@
 			<div class="alert alert-danger"><?php echo $this->session->flashdata('error-msg'); ?></div>
 		<?php } ?>
 		<!-- Search Filter -->
-		<form action="<?php echo base_url('reports/milk_CollectionReports')?>" method="GET">
+		<form action="<?php echo base_url('reports/allFarmersProductionReport')?>" method="GET">
 		<div class="row filter-row">
 			<div class="col-md-4">  
 				<div class="form-group form-focus">

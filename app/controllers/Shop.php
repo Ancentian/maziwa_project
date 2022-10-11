@@ -63,8 +63,9 @@ class Shop extends BASE_Controller {
         $this->load->view('layout/shop', $this->data);
     }
 
-    public function viewShopping($id)
+    public function viewShopping()
     {
+        $id = $this->input->get('fid');
         $this->data['farmer'] = $this->shop->fetch_farmerByID($id);
         //var_dump($this->data['farmer']);die;
         $this->data['shopping'] = $this->shop->fetch_shoppingByFarmerID($id);

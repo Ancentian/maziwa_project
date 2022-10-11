@@ -15,13 +15,6 @@
 						<li class="breadcrumb-item active"><?php echo $farmers[0]['centerName']?> Collection Center</li>
 					</ul>
 				</div>
-				<div class="col-auto float-right ml-auto">
-					<a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee"><i class="fa fa-plus"></i> Add Farmer</a>
-					<div class="view-icons" hidden>
-						<a href="employees.html" class="grid-view btn btn-link"><i class="fa fa-th"></i></a>
-						<a href="employees-list.html" class="list-view btn btn-link active"><i class="fa fa-bars"></i></a>
-					</div>
-				</div>
 			</div>
 		</div>
 		<!-- /Page Header -->

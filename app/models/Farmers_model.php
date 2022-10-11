@@ -48,6 +48,28 @@ class Farmers_model extends CI_Model{
         $query = $this->db->get();
         return $query->row_array();
     }
+
+    public function fetch_next_of_kin($id)
+    {
+        $this->db->where('farmer_next_of_kins.farmerID', $id);
+        $this->db->select('farmer_next_of_kins.*,farmers_biodata.id as farID, farmers_biodata.farmerID')->from('farmer_next_of_kins');
+        $this->db->join('farmers_biodata', 'farmers_biodata.farmerID = farmer_next_of_kins.farmerID');
+        $this->db->order_by('farmer_next_of_kins.created_at', 'DESC');
+        $this->db->limit(2);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    function farmer_paymentByID($id)
+    {
+        $this->db->where('payments.farmerID', $id);
+        $this->db->select('payments.*,farmers_biodata.id as farID, farmers_biodata.farmerID');
+        $this->db->from('payments');
+        $this->db->join('farmers_biodata', 'farmers_biodata.farmerID = payments.farmerID', 'LEFT');
+        $this->db->order_by('payments.created_at', 'DESC');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
     /*
         Store the record in the database
     */
@@ -57,9 +79,9 @@ class Farmers_model extends CI_Model{
         return $this->db->affected_rows();
     }
 
-    public function store_mechanic($data)
+    public function store_next_of_kin($data)
     {
-        $this->db->insert('mechanics', $data);
+        $this->db->insert('farmer_next_of_kins', $data);
         return $this->db->affected_rows();
     }
 
@@ -92,13 +114,6 @@ class Farmers_model extends CI_Model{
         return $this->db->affected_rows();
     }
 
-    function edit_mechanic($id, $data)
-    {
-        $this->db->where('id', $id);
-        $this->db->update('mechanics', $data);
-        return $this->db->affected_rows();
-    }
-
     function fetch_byId($id)
     {
         $this->db->where('id', $id);
@@ -113,14 +128,6 @@ class Farmers_model extends CI_Model{
         $this->db->select()->from('users');
         $query = $this->db->get();
         return $query->result()[0];
-    }
-
-    function fetch_mechanicById($id)
-    {
-        $this->db->where('id', $id);
-        $this->db->select()->from('mechanics');
-        $query = $this->db->get();
-        return $query->result_array()[0];
     }
     /*
         Delete a record in the database

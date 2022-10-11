@@ -69,6 +69,21 @@ class Payments extends BASE_Controller {
         $this->load->view('layout/template', $this->data);
     }
 
+    public function addMonthPayment()
+    {        
+        $sdate = "";$edate = "";
+        $forminput = $this->input->get();
+        $sdate = date('Y-m-d', strtotime("first day of -1 month"));
+        $edate = date('Y-m-d', strtotime("last day of -1 month"));
+        $this->data['startdate'] = $sdate;
+        $this->data['enddate'] = $edate;
+        //var_dump($sdate." ".$edate);die;
+        $this->data['milkCollection'] = $this->payments_model->monthly_milkCollections($sdate, $edate);
+        $this->data['pg_title'] = "Payments";
+        $this->data['page_content'] = 'payments/generatePayments';
+        $this->load->view('layout/template', $this->data);
+    }
+
     public function makePayment()
     {   
         $day = date('d');

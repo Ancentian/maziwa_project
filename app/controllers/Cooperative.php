@@ -35,6 +35,7 @@ class Cooperative extends BASE_Controller {
 
     public function searchCollectionCenter()
     {
+        $this->data['collectionCenter'] = $this->cooperative_model->fetch_allCollectionCenters();
         $this->data['pg_title'] = "Search";
         $this->data['page_content'] = 'col_centers/search';
         $this->load->view('layout/template', $this->data);
