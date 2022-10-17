@@ -95,7 +95,7 @@
 								<td><?php echo ucfirst($key['centerName'])?></td>
 								<!-- <td><?php //echo date('d/m/Y', strtotime($key['join_date']))?></td> -->
 								<td><?php echo ucfirst($key['gender'])?></td>
-								<td><?php echo $key['amount']?></td>
+								<td><?php echo $key['totShopAmount']?></td>
 								<td class="text-right">
 									<a href="<?php echo base_url('shop/viewShopping?fid='.$key['farmerID']) ?>" title="View Shoppings" class="btn btn-info"><i class="fa fa-eye"></i></a>
 								</td>

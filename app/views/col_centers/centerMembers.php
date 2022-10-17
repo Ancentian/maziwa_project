@@ -9,7 +9,7 @@
 		<div class="page-header">
 			<div class="row align-items-center">
 				<div class="col">
-					<h3 class="page-title">Farmers</h3>
+					<h3 class="page-title"><?php echo $farmers[0]['centerName']?> Farmers</h3>
 					<ul class="breadcrumb">
 						<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
 						<li class="breadcrumb-item active"><?php echo $farmers[0]['centerName']?> Collection Center</li>
@@ -30,39 +30,7 @@
 		<?php } ?>
 		<?php if ($this->session->flashdata('error-msg')) { ?>
 			<div class="alert alert-danger"><?php echo $this->session->flashdata('error-msg'); ?></div>
-		<?php } ?>
-		<!-- Search Filter -->
-		<div class="row filter-row">
-			<div class="col-sm-6 col-md-3">  
-				<div class="form-group form-focus">
-					<input type="text" class="form-control floating">
-					<label class="focus-label">Employee ID</label>
-				</div>
-			</div>
-			<div class="col-sm-6 col-md-3">  
-				<div class="form-group form-focus">
-					<input type="text" class="form-control floating">
-					<label class="focus-label">Farmer Name</label>
-				</div>
-			</div>
-			<div class="col-sm-6 col-md-3"> 
-				<div class="form-group form-focus select-focus">
-					<select class="select floating"> 
-						<option>Select Collection Center</option>
-						<option>Web Developer</option>
-						<option>Web Designer</option>
-						<option>Android Developer</option>
-						<option>Ios Developer</option>
-					</select>
-					<label class="focus-label">Collection Center</label>
-				</div>
-			</div>
-			<div class="col-sm-6 col-md-3">  
-				<a href="#" class="btn btn-success btn-block"> Search </a>  
-			</div>     
-		</div>
-		<!-- /Search Filter -->
-		
+		<?php } ?>		
 		<div class="row">
 			<div class="col-md-12">
 				<div class="table-responsive">
@@ -92,24 +60,22 @@
 									<tr>
 										<td><?php echo $i; ?></td>
 										<td>
-											<h2 class="table-avatar">
+											
 												<a href="<?php echo base_url('farmers/farmerProfile/'. $key['id'] )?>" class="avatar">
-													<img alt="" src="<?php echo base_url()?>res/assets/img/profiles/user.png"></a>
-													<a href="<?php echo base_url('farmers/farmerProfile/'. $key['id'] )?>"><?php echo $key['fname']." ".$key['lname']?> 
-													<span><?php echo $key['location']?></span></a>
-												</h2>
+													<img alt="" src="<?php echo base_url()?>res/assets/img/profiles/user.png"></a><?php echo $key['fname']." ".$key['lname']?> 
+												
 											</td>
 											<td>
 												<input type="text" name="farmerID[]" value="<?php echo $key['farmerID']?>" class="form-control" readonly> 
 											</td>
 											<td>
-												<input type="number" name="morning[]" id="value1" class="form-control  morning" value="0" placeholder="Enter first value" required />
+												<input type="number" name="morning[]" id="value1" class="form-control  morning" value="0" step="any" placeholder="Enter first value" required />
 											</td>
 											<td>
-												<input type="number" name="evening[]" id="value2" class="form-control  evening" value="0" placeholder="Enter second value" required />
+												<input type="number" name="evening[]" id="value2" class="form-control  evening" value="0" step="any" placeholder="Enter second value" required />
 											</td>
 											<td>
-												<input type="number" name="rejected[]" id="value3" class="form-control  rejected" value="0" placeholder="Enter second value" required />
+												<input type="number" name="rejected[]" id="value3" class="form-control  rejected" value="0" step="any" placeholder="Enter second value" required />
 											</td>
 											<td>
 												<input type="number" name="total[]" id="sum" class="form-control total"readonly />

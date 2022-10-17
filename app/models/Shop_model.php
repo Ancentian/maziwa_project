@@ -50,13 +50,18 @@ class Shop_model extends CI_Model{
         return $query->row_array();
     }
 
-    public function fetch_shoppingByFarmerID($id)
+    public function fetch_shoppingByFarmerID($id, $sdate, $edate)
     {
         $this->db->where('shop_sales.farmerID', $id);
         $this->db->select('shop_sales.*, inventory.id as invID, inventory.itemName, users.id as userID, users.firstname,users.lastname,');
         $this->db->from('shop_sales');
         $this->db->join('inventory', 'inventory.id = shop_sales.itemID');
         $this->db->join('users', 'users.id = shop_sales.user_id');
+        if($sdate != "" && $edate != ""){
+            $edate = date('Y-m-d',strtotime($edate)+86400);
+            $this->db->where('shop_sales.date >=',$sdate);
+            $this->db->where('shop_sales.date <',$edate);
+        }
         $this->db->order_by('shop_sales.created_at');
         $query = $this->db->get();
         return $query->result_array();

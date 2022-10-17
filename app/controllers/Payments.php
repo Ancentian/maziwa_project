@@ -9,7 +9,7 @@ class Payments extends BASE_Controller {
         $this->load->model('roles_model', 'roles');
         $this->load->model('payments_model');
         $this->load->model('shop_model', 'shop');
-        $this->load->library('convertNumbersIntoWords');
+        //$this->load->library('convertNumbersIntoWords');
     }
 
     /*
@@ -173,12 +173,23 @@ class Payments extends BASE_Controller {
         $this->load->view('layout/template', $this->data);
     }
 
+    public function lastMonths()
+    {
+        $pm = (int) date('n', strtotime('-1 months'));
+        $pmy = (int) date('Y', strtotime('-1 months')); 
+        $this->data['months'] = $this->payments_model->get_last_month($pm, $pmy); 
+        //var_dump($this->data['months']);die;    
+        $this->data['pg_title'] = "Salary";
+        $this->data['page_content'] = 'payments/months';
+        $this->load->view('layout/template', $this->data);
+    }
+
     public function monthlyPayments()
     {
         $sdate = "";$edate ="";
         $forminput = $this->input->get();
-        $sdate = date('Y-m-d',strtotime(str_replace("/","-",$forminput['sdate'])));
-        $edate = date('Y-m-d',strtotime(str_replace("/","-",$forminput['edate'])));
+        $sdate = $forminput['sdate'];
+        $edate = $forminput['edate'];
         //echo $forminput;die; 
         $this->data['payments'] = $this->payments_model->fetch_allMonthlyPayments($sdate, $edate);      
         $this->data['pg_title'] = "Salary";

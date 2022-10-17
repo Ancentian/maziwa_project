@@ -77,10 +77,26 @@
 								<tr>
 								<td><?php echo $i; ?></td>
 								<td><a href="<?php echo base_url('reports/collection_centerReports/'.$key['id'])?>"><?php echo ucfirst($key['centerName'])?></a></td>
-								<td><?php echo $key['totMorning']?></td>	
-								<td><?php echo $key['totEvening']?></td>	
+								<?php if($key['totMorning'] != ""){?>
+								<td><?php echo $key['totMorning']?></td>
+								<?php }elseif ($key['totMorning'] == "") { ?>
+									<td><?php echo "0"; ?></td>
+								<?php }?>
+								<?php if($key['totEvening'] != ""){?>
+								<td><?php echo $key['totEvening']?></td>
+								<?php }elseif ($key['totEvening'] == "") { ?>
+									<td><?php echo "0";?></td>
+								<?php }?>
+								<?php if($key['totRejected'] != ""){?>
 								<td><?php echo $key['totRejected']?></td>
-								<td><?php echo $key['totalMilk']?></td>				
+								<?php }elseif ($key['totRejected'] == "") { ?>
+									<td><?php echo "0"; ?></td>
+								<?php }?>	
+								<?php if($key['totalMilk'] != ""){?>
+								<td><?php echo $key['totalMilk']?></td>
+								<?php }elseif ($key['totalMilk'] == "") { ?>
+									<td><?php echo "0";?></td>
+								<?php }?>			
 								<td><?php echo $key['firstname']." ".$key['lastname']?></td>
 								<td class="text-right">
 									<a href="<?php echo base_url('reports/collection_centerReports/'.$key['id'])?>" class="btn btn-info"><i class="fa fa-eye"></i></a>

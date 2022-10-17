@@ -70,7 +70,7 @@ $edate = $_GET['edate'];
 								<th>Shop</th>					
 								<th>Individ</th>
 								<th>General</th>
-								<th hidden>Gross</th>
+								
 								<!-- <th class="text-right">Action</th> -->
 							</tr>
 						</thead>
@@ -84,8 +84,10 @@ $edate = $_GET['edate'];
 							<?php $i=1; foreach ($milkCollection as $key) {
 									$total = $this->payments_model->select_deductions($key['farmerID'],$startdate,$enddate);
 									$individualDeduction = $this->payments_model->select_individualDeductions($key['farmerID'],$startdate,$enddate);
-									$generalDeduction = $this->payments_model->select_generalDeductions($startdate,$enddate);
+									$generalDeduction = $this->payments_model->select_generalDeductions($startdate,$enddate); { if(!$key['milktotal'])
 							 ?>
+
+							 
 								<tr>
 									<td><?php echo $i; ?></td>
 									<td><input type="text" class="form-control" value="<?php echo $key['farmerID']?>" name="farmerID[]" readonly></td>
@@ -101,10 +103,11 @@ $edate = $_GET['edate'];
 									<td>
 										<input type="text" class="form-control" id="general" name="generalDeductions[]" value="<?php echo $generalDeduction?>" readonly>
 									</td>
-									<td hidden><input type="text" class="form-control" id="gross" name="generalDeductions[]" value="" readonly></td>
+									<!-- <td hidden><input type="text" class="form-control" id="gross" name="generalDeductions[]" value="" readonly></td> -->
 									
 								</tr>
-								<?php $i++; } ?>
+							
+								<?php $i++; } }?>
 							</tbody>
 						</table>
 						</div>

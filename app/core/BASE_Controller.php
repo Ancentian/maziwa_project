@@ -19,8 +19,13 @@ class BASE_Controller extends CI_Controller
         if(!$this->session->userdata('user_aob')){
             $this->session->set_flashdata('error-msg','Please login to continue!');
             redirect('auth');
+            
         }
-        
+         $this->load->model('cooperative_model');
     }
-   
+        public function index()
+        {
+            $this->data['cooperative'] = $this->cooperative_model->fetch_allCooperatives();
+        }     
 }
+   

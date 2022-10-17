@@ -28,31 +28,26 @@ $edate = $_GET['edate'];
 			<div class="alert alert-danger"><?php echo $this->session->flashdata('error-msg'); ?></div>
 		<?php } ?>
 		<!-- Search Filter -->
-		<form action="<?php echo base_url('payments/monthlyPayments')?>" method="GET"> 
-		<div class="row filter-row">
-			<div class="col-md-4">  
-				<div class="form-group form-focus">
-					<div class="cal-icon">
-						<input class="form-control floating datetimepicker" name="sdate" value="<?php echo $sdate;?>" type="text">
+		<form action="<?php echo base_url('payments/monthlyPayments')?>" method="GET">					
+			<div class="row filter-row mb-4">		
+				<div class="col-sm-6 col-md-4">  
+					<div class="form-group form-focus">
+							<input class="form-control"  name="sdate" value="<?php echo $sdate; ?>" type="date">
+						<label class="focus-label">From</label>
 					</div>
-					<label class="focus-label">From</label>
 				</div>
-			</div>
-			<div class="col-md-4 ">  
-				<div class="form-group form-focus">
-					<div class="cal-icon">
-						<input class="form-control floating datetimepicker" name="edate" value="<?php echo $edate;?>" type="text">
+				<div class="col-sm-6 col-md-4">  
+					<div class="form-group form-focus">
+							<input class="form-control"  name="edate" value="<?php echo $edate?>" type="date">
+						<label class="focus-label">To</label>
 					</div>
-					<label class="focus-label">To</label>
 				</div>
+				<div class="col-sm-6 col-md-4">
+				<button type="submit" class="btn btn-success btn-block">Filter</button> 
+				</div>    
 			</div>
-			<div class="col-md-4 ">  
-				<input type="submit" class="btn btn-success btn-block" value="FILTER" required>
-				<!-- <button class="btn btn-success " value="FILTER" type="submit"> Search</button>  --> 
-			</div>     
-		</div>
 		</form>
-		<!-- /Search Filter -->	
+		<!-- /Search Filter -->
 		<div class="row">
 			<div class="col-md-12">		
 				<div class="table-responsive">

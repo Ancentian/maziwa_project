@@ -23,12 +23,13 @@ class Reports extends BASE_Controller
         $this->load->view('layout/template', $this->data);
     }
 
-    function collection_centerReports($id)
+    function collection_centerReports()
     {
         $sdate = "";$edate = "";
         $forminput = $this->input->get();
         $sdate = $forminput['sdate'];
         $edate = $forminput['edate'];
+        var_dump($sdate);die;
         $this->data['milkCollection'] = $this->reports->milk_collectionsByCenter($id, $sdate, $edate);
         //var_dump($this->data['milkCollection']);die;
         $this->data['pg_title'] = "Reports";

@@ -21,6 +21,7 @@
                                 <a href="#" class="noti-dot"><i class="la la-user"></i> <span> Employees</span> <span class="menu-arrow"></span></a>
                                 <ul style="display: none;">
                                     <li><a href="<?php echo base_url('employee/index'); ?>">All Employees</a></li>
+                                    <li><a href="<?php echo base_url('farmers/index'); ?>">Farmers</a></li>
                                     <!-- <li><a href="departments.html">Departments</a></li>
                                         <li><a href="designations.html">Designations</a></li> -->
                                     </ul>
@@ -50,8 +51,8 @@
                                     <a href="#"><i class="la la-money"></i> <span> Payment Schedule </span> <span class="menu-arrow"></span></a>
                                     <ul style="display: none;">
                                         <li><a href="<?php echo base_url('payments/salary')?>"> Farmer Salary </a></li>
-                                        <li><a href="<?php echo base_url('payments/addPayment')?>"> Generate Payment </a></li>
-                                        <li><a href="<?php echo base_url('payments/addMonthPayment')?>"> Previous Month Payment </a></li>
+                                        <li hidden><a href="<?php echo base_url('payments/addPayment')?>"> Generate Payment </a></li>
+                                        <li><a href="<?php echo base_url('payments/addMonthPayment')?>"> Generate Payment </a></li>
                                         <li><a href="<?php echo base_url('payments/monthlyPayments')?>"> Payments </a></li>
                                         <li><a href="<?php echo base_url('payments/overallPayments')?>">Overall Payments </a></li>
                                     </ul>

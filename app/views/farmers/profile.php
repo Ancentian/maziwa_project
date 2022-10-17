@@ -8,7 +8,7 @@
 		<div class="page-header">
 			<div class="row">
 				<div class="col-sm-12">
-					<h3 class="page-title"> Profile</h3>
+					<h3 class="page-title"><?php echo $farmer['fname']." ".$farmer['mname']." ".$farmer['lname']?> Profile</h3>
 					<ul class="breadcrumb">
 						<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
 						<li class="breadcrumb-item active">Profile / <?php echo $farmer['fname']." ".$farmer['mname']." ".$farmer['lname']?></li>
@@ -42,7 +42,7 @@
 											<h6 class="text-muted"><?php echo $farmer['location']?></h6>
 											<small class="text-muted"><?php echo strtoupper($farmer['centerName'])?></small>
 											<div class="staff-id"><?php echo $farmer['farmerID']?></div>
-											<div class="small doj text-muted">Date of Join : <?php echo $farmer['join_date']?></div>
+											<div class="small doj text-muted">Date of Join : <?php echo date('Y/m/d', strtotime($farmer['join_date']))?></div>
 											<div class="staff-msg" hidden><a class="btn btn-custom" href="#">Send Message</a></div>
 										</div>
 									</div>

@@ -31,29 +31,24 @@
 			<div class="alert alert-danger"><?php echo $this->session->flashdata('error-msg'); ?></div>
 		<?php } ?>	
 		<!-- Search Filter -->
-		<form action="<?php echo base_url('cooperative/milkCollection')?>" method="GET"> 
-		<div class="row filter-row">
-			<div class="col-md-4">  
-				<div class="form-group form-focus">
-					<div class="cal-icon">
-						<input class="form-control floating datetimepicker" name="sdate" value="<?php echo $sdate;?>" type="text">
+		<form action="<?php echo base_url('cooperative/milkCollection')?>" method="GET">					
+			<div class="row filter-row mb-4">		
+				<div class="col-sm-6 col-md-4">  
+					<div class="form-group form-focus">
+						<input class="form-control"  name="sdate" value="<?php echo $sdate; ?>" type="date">
+						<label class="focus-label">From</label>
 					</div>
-					<label class="focus-label">From</label>
 				</div>
-			</div>
-			<div class="col-md-4 ">  
-				<div class="form-group form-focus">
-					<div class="cal-icon">
-						<input class="form-control floating datetimepicker" name="edate" value="<?php echo $edate;?>" type="text">
+				<div class="col-sm-6 col-md-4">  
+					<div class="form-group form-focus">
+						<input class="form-control"  name="edate" value="<?php echo $edate; ?>" type="date">
+						<label class="focus-label">To</label>
 					</div>
-					<label class="focus-label">To</label>
 				</div>
+				<div class="col-md-4 ">  
+					<input type="submit" class="btn btn-success btn-block" value="FILTER" required> 
+				</div>   
 			</div>
-			<div class="col-md-4 ">  
-				<input type="submit" class="btn btn-success btn-block" value="FILTER" required>
-				<!-- <button class="btn btn-success " value="FILTER" type="submit"> Search</button>  --> 
-			</div>     
-		</div>
 		</form>
 		<!-- /Search Filter -->
 		<div class="row">
@@ -84,9 +79,21 @@
 								<td><?php echo $key['fname']." ".$key['mname']." ".$key['lname']?></td>
 								<td><?php echo ucfirst($key['centerName'])?></td>
 								<td><?php echo date('d/m/Y', strtotime($key['collection_date']))?></td>	
+								<?php if(!$key['morning'] == "") {?>
 								<td><?php echo $key['morning']?></td>
+								<?php } elseif ($key['morning'] =="") {?>
+								<td><?php echo "0"; ?></td>
+								<?php }?>
+								<?php if(!$key['evening'] == "") {?>
 								<td><?php echo $key['evening']?></td>
-								<td><?php echo $key['rejected']?></td>	
+								<?php } elseif ($key['evening'] =="") {?>
+								<td><?php echo "0"; ?></td>
+								<?php }?>
+								<?php if(!$key['rejected'] == "") {?>
+								<td><?php echo $key['rejected']?></td>
+								<?php } elseif ($key['rejected'] == "") {?>
+								<td><?php echo "0"; ?></td>
+								<?php }?>	
 								<td><?php echo $key['total']?></td>			
 								<td><?php echo $key['firstname']?></td>
 								<td><?php echo date('d/m/Y', strtotime($key['created_at'])) ?></td>

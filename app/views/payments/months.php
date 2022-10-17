@@ -41,10 +41,10 @@
 							</tr>
 						</thead>
 						<tbody>
-							<?php $i=1; foreach ($schedules as $key) { ?>
+							<?php $i=1; foreach ($months as $key) { ?>
 								<tr>
 									<td><?php echo $i; ?></td>
-									<td><?php echo $key['scheduleName']?></td>
+									<td><?php echo $key['from_date']?></td>
 									<td><?php echo $key['start_date']?></td>
 									<td><?php echo $key['end_date']?></td>
 									<td><?php echo date('d/m/Y H:i', strtotime($key['created_at'])) ?></td>

@@ -67,8 +67,8 @@ class Cooperative extends BASE_Controller {
     {
         $sdate = "";$edate ="";
         $forminput = $this->input->get();
-        $sdate = date('Y-m-d',strtotime(str_replace("/","-",$forminput['sdate'])));
-        $edate = date('Y-m-d',strtotime(str_replace("/","-",$forminput['edate'])));
+        $sdate = $forminput['sdate'];
+        $edate = $forminput['edate'];
         $this->data['milk'] = $this->cooperative_model->milk_collections($sdate, $edate);
         $this->data['pg_title'] = "Selected Center";
         $this->data['page_content'] = 'cooperatives/milkCollections';
@@ -150,9 +150,11 @@ class Cooperative extends BASE_Controller {
             $evng = $evening[$i];
             $reject = $rejected[$i];
             $tot = $total[$i];
-            //var_dump($tot);die;
-            $this->db->insert('milk_collections', ['user_id' => $userID, 'center_id' => $forminput['center_id'], 'collection_date' => $date, 'farmerID' => $key, 'morning' => $mrg, 'evening' => $evng, 'rejected' => $reject, 'total' => $tot]);
-            $i++;
+            if($tot > 0)
+            {
+                $this->db->insert('milk_collections', ['user_id' => $userID, 'center_id' => $forminput['center_id'], 'collection_date' => $date, 'farmerID' => $key, 'morning' => ltrim($mrg, "0"), 'evening' => ltrim($evng, "0"), 'rejected' => ltrim($reject, "0"), 'total' => $tot]);
+                $i++;
+            }
         }
         //var_dump($evng);die;
         $inserted = $this->db->affected_rows();
