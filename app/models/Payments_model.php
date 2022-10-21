@@ -262,7 +262,7 @@ class Payments_model extends CI_Model
             $this->db->where('payments.from_date >=',$sdate);
             $this->db->where('payments.to_date <=',$edate);
         }
-        $this->db->group_by('MONTH(payments.from_date), YEAR(payments.from_date)');
+        //$this->db->group_by('MONTH(payments.from_date), YEAR(payments.from_date)');
         //$this->db->group_by('payments.from_date');
         $this->db->order_by('payments.created_at');
         $query = $this->db->get();

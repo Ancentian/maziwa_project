@@ -33,7 +33,7 @@
                 <ul class="nav user-menu">
                 
                     <!-- Search -->
-                    <li class="nav-item">
+                    <li class="nav-item" hidden>
                         <div class="top-nav-search">
                             <a href="javascript:void(0);" class="responsive-search">
                                 <i class="fa fa-search"></i>

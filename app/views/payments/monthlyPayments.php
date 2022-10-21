@@ -32,13 +32,13 @@ $edate = $_GET['edate'];
 			<div class="row filter-row mb-4">		
 				<div class="col-sm-6 col-md-4">  
 					<div class="form-group form-focus">
-							<input class="form-control"  name="sdate" value="<?php echo $sdate; ?>" type="date">
+							<input class="form-control datetimepicker"  name="sdate" value="<?php echo $sdate; ?>" >
 						<label class="focus-label">From</label>
 					</div>
 				</div>
 				<div class="col-sm-6 col-md-4">  
 					<div class="form-group form-focus">
-							<input class="form-control"  name="edate" value="<?php echo $edate?>" type="date">
+							<input class="form-control datetimepicker"  name="edate" value="<?php echo $edate?>" >
 						<label class="focus-label">To</label>
 					</div>
 				</div>

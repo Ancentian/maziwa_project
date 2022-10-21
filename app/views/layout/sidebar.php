@@ -20,7 +20,7 @@
                             <li class="submenu">
                                 <a href="#" class="noti-dot"><i class="la la-user"></i> <span> Employees</span> <span class="menu-arrow"></span></a>
                                 <ul style="display: none;">
-                                    <li><a href="<?php echo base_url('employee/index'); ?>">All Employees</a></li>
+                                    <li><a href="<?php echo base_url('employee/index'); ?>">Staff</a></li>
                                     <li><a href="<?php echo base_url('farmers/index'); ?>">Farmers</a></li>
                                     <!-- <li><a href="departments.html">Departments</a></li>
                                         <li><a href="designations.html">Designations</a></li> -->
@@ -81,11 +81,11 @@
                                     <ul style="display: none;">
                                         <li><a href="<?php echo base_url('reports/milk_CollectionReports')?>"> Milk Collection Report </a></li>
                                         <li><a href="<?php echo base_url('reports/allFarmersProductionReport')?>"> All Farmers Report </a></li>
-                                        <li><a href="#"> Payments Report </a></li>
+                                       <!--  <li><a href="#"> Payments Report </a></li>
                                         <li><a href="#"> User Report </a></li>
                                         <li><a href="#"> Employee Report </a></li>
                                         <li><a href="#"> Payslip Report </a></li>
-                                        <li><a href="#"> Daily Report </a></li>
+                                        <li><a href="#"> Daily Report </a></li> -->
                                     </ul>
                                 </li> 
                                 <li class="submenu">
@@ -129,8 +129,8 @@
                                         <li><a href="<?php echo base_url('cooperative/collectionCentre'); ?>">Collection Centers</a>
                                         </li>
                                         <li><a href="<?php echo base_url('roles/index'); ?>">Roles</a></li>
-                                        <li><a href="<?php echo base_url('payments/milkRates'); ?>">Milk Rates</a></li>
-                                        <li><a href="<?php echo base_url('payments/paymentSchedules'); ?>">Payment Schedules</a></li>
+                                        <li hidden><a href="<?php echo base_url('payments/milkRates'); ?>">Milk Rates</a></li>
+                                        <li hidden><a href="<?php echo base_url('payments/paymentSchedules'); ?>">Payment Schedules</a></li>
                                     </ul>
                                 </li>     
                                 <li class="menu-title" hidden> 

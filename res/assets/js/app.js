@@ -108,7 +108,7 @@ $(document).ready(function() {
 			height: 'auto',
 			width: '100%',
 			position: 'right',
-			size: '7px',
+			size: '14px',
 			color: '#ccc',
 			wheelStep: 10,
 			touchScrollStep: 100

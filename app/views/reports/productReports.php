@@ -18,9 +18,6 @@
 						<li class="breadcrumb-item active"><?php echo ucfirst($items[0]['itemName'])?> Report</li>
 					</ul>
 				</div>
-				<div class="col-auto float-right ml-auto" hidden>
-					<a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_department"><i class="fa fa-plus"></i> Add Cooperative</a>
-				</div>
 			</div>
 		</div>
 		<!-- /Page Header -->
@@ -31,7 +28,7 @@
 			<div class="alert alert-danger"><?php echo $this->session->flashdata('error-msg'); ?></div>
 		<?php } ?>
 		<!-- Search Filter -->
-		<form action="<?php echo base_url('reports/productReports')?>" method="GET">
+		<form action="<?php //echo base_url('reports/productReports/'.$items[0]['id'] )?>" method="GET">
 		<div class="row filter-row">
 			<div class="col-md-4">  
 				<div class="form-group form-focus">
@@ -67,7 +64,6 @@
 								<th>Quantity</th>					
 								<th>Total</th>
 								<th>Date</th>					
-								<th class="text-right">Action</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -78,24 +74,15 @@
 								<!-- <td><?php //echo $key['itemName']?></td> -->
 								<td><?php echo $key['qty']?></td>		
 								<td><?php echo $key['amount']?></td>
-								<td><?php echo $key['date']?></td>				
-								<td class="text-right">
-									<div class="dropdown dropdown-action">
-										<a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-										<div class="dropdown-menu dropdown-menu-right">
-											<a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_department"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-											<a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_department"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-										</div>
-									</div>
-								</td>
+								<td><?php echo date('Y/m/d', strtotime($key['date']))?></td>		
 							</tr>
 							<?php $i++; } } }?>
 						</tbody>
 						<tfoot>
 							<tr>
 								<td colspan="2"></td>
-								<td><?php echo $totQty;?></td>
-								<td><?php echo $amt;?></td>
+								<td><b><?php echo $totQty;?></b></td>
+								<td><b><?php echo number_format($amt);?></b></td>
 								<td colspan="2"></td>
 
 							</tr>
