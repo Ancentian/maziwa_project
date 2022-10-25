@@ -26,7 +26,7 @@
                                         <li><a href="designations.html">Designations</a></li> -->
                                     </ul>
                                 </li>                           
-                                <li class="menu-title"> 
+                                <li class="menu-title" hidden> 
                                     <span>HR</span>
                                 </li>
                                 <li class="submenu">
@@ -53,6 +53,7 @@
                                         <li><a href="<?php echo base_url('payments/salary')?>"> Farmer Salary </a></li>
                                         <li hidden><a href="<?php echo base_url('payments/addPayment')?>"> Generate Payment </a></li>
                                         <li><a href="<?php echo base_url('payments/addMonthPayment')?>"> Generate Payment </a></li>
+                                        <!-- <li><a href="<?php //echo base_url('payments/paymentSchedules')?>"> Payments </a></li> -->
                                         <li><a href="<?php echo base_url('payments/monthlyPayments')?>"> Payments </a></li>
                                         <li><a href="<?php echo base_url('payments/overallPayments')?>">Overall Payments </a></li>
                                     </ul>

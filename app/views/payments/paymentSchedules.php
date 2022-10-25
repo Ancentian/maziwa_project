@@ -33,9 +33,6 @@
 						<thead>
 							<tr>
 								<th style="width: 30px;">#</th>
-								<th>Schedule Name</th>
-								<th>Start Date</th>
-								<th>End Date</th>
 								<th>Created on</th>
 								<th class="text-right">Action</th>
 							</tr>
@@ -44,10 +41,7 @@
 							<?php $i=1; foreach ($months as $key) { ?>
 								<tr>
 									<td><?php echo $i; ?></td>
-									<td><?php echo $key['from_date']?></td>
-									<td><?php echo $key['start_date']?></td>
-									<td><?php echo $key['end_date']?></td>
-									<td><?php echo date('d/m/Y H:i', strtotime($key['created_at'])) ?></td>
+									<td><a href="<?php echo base_url('payments/monthlyPayments?date='.date('Y-m-d H:i', strtotime($key['created_at'])))?>"><?php echo date('d/m/Y H:i', strtotime($key['created_at'])) ?></a></td>
 									<td class="text-right">
 										<a href="<?php echo base_url('payments/editSchedule/'.$key['id'])?>" class="btn btn-success"><i class="fa fa-pencil"></i></a>
 										<a href="<?php echo base_url('payments/deleteSchedule/'.$key['id'])?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>

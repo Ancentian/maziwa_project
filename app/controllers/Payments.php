@@ -42,7 +42,6 @@ class Payments extends BASE_Controller {
     public function selectSchedule()
     {
         $forminput = $this->input->post();
-        //var_dump($forminput);die;
         $this->data['schedule'] = $this->payments_model->searchSchedule($forminput);
 
         if (!$this->data['schedule']) {
@@ -157,10 +156,13 @@ class Payments extends BASE_Controller {
 
     public function paymentSchedules()
     {
-        $this->data['schedules'] = $this->payments_model->fetch_paymentSchedules();
-        //var_dump($this->data['schedules']);die;
-        $this->data['pg_title'] = "Payment Schedules";
-        $this->data['page_content'] = 'payments/schedules';
+        $sdate = "";$edate ="";
+        $forminput = $this->input->get();
+        $sdate = $forminput['sdate'];
+        $edate = $forminput['edate'];     
+        $this->data['months'] = $this->payments_model->get_last_month(); 
+        $this->data['pg_title'] = "Salary";
+        $this->data['page_content'] = 'payments/paymentSchedules';
         $this->load->view('layout/template', $this->data);
     }
 

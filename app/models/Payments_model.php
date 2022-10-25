@@ -241,11 +241,10 @@ class Payments_model extends CI_Model
         return $query->result_array();
     }
 
-    public function get_last_month($pm, $pmy){
+    public function get_last_month(){
         $this->db->select('*');
         $this->db->from('payments');
-        $this->db->where('MONTH(to_date)', $pm);
-        $this->db->where('YEAR(to_date)', $pmy);
+        $this->db->group_by('created_at');
         $query = $this->db->get();
         return $query->result_array();
     } 
