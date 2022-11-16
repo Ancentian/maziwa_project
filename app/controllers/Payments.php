@@ -9,7 +9,7 @@ class Payments extends BASE_Controller {
         $this->load->model('roles_model', 'roles');
         $this->load->model('payments_model');
         $this->load->model('shop_model', 'shop');
-        $this->load->library('convertNumbersIntoWords');
+        //$this->load->library('convertNumbersIntoWords');
     }
 
     /*
@@ -42,7 +42,6 @@ class Payments extends BASE_Controller {
     public function selectSchedule()
     {
         $forminput = $this->input->post();
-        //var_dump($forminput);die;
         $this->data['schedule'] = $this->payments_model->searchSchedule($forminput);
 
         if (!$this->data['schedule']) {
@@ -157,10 +156,13 @@ class Payments extends BASE_Controller {
 
     public function paymentSchedules()
     {
-        $this->data['schedules'] = $this->payments_model->fetch_paymentSchedules();
-        //var_dump($this->data['schedules']);die;
-        $this->data['pg_title'] = "Payment Schedules";
-        $this->data['page_content'] = 'payments/schedules';
+        $sdate = "";$edate ="";
+        $forminput = $this->input->get();
+        $sdate = $forminput['sdate'];
+        $edate = $forminput['edate'];     
+        $this->data['months'] = $this->payments_model->get_last_month(); 
+        $this->data['pg_title'] = "Salary";
+        $this->data['page_content'] = 'payments/paymentSchedules';
         $this->load->view('layout/template', $this->data);
     }
 
@@ -173,12 +175,23 @@ class Payments extends BASE_Controller {
         $this->load->view('layout/template', $this->data);
     }
 
+    public function lastMonths()
+    {
+        $pm = (int) date('n', strtotime('-1 months'));
+        $pmy = (int) date('Y', strtotime('-1 months')); 
+        $this->data['months'] = $this->payments_model->get_last_month($pm, $pmy); 
+        //var_dump($this->data['months']);die;    
+        $this->data['pg_title'] = "Salary";
+        $this->data['page_content'] = 'payments/months';
+        $this->load->view('layout/template', $this->data);
+    }
+
     public function monthlyPayments()
     {
         $sdate = "";$edate ="";
         $forminput = $this->input->get();
-        $sdate = date('Y-m-d',strtotime(str_replace("/","-",$forminput['sdate'])));
-        $edate = date('Y-m-d',strtotime(str_replace("/","-",$forminput['edate'])));
+        $sdate = $forminput['sdate'];
+        $edate = $forminput['edate'];
         //echo $forminput;die; 
         $this->data['payments'] = $this->payments_model->fetch_allMonthlyPayments($sdate, $edate);      
         $this->data['pg_title'] = "Salary";
@@ -202,8 +215,8 @@ class Payments extends BASE_Controller {
     {
         $sdate = "";$edate ="";
         $forminput = $this->input->get();
-        $sdate = date('Y-m-d',strtotime(str_replace("/","-",$forminput['sdate'])));
-        $edate = date('Y-m-d',strtotime(str_replace("/","-",$forminput['edate'])));
+        $sdate = $forminput['sdate'];
+        $edate = $forminput['edate'];
         //echo $forminput;die; 
         $this->data['payments'] = $this->payments_model->fetch_allMonthlyPayments($sdate, $edate);      
         $this->data['pg_title'] = "Salary";
@@ -311,39 +324,12 @@ class Payments extends BASE_Controller {
         $this->load->view('layout/template', $this->data);
     }
 
-    /*
-      Update the submitted record
-    */
-    public function updateExpense(int $id)
-    {
-        $forminput = $this->input->post();
-
-        //CALCULATES THE TOTAL OF EXPENSE AMOUNT
-        $total = 0;
-        foreach ($forminput['amount'] as $key ) {
-            $total += $key;
-        }
-        //END OF CALCULATION
-
-        $data = array('user_id' => $forminput['user_id'], 'item_name' => json_encode($forminput['item_name']), 'date' => json_encode($forminput['date']), 'amount' => json_encode($forminput['amount']), 'description' => $forminput['description'], 'total_amount' => $total);
-
-        $inserted = $this->expense->update_expense($id, $data);
-
-        if ($inserted > 0) {
-            $this->session->set_flashdata('success-msg', 'Expense Updated Successfully');
-        }else{
-            $this->sessison->set_flashdata('error-msg', 'Err! Failed Try Again');
-        }
-        return redirect('expense/index');
-    }
-
     public function store_milkRates()
     {
         $this->form_validation->set_rules('rateName', 'Rate Name', 'required'); 
         $this->form_validation->set_rules('milkRate', 'Milk Price', 'required');
         $this->form_validation->set_rules('runs_from', 'Runs From', 'required');
         $this->form_validation->set_rules('runs_to', 'Runs To', 'required');
-        //$user = $this->session->userdata('user_aob')->id;
         if ($this->form_validation->run() == FALSE) {
             redirect(base_url('payments/milkRates')); 
         } else {
@@ -354,11 +340,9 @@ class Payments extends BASE_Controller {
                 'runs_to' => $this->input->post('runs_to'),
                 'updated_by' => $this->session->userdata('user_aob')->id
             );
-            //var_dump($data);die;
             $this->payments_model->update_milkRates($data);
             $this->session->set_flashdata('success-msg', 'Milk Rate Updated Successfully');
-            return redirect('payments/milkRates');
-            //return redirect(base_url('payments/milkRates'));
+            return redirect(base_url('payments/milkRates'));
         }
     }
 
@@ -378,7 +362,13 @@ class Payments extends BASE_Controller {
 
     public function print_invoice($id)
     {     
+        $data['cooperative'] = $this->cooperative->fetch_allCooperatives();
         $data['payments'] = $this->payments_model->fetch_allMonthlyPaymentsByID($id); 
+        $farmerid= $data['payments']['farmerID'];
+        $sdate = $data['payments']['from_date'];
+        $edate = $data['payments']['to_date'];
+        $data['shopping'] = $this->shop->fetch_shoppingInvoiceByFarmerID($farmerid, $sdate, $edate);
+        //var_dump($data['shopping']);die;
         //$data['general'] = $this->deductions_model->fetch_generalFarmerDeductions();
         //$data['individual'] = $this->payments_model->fetch_individualFarmerDeductions($id);
         

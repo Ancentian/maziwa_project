@@ -34,7 +34,7 @@
                     <div class="card-body">
                         <span class="dash-widget-icon"><i class="fa fa-usd"></i></span>
                         <div class="dash-widget-info">
-                            <h3><?php echo number_format((int)$milkRate['milkRate'] * (int)$totMilk)?></h3>
+                            <h3><?php echo number_format((int)$milkRate['milkRate'] * (float)$totMilk)?></h3>
                             <span>Amount </span>
                         </div>
                     </div>
@@ -227,7 +227,7 @@
                                         <td>
                                             <h2 class="table-avatar">
                                                 <a href="#" class="avatar"><img alt="" src="<?php echo base_url()?>res/assets/img/profiles/user.png"></a>
-                                                <a href="<?php echo base_url('farmers/farmerProfile/'. $key['farmerID'] )?>"><?php echo $key['fname']." ".$key['mname']." ".$key['lname']?> <span><?php echo ucfirst($key['location'])?></span></a>
+                                                <a href="<?php echo base_url('farmers/farmerProfile?fid='. $key['farmerID'] )?>"><?php echo $key['fname']." ".$key['mname']." ".$key['lname']?> <span><?php echo ucfirst($key['location'])?></span></a>
                                             </h2>
                                         </td>
                                         <td><?php echo ucfirst($key['centerName'])?></td>

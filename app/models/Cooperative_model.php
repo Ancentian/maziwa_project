@@ -20,7 +20,7 @@ class Cooperative_model extends CI_Model{
     function fetch_allCooperatives()
     {
        $this->db->select()->from('cooperatives');
-        $this->db->order_by('id', 'DESC');
+        $this->db->limit(1);
         $query = $this->db->get();
         return $query->result_array(); 
     }

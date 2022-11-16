@@ -108,7 +108,7 @@ $(document).ready(function() {
 			height: 'auto',
 			width: '100%',
 			position: 'right',
-			size: '7px',
+			size: '14px',
 			color: '#ccc',
 			wheelStep: 10,
 			touchScrollStep: 100
@@ -136,7 +136,7 @@ $(document).ready(function() {
 	
 	if($('.datetimepicker').length > 0) {
 		$('.datetimepicker').datetimepicker({
-			format: 'DD/MM/YYYY',
+			format: 'YYYY-MM-DD',
 			icons: {
 				up: "fa fa-angle-up",
 				down: "fa fa-angle-down",

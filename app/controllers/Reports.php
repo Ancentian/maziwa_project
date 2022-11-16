@@ -29,6 +29,7 @@ class Reports extends BASE_Controller
         $forminput = $this->input->get();
         $sdate = $forminput['sdate'];
         $edate = $forminput['edate'];
+        //var_dump($sdate);die;
         $this->data['milkCollection'] = $this->reports->milk_collectionsByCenter($id, $sdate, $edate);
         //var_dump($this->data['milkCollection']);die;
         $this->data['pg_title'] = "Reports";

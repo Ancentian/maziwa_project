@@ -40,28 +40,28 @@
         $('#maziwa').DataTable({
             dom: 'Bfrtip',
             buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
+            'copy', 'excel', 'pdf', 'print'
             ],
             stateSave: true,
         });
     	$('#shopDeductions').DataTable({
     		dom: 'Bfrtip',
             buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
+            'copy', 'excel', 'pdf', 'print'
             ],
             stateSave: true,
     	});
     	$('#otherDeductions').DataTable({
     		dom: 'Bfrtip',
             buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
+            'copy', 'excel', 'pdf', 'print'
             ],
             stateSave: true,
     	});
     	$('#payments').DataTable({
     		dom: 'Bfrtip',
             buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
+            'copy', 'excel', 'pdf', 'print'
             ],
             stateSave: true,
     	});
@@ -103,7 +103,7 @@
 
     function getcube(){  
 var rate = document.getElementById("rate").value;  
-  alert(rate);
+  //alert(rate);
 }  
 
     //Payments

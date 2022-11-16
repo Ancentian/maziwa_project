@@ -184,16 +184,13 @@ class Employee extends BASE_Controller {
     /*
       Delete a record
     */
-    public function deleteStaff(int $id)
+    public function deleteStaff($id)
     {
-        $data = $this->employee_model->delete_staff($id);
-        if ($inserted > 0) {
-            $this->session->set_flashdata('success-msg', 'User deleted successfully');
-        } else {
-            $this->session->set_flashdata('error-msg', 'Failed, please try again');
-        }
+        $delete = $this->employee_model->delete_staff($id);
+        $this->session->set_flashdata('success-msg', "User Deleted Successfully!");
         redirect('employee/staffList');
     }
+
 
 
 }

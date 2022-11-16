@@ -1,4 +1,7 @@
-
+?php $sdate = "";$edate="";
+    $sdate = $_GET['sdate'];
+    $edate = $_GET['edate'];
+?>
 <!-- Page Wrapper -->
 <div class="page-wrapper">
 	
@@ -11,7 +14,7 @@
 				<div class="col">
 					<h3 class="page-title">Farmer Items</h3>
 					<ul class="breadcrumb">
-						<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+						<li class="breadcrumb-item"><a href="<?php echo base_url() ?>">Dashboard</a></li>
 						<li class="breadcrumb-item active">Items</li>
 					</ul>
 				</div>
@@ -24,27 +27,22 @@
 			<div class="row filter-row mb-4">		
 				<div class="col-sm-6 col-md-4">  
 					<div class="form-group form-focus">
-						<div class="cal-icon">
-							<input class="form-control floating datetimepicker" name="sdate" type="text">
-						</div>
+							<input class="form-control"  name="sdate" value="<?php echo $sdate; ?>" type="date">
 						<label class="focus-label">From</label>
 					</div>
 				</div>
 				<div class="col-sm-6 col-md-4">  
 					<div class="form-group form-focus">
-						<div class="cal-icon">
-							<input class="form-control floating datetimepicker" name="edate" type="text">
-						</div>
+							<input class="form-control"  name="edate" value="<?php echo $edate?>" type="date">
 						<label class="focus-label">To</label>
 					</div>
 				</div>
-				<div class="col-sm-6 col-md-4">  
-					<a href="#" class="btn btn-success btn-block"> Search </a>  
-				</div>     
+				<div class="col-sm-6 col-md-4">
+				<button type="submit" class="btn btn-success btn-block">Filter</button> 
+				</div>    
 			</div>
 		</form>
 		<!-- /Search Filter -->
-
 		<?php if ($this->session->flashdata('success-msg')) { ?>
 			<div class="alert alert-success"><?php echo $this->session->flashdata('success-msg'); ?></div>
 		<?php } ?>
@@ -54,7 +52,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="table-responsive">
-					<table class="table table-striped custom-table mb-0 datatable">
+					<table class="table table-striped custom-table mb-0" id="maziwa">
 						<thead>
 							<tr>
 								<th style="width: 30px;">#</th>
@@ -90,7 +88,7 @@
 									Grand Total
 								</td>
 								<td style="font-size: 16px;width: 230px">
-									<input class="form-control text-right" type="text" id="grand_total" name="" value="Ksh. <?php echo $amt; ?>" readonly>
+									Ksh. <?php echo $amt; ?>
 								</td>
 							</tr>
 						</tfoot>

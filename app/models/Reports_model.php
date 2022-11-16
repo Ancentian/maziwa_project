@@ -37,21 +37,25 @@ class Reports_model extends CI_Model{
         $this->db->join('users', 'users.id = milk_collections.user_id');
         $this->db->join('farmers_biodata', 'farmers_biodata.farmerID = milk_collections.farmerID', 'left');
         if($sdate != "" && $edate != ""){
-            //$edate = date('d/m/Y',strtotime($edate)+86400);
+            $edate = date('d/m/Y',strtotime($edate)+86400);
             $this->db->where('milk_collections.collection_date >=',$sdate);
-            $this->db->where('milk_collections.collection_date <=',$edate);
-            //$this->db->like('farmers_biodata.fname =', $name);
+            $this->db->where('milk_collections.collection_date <',$edate);
         }
         $this->db->order_by('milk_collections.id', 'DESC');
         $query = $this->db->get();
         return $query->result_array();
     }
 
-    public function allProductReports()
+    public function allProductReports($sdate, $edate)
     {
-        $this->db->select('inventory.*, shop_sales.id as salesID, shop_sales.farmerID,shop_sales.itemID, SUM(shop_sales.qty) as totQty, SUM(shop_sales.amount) as totAmount');
+        $this->db->select('inventory.*, shop_sales.id as salesID, shop_sales.date, shop_sales.farmerID,shop_sales.itemID, SUM(shop_sales.qty) as totQty, SUM(shop_sales.amount) as totAmount');
         $this->db->from('inventory');
         $this->db->join('shop_sales', 'shop_sales.itemID = inventory.id');
+        if($sdate != "" && $edate != ""){
+            $edate = date('Y-m-d', strtotime($edate)+86400);
+            $this->db->where('shop_sales.created_at >=',$sdate);
+            $this->db->where('shop_sales.created_at <',$edate);
+        }
         $this->db->group_by('inventory.id');
         $this->db->order_by('SUM(shop_sales.qty)', 'DESC');
         $query = $this->db->get();

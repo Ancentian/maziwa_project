@@ -76,6 +76,7 @@
 								<th>Collection Center</th>
 								<th class="text-nowrap">Join Date</th>
 								<th>Gender</th>
+								<th>Status</th>
 								<th class="text-right no-sort">Action</th>
 							</tr>
 						</thead>
@@ -93,12 +94,26 @@
 
 									<td><?php echo $key['contact1']?></td>
 									<td><?php echo ucfirst($key['centerName'])?></td>
-									<td><?php echo $key['join_date']?></td>
+									<td><?php echo date('Y/m/d', strtotime($key['join_date']))?></td>
 									<td><?php echo $key['gender']?></td>
-
+									<td class="text-center">
+										<div class="dropdown action-label">
+											<?php if($key['status'] == 1) {?>
+											<a class="btn btn-white btn-sm btn-rounded" href="#" data-toggle="dropdown" aria-expanded="false">
+												<i class="fa fa-dot-circle-o text-success"></i> Active
+											</a>
+											<?php } elseif ($key['status'] == 0) {?>
+												<a class="btn btn-white btn-sm btn-rounded" href="#" data-toggle="modal" data-target="#approve_leave"><i class="fa fa-dot-circle-o text-danger"></i> Inactive</a>
+											<?php } ?>
+									
+											<div class="dropdown-menu dropdown-menu-right">
+												<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-danger"></i> Declined</a>
+											</div>
+										</div>
+									</td>
 									<td class="text-right">
-										<a href="<?php echo base_url('farmers/editFarmer/'.$key['farmerID'])?>" class="btn btn-success"><i class="fa fa-pencil"></i></a>
-										<a href="<?php echo base_url('farmers/deleteFarmer/'.$key['farmerID'])?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+										<a href="<?php echo base_url('farmers/editFarmer?fid='.$key['farmerID'])?>" class="btn btn-success"><i class="fa fa-pencil"></i></a>
+										<a href="<?php echo base_url('farmers/deleteFarmer?fid='.$key['farmerID'])?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
 									</td>
 								</tr>
 
@@ -219,6 +234,16 @@
 															<option value="widow">Widow</option>
 															<option value="windower">Windower</option>
 															<option value="seperated">Seperated</option>
+														</select>
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="form-group">
+														<label> Status <span class="text-danger">*</span></label>
+														<select name="" class="select" required>
+															<option>Select Status</option>
+															<option value="0">Inactive</option>
+															<option value="1">Active</option>
 														</select>
 													</div>
 												</div>

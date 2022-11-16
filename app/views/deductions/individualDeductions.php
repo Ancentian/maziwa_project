@@ -9,7 +9,7 @@
 		<div class="page-header">
 			<div class="row align-items-center">
 				<div class="col">
-					<h3 class="page-title">Farmers</h3>
+					<h3 class="page-title">All Farmers</h3>
 					<ul class="breadcrumb">
 						<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
 						<li class="breadcrumb-item active">Farmers</li>
@@ -31,37 +31,6 @@
 		<?php if ($this->session->flashdata('error-msg')) { ?>
 			<div class="alert alert-danger"><?php echo $this->session->flashdata('error-msg'); ?></div>
 		<?php } ?>
-		<!-- Search Filter -->
-		<div class="row filter-row">
-			<div class="col-sm-6 col-md-3">  
-				<div class="form-group form-focus">
-					<input type="text" class="form-control floating">
-					<label class="focus-label">Employee ID</label>
-				</div>
-			</div>
-			<div class="col-sm-6 col-md-3">  
-				<div class="form-group form-focus">
-					<input type="text" class="form-control floating">
-					<label class="focus-label">Farmer Name</label>
-				</div>
-			</div>
-			<div class="col-sm-6 col-md-3"> 
-				<div class="form-group form-focus select-focus">
-					<select class="select floating"> 
-						<option>Select Collection Center</option>
-						<option>Web Developer</option>
-						<option>Web Designer</option>
-						<option>Android Developer</option>
-						<option>Ios Developer</option>
-					</select>
-					<label class="focus-label">Collection Center</label>
-				</div>
-			</div>
-			<div class="col-sm-6 col-md-3">  
-				<a href="#" class="btn btn-success btn-block"> Search </a>  
-			</div>     
-		</div>
-		<!-- /Search Filter -->
 		
 		<div class="row">
 			<div class="col-md-12">
@@ -73,8 +42,7 @@
 								<th>Code</th>
 								<th>Name</th>
 								<th>Contact</th>
-								<th>Collection Center</th>
-								<th class="text-nowrap">Join Date</th>
+								<th>Center</th>
 								<th>Gender</th>
 								<th class="text-right no-sort">Action</th>
 							</tr>
@@ -90,12 +58,13 @@
 										<a href="<?php echo base_url('farmers/farmerProfile?fid='. $key['farmerID'] )?>"><?php echo $key['fname']." ". $key['lname']?> <span><?php echo $key['location']?></span></a>
 									</h2>
 								</td>
-								
+								<?php if($key['contact1'] != "") {?>
 								<td><?php echo $key['contact1']?></td>
+								<?php }elseif($key['contact1'] == ""){?>
+								<td><?php echo "--"; ?></td>
+								<?php }?>
 								<td><?php echo ucfirst($key['centerName'])?></td>
-								<td><?php echo date('d/m/Y', strtotime($key['join_date']))?></td>
 								<td><?php echo ucfirst($key['gender'])?></td>
-								
 								<td class="text-right">
 									<a href="<?php echo base_url('deductions/addDeduction?fid='.$key['farmerID']) ?>" class="btn btn-warning"><i class="fa fa-plus"></i></a>
 								</td>

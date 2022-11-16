@@ -20,7 +20,7 @@
 
 		<div class="row">
 			<div class="col-sm-12">
-				<form action="<?php echo base_url('farmers/updateFarmer/'.$farmer['farmerID'])?>" method="POST">
+				<form action="<?php echo base_url('farmers/updateFarmer?fid='.$farmer['farmerID'])?>" method="POST">
 					<div class="row">
 						<div class="col-sm-6 col-md-3">
 							<div class="form-group">
@@ -87,7 +87,7 @@
 								<label>Collection Center</label>
 								<select class="select" name="center_id">
 									<?php foreach($collectionCenter as $key)?>
-									<option value="<?php echo $key['id']?>"<?php if($farmer['center_id'] == $key['id']) { echo  selected; }?>><?php echo $key['centerName']?></option>
+									<option value="<?php echo $key['id']?>"<?php if($farmer['center_id'] == $key['id']) { echo  "selected"; }?>><?php echo $key['centerName']?></option>
 								</select>
 							</div>
 						</div>
@@ -106,7 +106,16 @@
 									<option value="divorced"<?php if($farmer['marital_status'] == 'divorced') { echo "selected"; }?>>Divorced</option>
 									<option value="widow"<?php if($farmer['marital_status'] == 'widow') { echo "selected"; }?>>Widow</option>
 									<option value="windower"<?php if($farmer['marital_status'] == 'windower') { echo "selected"; }?>>Windower</option>
-									<option value="seperated"<?php if($farmer['marital_status'] == 'seperated') { echo "selected"; }?>>Sepearated</option>
+									<option value="seperated"<?php if($farmer['marital_status'] == 'seperated') { echo "selected"; }?>>Seperated</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-sm-6 col-md-8">
+							<div class="form-group">
+								<label>Marital Status</label>
+								<select class="select" name="status">
+									<option value="1"<?php if($farmer['status'] == 1) { echo "selected"; }?>>Active</option>
+									<option value="0"<?php if($farmer['status'] == 0) { echo "selected"; }?>>Inactive</option>
 								</select>
 							</div>
 						</div>

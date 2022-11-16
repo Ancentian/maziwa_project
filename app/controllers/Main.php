@@ -12,6 +12,8 @@ class Main extends BASE_Controller {
         $this->load->model('employee_model');
         $this->load->model('reports_model');
         $this->load->model('payments_model');
+        $this->load->model('cooperative_model');
+
 	}
 
 	public function index()
@@ -22,6 +24,7 @@ class Main extends BASE_Controller {
         $this->data['milkRate'] = $this->payments_model->fetch_milkRates();
         $this->data['bestProducers'] = $this->reports_model->best_milkProducers();
         $this->data['bestCenters'] = $this->reports_model->best_collectionCenters();
+        $this->data['cooperative'] = $this->cooperative_model->fetch_allCooperatives();
 		$this->data['pg_title'] = "Dashboard";
 		$this->data['page_content'] = 'admin/index';
 		$this->load->view('layout/template', $this->data);
@@ -31,19 +34,6 @@ class Main extends BASE_Controller {
     {
         $this->data['pg_title'] = "My Profile";
         $this->data['page_content'] = 'admin/myprofile';
-        $this->load->view('layout/template', $this->data);
-    }
-    
-	public function quotations()
-	{
-		$this->data['pg_title'] = "Quotations";
-        $this->data['page_content'] = 'quotations/index';
-        $this->load->view('layout/template', $this->data);
-	}
-	public function addquotation()
-	{
-		$this->data['title'] = "Quotations";
-        $this->data['page_content'] = 'quotations/add-quotation';
         $this->load->view('layout/template', $this->data);
     }
 

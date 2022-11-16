@@ -60,6 +60,7 @@
 								<th style="width: 30px;">#</th>
 								<th>Collection Center </th>
 								<th>Clerk Name</th>
+								<th>Farmers</th>
 								<th class="text-right">Action</th>
 							</tr>
 						</thead>
@@ -70,9 +71,8 @@
 								<td><a href="<?php echo base_url('cooperative/centerMembers/') . $key['id']; ?>"><?php echo strtoupper($key['centerName']); ?>
 								</a></td>
 								<td><?php echo $key['firstname']." ".$key['lastname']?></td>
-								<td class="text-right">
-									
-								</td>
+								<td></td>
+								<td class="text-right"></td>
 							</tr>
 							<?php $i++; }?>
 						</tbody>

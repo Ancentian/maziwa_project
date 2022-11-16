@@ -76,7 +76,7 @@ $edate = $_GET['edate'];
 								<th>Shop</th>					
 								<th>Individ</th>
 								<th>General</th>
-								<th>Gross</th>
+								<!-- <th>Gross</th> -->
 								<!-- <th class="text-right">Action</th> -->
 							</tr>
 						</thead>
@@ -90,9 +90,9 @@ $edate = $_GET['edate'];
 							<?php $i=1; foreach ($milkCollection as $key) {
 									$total = $this->payments_model->select_deductions($key['farmerID'],$startdate,$enddate);
 									$individualDeduction = $this->payments_model->select_individualDeductions($key['farmerID'],$startdate,$enddate);
-									$generalDeduction = $this->payments_model->select_generalDeductions($startdate,$enddate);
+									$generalDeduction = $this->payments_model->select_generalDeductions($startdate,$enddate); 
 							 ?>
-
+							 <?php if($key['milktotal'] > 0) {?>
 								<tr>
 									<td><?php echo $i; ?></td>
 									<td><input type="text" class="form-control" value="<?php echo $key['farmerID']?>" name="farmerID[]" readonly></td>
@@ -102,15 +102,16 @@ $edate = $_GET['edate'];
 										<input type="text" class="form-control totalMilk" name="total_milk[]" value="<?php echo $key['milktotal']?>" readonly>
 									</td>
 									<td>
-										<input type="text" class="form-control shop" id="shop" name="shopDeductions[]" value="<?php echo number_format($total)?>" readonly>
+										<input type="text" class="form-control shop" id="shop" name="shopDeductions[]" value="<?php echo $total?>" readonly>
 									</td>				
-									<td><input type="text" class="form-control individual" name="individualDeductions[]" id="individual" value="<?php echo number_format($individualDeduction)?>" readonly></td>
+									<td><input type="text" class="form-control individual" name="individualDeductions[]" id="individual" value="<?php echo $individualDeduction?>" readonly></td>
 									<td>
 										<input type="text" class="form-control general" id="general" name="generalDeductions[]" value="<?php echo $generalDeduction?>" readonly>
 									</td>
-									<td ><input type="text" class="form-control gross" id="gross" name="generalDeductions[]" value="" readonly></td>
+									<!-- <td ><input type="text" class="form-control gross" id="gross" name="generalDeductions[]" value="" readonly></td> -->
 								</tr>
-								<?php $i++; } ?>
+							<?php }?>
+								<?php $i++; }  ?>
 							</tbody>
 						</table>
 						</div>

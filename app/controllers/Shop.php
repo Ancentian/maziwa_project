@@ -52,10 +52,7 @@ class Shop extends BASE_Controller {
     public function addShopping()
     {
         $id = $this->input->get('fid');
-        //echo $id;die;
-        //$this->data['farmerID'] = $id;
         $this->data['farmer'] = $this->shop->fetch_farmerByID($id);
-        //var_dump($this->data['farmer']);die;
         $this->data['farmers'] = $this->farmers->fetch_farmers();
         $this->data['inventory'] = $this->shop->fetch_allInventory();
         $this->data['pg_title'] = "Add Shopping";
@@ -65,11 +62,12 @@ class Shop extends BASE_Controller {
 
     public function viewShopping()
     {
+        $sdate = ""; $edate = "";
+        $edate = $this->input->get('sdate');
+        $edate = $this->input->get('edate');
         $id = $this->input->get('fid');
         $this->data['farmer'] = $this->shop->fetch_farmerByID($id);
-        //var_dump($this->data['farmer']);die;
-        $this->data['shopping'] = $this->shop->fetch_shoppingByFarmerID($id);
-        
+        $this->data['shopping'] = $this->shop->fetch_shoppingByFarmerID($id, $sdate, $edate);
         $this->data['farmers'] = $this->farmers->fetch_farmers();
         $this->data['inventory'] = $this->shop->fetch_allInventory();
         $this->data['pg_title'] = "View Shopping";

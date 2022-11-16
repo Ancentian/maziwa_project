@@ -31,38 +31,6 @@
 		<?php if ($this->session->flashdata('error-msg')) { ?>
 			<div class="alert alert-danger"><?php echo $this->session->flashdata('error-msg'); ?></div>
 		<?php } ?>
-		<!-- Search Filter -->
-		<div class="row filter-row">
-			<div class="col-sm-6 col-md-3">  
-				<div class="form-group form-focus">
-					<input type="text" class="form-control floating">
-					<label class="focus-label">Employee ID</label>
-				</div>
-			</div>
-			<div class="col-sm-6 col-md-3">  
-				<div class="form-group form-focus">
-					<input type="text" class="form-control floating">
-					<label class="focus-label">Farmer Name</label>
-				</div>
-			</div>
-			<div class="col-sm-6 col-md-3"> 
-				<div class="form-group form-focus select-focus">
-					<select class="select floating"> 
-						<option>Select Collection Center</option>
-						<option>Web Developer</option>
-						<option>Web Designer</option>
-						<option>Android Developer</option>
-						<option>Ios Developer</option>
-					</select>
-					<label class="focus-label">Collection Center</label>
-				</div>
-			</div>
-			<div class="col-sm-6 col-md-3">  
-				<a href="#" class="btn btn-success btn-block"> Search </a>  
-			</div>     
-		</div>
-		<!-- /Search Filter -->
-		
 		<div class="row">
 			<div class="col-md-12">
 				<div class="table-responsive">
@@ -90,12 +58,14 @@
 										<a href="<?php echo base_url('farmers/farmerProfile?fid='. $key['farmerID'] )?>"><?php echo $key['fname']." ". $key['lname']?> <span><?php echo $key['location']?></span></a>
 									</h2>
 								</td>
-								
+								<?php if($key['contact1'] != "") {?>
 								<td><?php echo $key['contact1']?></td>
+								<?php }elseif($key['contact1'] == ""){?>
+								<td><?php echo "--"; ?></td>
+								<?php }?>
 								<td><?php echo ucfirst($key['centerName'])?></td>
-								<!-- <td><?php //echo date('d/m/Y', strtotime($key['join_date']))?></td> -->
 								<td><?php echo ucfirst($key['gender'])?></td>
-								<td><?php echo $key['amount']?></td>
+								<td><?php echo $key['totShopAmount']?></td>
 								<td class="text-right">
 									<a href="<?php echo base_url('shop/viewShopping?fid='.$key['farmerID']) ?>" title="View Shoppings" class="btn btn-info"><i class="fa fa-eye"></i></a>
 								</td>

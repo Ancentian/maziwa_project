@@ -241,6 +241,14 @@ class Payments_model extends CI_Model
         return $query->result_array();
     }
 
+    public function get_last_month(){
+        $this->db->select('*');
+        $this->db->from('payments');
+        $this->db->group_by('created_at');
+        $query = $this->db->get();
+        return $query->result_array();
+    } 
+
     public function fetch_allMonthlyPayments($sdate, $edate)
     {
         $this->db->select('payments.*,farmers_biodata.id as farID, farmers_biodata.fname, farmers_biodata.mname, farmers_biodata.lname, farmers_biodata.center_id, collection_centers.id as colID, collection_centers.centerName, users.id as userID, users.firstname, users.lastname');
@@ -253,6 +261,7 @@ class Payments_model extends CI_Model
             $this->db->where('payments.from_date >=',$sdate);
             $this->db->where('payments.to_date <=',$edate);
         }
+        //$this->db->group_by('MONTH(payments.from_date), YEAR(payments.from_date)');
         //$this->db->group_by('payments.from_date');
         $this->db->order_by('payments.created_at');
         $query = $this->db->get();

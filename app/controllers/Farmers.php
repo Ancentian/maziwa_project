@@ -81,6 +81,7 @@ class Farmers extends BASE_Controller {
         $this->form_validation->set_rules('center_id', 'Collection Center', 'required');
         $this->form_validation->set_rules('location', 'Location', 'required');
         $this->form_validation->set_rules('marital_status', 'Marital Status', 'required');
+        $this->form_validation->set_rules('status', 'Status', 'required');
         $this->form_validation->set_rules('bank_name', 'Bank Name', 'required');
         $this->form_validation->set_rules('bank_branch', 'Branch Name', 'required');
         $this->form_validation->set_rules('acc_name', 'Account Name', 'required');
@@ -99,10 +100,11 @@ class Farmers extends BASE_Controller {
                 'contact1' => $this->input->post('contact1'),
                 'contact2' => $this->input->post('contact2'),
                 'gender' => $this->input->post('gender'),
-                'join_date' => $this->input->post('join_date'),
+                'join_date' => date('Y-m-d',strtotime(str_replace("/","-",$this->input->post('join_date')))),
                 'center_id' => $this->input->post('center_id'),
                 'location' => $this->input->post('location'),
                 'marital_status' => $this->input->post('marital_status'),
+                'status' => $this->input->post('status'),
                 'bank_name' => $this->input->post('bank_name'),
                 'bank_branch' => $this->input->post('bank_branch'),
                 'acc_name' => $this->input->post('acc_name'),
@@ -188,8 +190,10 @@ class Farmers extends BASE_Controller {
     /*
       Edit a record page
     */
-    public function editFarmer($id)
+    public function editFarmer()
     {
+        $id = $this->input->get('fid');
+        //var_dump($id);die;
         $this->data['collectionCenter'] = $this->cooperative->fetch_allCollectionCenters();
         $this->data['farmer'] = $this->farmers->fetch_farmerByID($id);
         $this->data['pg_title'] = "Edit Farmer";
@@ -200,8 +204,9 @@ class Farmers extends BASE_Controller {
     /*
       Update the submitted record
     */
-    public function updateFarmer($id)
+    public function updateFarmer()
     {
+        $id = $this->input->get('fid');
         $forminput = $this->input->post();
 
         //var_dump($forminput);die;
