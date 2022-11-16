@@ -39,8 +39,8 @@
 							<thead>
 								<tr>
 									<th>#</th>
-									<th>Name</th>
-									<th>Farmer ID</th>
+									<!-- <th>Name</th> -->
+									<th class="text-center">Farmer ID</th>
 									<th>Morning</th>
 									<th>Evening</th>
 									<th>Rejected</th>		
@@ -62,12 +62,10 @@
 										<td>
 											
 												<a href="<?php echo base_url('farmers/farmerProfile/'. $key['id'] )?>" class="avatar">
-													<img alt="" src="<?php echo base_url()?>res/assets/img/profiles/user.png"></a><?php echo $key['fname']." ".$key['lname']?> 
+													<img alt="" src="<?php echo base_url()?>res/assets/img/profiles/user.png"></a><?php echo $key['farmerID']." - ".($key['fname']." ".$key['lname'])?> 
 												
 											</td>
-											<td>
-												<input type="text" name="farmerID[]" value="<?php echo $key['farmerID']?>" class="form-control" readonly> 
-											</td>
+												<input type="text" name="farmerID[]" value="<?php echo $key['farmerID']?>" class="form-control" hidden> 
 											<td>
 												<input type="number" name="morning[]" id="value1" class="form-control  morning" value="0" step="any" placeholder="Enter first value" required />
 											</td>
@@ -157,17 +155,7 @@
 											</div>
 										</div>
 									</div>
-									<div class="col-md-6">
-										<div class="form-group">
-											<label>Collection Center <span class="text-danger">*</span></label>
-											<select name="collection_center" class="select">
-												<option>Select Collection Center</option>
-												<?php foreach ($collectionCenter as $key) { ?>
-													<option value="<?php echo $key['id']?>"><?php echo $key['centerName']?></option>
-												<?php }?>
-											</select>
-										</div>
-									</div>
+									
 									<div class="col-sm-6">  
 										<div class="form-group">
 											<label class="col-form-label">Location <span class="text-danger">*</span></label>

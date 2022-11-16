@@ -52,10 +52,7 @@ class Shop extends BASE_Controller {
     public function addShopping()
     {
         $id = $this->input->get('fid');
-        //echo $id;die;
-        //$this->data['farmerID'] = $id;
         $this->data['farmer'] = $this->shop->fetch_farmerByID($id);
-        //var_dump($this->data['farmer']);die;
         $this->data['farmers'] = $this->farmers->fetch_farmers();
         $this->data['inventory'] = $this->shop->fetch_allInventory();
         $this->data['pg_title'] = "Add Shopping";

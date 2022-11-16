@@ -15,15 +15,13 @@
                             </li>
 
                             <li class="menu-title"> 
-                                <span>Employees</span>
+                                <span>People</span>
                             </li>
                             <li class="submenu">
-                                <a href="#" class="noti-dot"><i class="la la-user"></i> <span> Employees</span> <span class="menu-arrow"></span></a>
+                                <a href="#" class="noti-dot"><i class="la la-user"></i> <span> People</span> <span class="menu-arrow"></span></a>
                                 <ul style="display: none;">
                                     <li><a href="<?php echo base_url('employee/index'); ?>">Staff</a></li>
                                     <li><a href="<?php echo base_url('farmers/index'); ?>">Farmers</a></li>
-                                    <!-- <li><a href="departments.html">Departments</a></li>
-                                        <li><a href="designations.html">Designations</a></li> -->
                                     </ul>
                                 </li>                           
                                 <li class="menu-title" hidden> 
