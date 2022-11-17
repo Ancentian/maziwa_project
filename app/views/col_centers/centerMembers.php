@@ -57,13 +57,12 @@
 										</div>
 								
 								<?php $i=1; foreach ($farmers as $key) { ?>
+									<?php if ($key['status'] == 1) { ?>
 									<tr>
 										<td><?php echo $i; ?></td>
 										<td>
-											
 												<a href="<?php echo base_url('farmers/farmerProfile/'. $key['id'] )?>" class="avatar">
 													<img alt="" src="<?php echo base_url()?>res/assets/img/profiles/user.png"></a><?php echo $key['farmerID']." - ".($key['fname']." ".$key['lname'])?> 
-												
 											</td>
 												<input type="text" name="farmerID[]" value="<?php echo $key['farmerID']?>" class="form-control" hidden> 
 											<td>
@@ -79,7 +78,8 @@
 												<input type="number" name="total[]" id="sum" class="form-control total"readonly />
 											</td>
 										</tr>
-										<?php $i++; }?>				
+									<?php }?>
+										<?php $i++;  }?>				
 									</tbody>
 								</table>
 							</div>

@@ -22,7 +22,7 @@ class Farmers_model extends CI_Model{
             //$this->db->or_like('PostalCode', $query);
             //$this->db->or_like('Country', $query);
         //}
-        $this->db->order_by('id', 'DESC');
+        $this->db->order_by('status', 'DESC');
         $query = $this->db->get();
         return $query->result_array();
     }

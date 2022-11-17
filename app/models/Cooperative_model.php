@@ -47,7 +47,7 @@ class Cooperative_model extends CI_Model{
     public function center_members($id)
     {
         $this->db->where('collection_centers.id', $id);
-        $this->db->select('collection_centers.*, farmers_biodata.id as keyID, farmers_biodata.fname, farmers_biodata.lname, farmers_biodata.farmerID, farmers_biodata.center_id')->from('collection_centers');
+        $this->db->select('collection_centers.*, farmers_biodata.id as keyID, farmers_biodata.fname, farmers_biodata.lname, farmers_biodata.farmerID, farmers_biodata.center_id, farmers_biodata.status')->from('collection_centers');
         $this->db->join('farmers_biodata', 'farmers_biodata.center_id = collection_centers.id');
         $query = $this->db->get();
         return $query->result_array();

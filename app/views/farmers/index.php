@@ -94,8 +94,12 @@
 
 									<td><?php echo $key['contact1']?></td>
 									<td><?php echo ucfirst($key['centerName'])?></td>
-									<td><?php echo date('Y/m/d', strtotime($key['join_date']))?></td>
-									<td><?php echo $key['gender']?></td>
+									<?php if($key['join_date'] == '0000-00-00 00:00:00') { ?>
+										<td><?php echo date('Y-m-d')?></td>
+									<?php } elseif ($key['join_date'] != '') { ?>
+										<td><?php echo date('Y/m/d', strtotime($key['join_date']))?></td>
+									<?php } ?>
+									<td><?php echo ucfirst($key['gender'])?></td>
 									<td class="text-center">
 										<div class="dropdown action-label">
 											<?php if($key['status'] == 1) {?>
