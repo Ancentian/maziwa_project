@@ -142,7 +142,8 @@ class Cooperative extends BASE_Controller {
         $rejected   =     $forminput['rejected'];
         $total      =     $forminput['total'];
         $userID     =     $this->session->userdata('user_aob')->id; 
-        //var_dump($total);die;      
+        //var_dump($total);die;
+             
         $i = 0;
         foreach($farmer as $key)
         {
@@ -150,7 +151,8 @@ class Cooperative extends BASE_Controller {
             $evng = $evening[$i];
             $reject = $rejected[$i];
             $tot = $total[$i];
-            // if($tot > 0)
+            //var_dump($total[1]);die;
+            //if($total[$i] > 0){ 
             // {
                 $this->db->insert('milk_collections', ['user_id' => $userID, 'center_id' => $forminput['center_id'], 'collection_date' => $date, 'farmerID' => $key, 'morning' => ltrim($mrg, "0"), 'evening' => ltrim($evng, "0"), 'rejected' => ltrim($reject, "0"), 'total' => $tot]);
                 $i++;

@@ -112,7 +112,7 @@
 						</div>
 						<div class="col-sm-6 col-md-8">
 							<div class="form-group">
-								<label>Marital Status</label>
+								<label>Status</label>
 								<select class="select" name="status">
 									<option value="1"<?php if($farmer['status'] == 1) { echo "selected"; }?>>Active</option>
 									<option value="0"<?php if($farmer['status'] == 0) { echo "selected"; }?>>Inactive</option>
