@@ -70,7 +70,7 @@
                     <div class="col-md-6 text-center">
                         <div class="card">
                             <div class="card-body">
-                                <h3 class="card-title">Total Revenue</h3>
+                                <h3 class="card-title">Milk Production</h3>
                                 <div id="bar-charts"></div>
                             </div>
                         </div>

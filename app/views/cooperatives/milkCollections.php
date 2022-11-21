@@ -58,8 +58,7 @@
 						<thead>
 							<tr>
 								<th style="width: 30px;">#</th>
-								<th>Code</th>
-								<th>Name</th>
+								<th class="text-center">Farmer Code</th>
 								<th>Center</th>
 								<th>Col. Date</th>
 								<th>Morning</th>
@@ -75,21 +74,20 @@
 							<?php $i=1; foreach ($milk as $key) { ?>
 								<tr>
 								<td><?php echo $i; ?></td>
-								<td><?php echo $key['farmerID']?></td>
-								<td><?php echo $key['fname']." ".$key['mname']." ".$key['lname']?></td>
+								<td><?php echo $key['farmerID']." - ".$key['fname']." ".$key['mname']." ".$key['lname']?></td>
 								<td><?php echo ucfirst($key['centerName'])?></td>
 								<td><?php echo date('d/m/Y', strtotime($key['collection_date']))?></td>	
-								<?php if(!$key['morning'] == "") {?>
+								<?php if($key['morning'] != "") {?>
 								<td><?php echo $key['morning']?></td>
 								<?php } elseif ($key['morning'] =="") {?>
 								<td><?php echo "0"; ?></td>
 								<?php }?>
-								<?php if(!$key['evening'] == "") {?>
+								<?php if($key['evening'] != "") {?>
 								<td><?php echo $key['evening']?></td>
 								<?php } elseif ($key['evening'] =="") {?>
 								<td><?php echo "0"; ?></td>
 								<?php }?>
-								<?php if(!$key['rejected'] == "") {?>
+								<?php if($key['rejected'] != "") {?>
 								<td><?php echo $key['rejected']?></td>
 								<?php } elseif ($key['rejected'] == "") {?>
 								<td><?php echo "0"; ?></td>

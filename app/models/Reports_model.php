@@ -10,6 +10,18 @@ class Reports_model extends CI_Model{
         Get all the records from the database
     */
 
+    function get_data(){
+    $this->db->select('milk_collections.id as milkColID,milk_collections.center_id, SUM(milk_collections.total) as totalMilk, collection_centers.id as colID, collection_centers.centerName');
+    $this->db->from('milk_collections');
+    $this->db->join('collection_centers', 'collection_centers.id = milk_collections.center_id');
+    $result = $this->db->get();
+    return $result;
+  
+      // $this->db->select('year,purchase,sale,profit');
+      // $result = $this->db->get('account');
+      // return $result;
+  }
+
     public function milk_collections($sdate, $edate)
     {
         //var_dump($sdate);die;
