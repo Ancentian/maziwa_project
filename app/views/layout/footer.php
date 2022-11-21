@@ -118,6 +118,19 @@ var rate = document.getElementById("rate").value;
         //calc_total();
         
     });
+
+    // Morris.Bar({
+    //     element: 'bar-charts',
+    //     data: <?php //echo $data;?>,
+    //     xkey: 'centerName',
+    //     ykeys: ['totalMilk', 'b'],
+    //     labels: ['Total Milk', 'Total Outcome'],
+    //     lineColors: ['#f43b48','#453a94'],
+    //     lineWidth: '3px',
+    //     barColors: ['#f43b48','#453a94'],
+    //     resize: true,
+    //     redraw: true
+    // });
     </script>
 	
 </body>

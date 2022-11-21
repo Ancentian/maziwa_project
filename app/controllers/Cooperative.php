@@ -70,6 +70,7 @@ class Cooperative extends BASE_Controller {
         $sdate = $forminput['sdate'];
         $edate = $forminput['edate'];
         $this->data['milk'] = $this->cooperative_model->milk_collections($sdate, $edate);
+        //var_dump($this->data['milk'][0]);die;
         $this->data['pg_title'] = "Selected Center";
         $this->data['page_content'] = 'cooperatives/milkCollections';
         $this->load->view('layout/template', $this->data);
@@ -186,7 +187,17 @@ class Cooperative extends BASE_Controller {
     {
         $forminput = $this->input->post();
 
-        $inserted = $this->cooperative_model->update_milkCollection($id, $forminput);
+        $center_id = $forminput['center_id'];
+        $collection_date = $forminput['collection_date'];
+        $farmerID = $forminput['farmerID'];
+        $morning = $forminput['morning'];
+        $evening = $forminput['evening'];
+        $rejected = $forminput['rejected'];
+        $total = $forminput['total'];
+
+        $data = array('center_id' => $center_id, 'collection_date' => $collection_date, 'farmerID' => $farmerID,'morning' => $morning, 'evening' => $evening, 'rejected' => $rejected, 'total' => $total);
+
+        $inserted = $this->cooperative_model->update_milkCollection($id, $data);
 
         if ($inserted > 0) {
             $this->session->set_flashdata('success-msg', 'Data Updated Successfully');

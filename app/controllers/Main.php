@@ -25,6 +25,17 @@ class Main extends BASE_Controller {
         $this->data['bestProducers'] = $this->reports_model->best_milkProducers();
         $this->data['bestCenters'] = $this->reports_model->best_collectionCenters();
         $this->data['cooperative'] = $this->cooperative_model->fetch_allCooperatives();
+        $data = $this->reports_model->get_data()->result();
+        // foreach($data->result_array() as $row)
+        // {
+        //     $output[] = array(
+        //      'centerName'  => $row["centerName"],
+        //      'totalMilk' => floatval($row["totalMilk"])
+        //     );
+        // }
+        // var_dump(json_encode($output));die;
+        $this->data['data'] = json_encode($data);
+        //var_dump($this->data['data']);die;
 		$this->data['pg_title'] = "Dashboard";
 		$this->data['page_content'] = 'admin/index';
 		$this->load->view('layout/template', $this->data);
