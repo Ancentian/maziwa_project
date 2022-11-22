@@ -31,7 +31,7 @@
 			<div class="alert alert-danger"><?php echo $this->session->flashdata('error-msg'); ?></div>
 		<?php } ?>
 		<!-- Search Filter -->
-		<form action="<?php echo base_url('reports/collection_centerReports/'.$milkCollection[0]['center_id'])?>" method="GET">
+		<form action="<?php echo base_url('reports/allCollectionCentersReport')?>" method="GET">
 		<div class="row filter-row">
 			<div class="col-md-4">  
 				<div class="form-group form-focus">
@@ -73,7 +73,11 @@
 							</tr>
 						</thead>
 						<tbody>
-							<?php $i=1; foreach ($allCenters as $key) { ?>
+							<?php $i=1; $morning = 0; $evening = 0; 
+							$rejected = 0; $total = 0; 
+							foreach ($allCenters as $key) { 
+								$morning += $key['totMorning']; $evening += $key['totEvening'];
+								$rejected += $key['totRejected']; $total += $key['totalMilk'];  ?>
 								<tr>
 								<td><?php echo $i; ?></td>
 								<td><a href="<?php echo base_url('reports/collection_centerReports/'.$key['id'])?>"><?php echo ucfirst($key['centerName'])?></a></td>
@@ -104,6 +108,18 @@
 							</tr>
 							<?php $i++; } ?>
 						</tbody>
+						<tfoot>
+							<tr>
+								<th style="width: 30px;">#</th>
+								<th>TOTALS</th>
+								<th><?php echo $morning; ?></th>
+								<th><?php echo $evening; ?></th>						
+								<th><?php echo $rejected; ?></th>
+								<th><?php echo $total; ?></th>					
+								<th></th>
+								<th class="text-right"></th>
+							</tr>
+						</tfoot>
 					</table>
 				</div>
 			</div>

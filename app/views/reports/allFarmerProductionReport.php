@@ -72,7 +72,10 @@
 							</tr>
 						</thead>
 						<tbody>
-							<?php $i=1; foreach ($allFarmers as $key) { ?>
+							<?php $i=1; $morning = 0; $evening = 0; 
+							$rejected = 0; $total = 0; foreach ($allFarmers as $key) {
+								$morning += $key['totMorning']; $evening += $key['totEvening'];
+								$rejected += $key['totRejected']; $total += $key['totalMilk']; ?>
 								<tr>
 								<td><?php echo $i; ?></td>
 								<td><a href="<?php echo base_url('reports/singleFarmerProduction?fid='.$key['farmerID'])?>"><?php echo $key['farmerID']?></a></td>
@@ -89,6 +92,18 @@
 							</tr>
 							<?php $i++; } ?>
 						</tbody>
+						<tfoot>
+							<tr>
+								<th style="width: 30px;">#</th>
+								<th colspan="3">TOTALS</th>
+								<th ><?php echo $morning; ?></th>
+								<th><?php echo $evening; ?></th>						
+								<th><?php echo $rejected; ?></th>
+								<th><?php echo $total; ?></th>					
+								<th></th>
+								<th class="text-right"></th>
+							</tr>
+						</tfoot>
 					</table>
 				</div>
 			</div>

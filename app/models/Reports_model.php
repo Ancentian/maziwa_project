@@ -49,7 +49,7 @@ class Reports_model extends CI_Model{
         $this->db->join('users', 'users.id = milk_collections.user_id');
         $this->db->join('farmers_biodata', 'farmers_biodata.farmerID = milk_collections.farmerID', 'left');
         if($sdate != "" && $edate != ""){
-            $edate = date('d/m/Y',strtotime($edate)+86400);
+            $edate = date('Y-m-d',strtotime($edate)+86400);
             $this->db->where('milk_collections.collection_date >=',$sdate);
             $this->db->where('milk_collections.collection_date <',$edate);
         }
@@ -201,12 +201,17 @@ class Reports_model extends CI_Model{
         return $query->result_array();
     }
 
-    function all_collectionCentersProduction()
+    function all_collectionCentersProduction($sdate, $edate)
     {
-        $this->db->select('collection_centers.*, milk_collections.id as milkColID, milk_collections.center_id,SUM(milk_collections.morning) as totMorning,SUM(milk_collections.evening) as totEvening,SUM(milk_collections.rejected) as totRejected, SUM(milk_collections.total) as totalMilk,users.id as userID, users.firstname, users.lastname');
+        $this->db->select('collection_centers.*, milk_collections.id as milkColID, milk_collections.center_id, milk_collections.collection_date, SUM(milk_collections.morning) as totMorning,SUM(milk_collections.evening) as totEvening,SUM(milk_collections.rejected) as totRejected, SUM(milk_collections.total) as totalMilk, milk_collections.created_at, users.id as userID, users.firstname, users.lastname');
         $this->db->from('collection_centers');
         $this->db->join('milk_collections', 'milk_collections.center_id = collection_centers.id','LEFT');
         $this->db->join('users', 'users.id = collection_centers.clerk_id');
+        if($sdate != "" && $edate != ""){
+            $edate = date('Y-m-d',strtotime($edate)+86400);
+            $this->db->where('milk_collections.collection_date >=',$sdate);
+            $this->db->where('milk_collections.collection_date <',$edate);
+        }
         $this->db->group_by('collection_centers.id');
         $this->db->order_by('SUM(milk_collections.total)', 'DESC');
         //$this->db->limit(5);
@@ -216,7 +221,7 @@ class Reports_model extends CI_Model{
 
     function all_farmerProduction($sdate, $edate)
     {
-        $this->db->select('farmers_biodata.*, milk_collections.id as milkColID, milk_collections.center_id,SUM(milk_collections.morning) as totMorning,SUM(milk_collections.evening) as totEvening,SUM(milk_collections.rejected) as totRejected, SUM(milk_collections.total) as totalMilk,collection_centers.id as colID, collection_centers.centerName,users.id as userID, users.firstname, users.lastname');
+        $this->db->select('farmers_biodata.*, milk_collections.id as milkColID, milk_collections.center_id,milk_collections.collection_date, SUM(milk_collections.morning) as totMorning,SUM(milk_collections.evening) as totEvening,SUM(milk_collections.rejected) as totRejected, SUM(milk_collections.total) as totalMilk,collection_centers.id as colID, collection_centers.centerName,users.id as userID, users.firstname, users.lastname');
         $this->db->from('farmers_biodata');
         $this->db->join('milk_collections', 'milk_collections.farmerID = farmers_biodata.farmerID');
         $this->db->join('collection_centers', 'collection_centers.id = farmers_biodata.center_id');
@@ -224,8 +229,8 @@ class Reports_model extends CI_Model{
         if($sdate != "" && $edate != ""){
             //var_dump($sdate);die;
             $edate = date('Y-m-d',strtotime($edate)+86400);
-            $this->db->where('milk_collections.created_at >=',$sdate);
-            $this->db->where('milk_collections.created_at <',$edate);
+            $this->db->where('milk_collections.collection_date >=',$sdate);
+            $this->db->where('milk_collections.collection_date <',$edate);
         }
         $this->db->group_by('farmers_biodata.farmerID');
         $this->db->order_by('SUM(milk_collections.total)', 'DESC');
@@ -233,7 +238,7 @@ class Reports_model extends CI_Model{
         return $query->result_array();
     }
 
-    function single_farmerProduction($id)
+    function single_farmerProduction($id, $sdate, $edate)
     {
         $this->db->where('milk_collections.farmerID', $id);
         $this->db->select('milk_collections.*, farmers_biodata.id as farID, farmers_biodata.fname, farmers_biodata.mname, farmers_biodata.lname, farmers_biodata.farmerID,farmers_biodata.center_id,collection_centers.id as colID, collection_centers.centerName,users.id as userID, users.firstname, users.lastname');
@@ -241,6 +246,12 @@ class Reports_model extends CI_Model{
         $this->db->join('farmers_biodata', 'farmers_biodata.farmerID = milk_collections.farmerID');
         $this->db->join('collection_centers', 'collection_centers.id = farmers_biodata.center_id');
         $this->db->join('users', 'users.id = collection_centers.clerk_id');
+        if($sdate != "" && $edate != ""){
+            //var_dump($sdate);die;
+            $edate = date('Y-m-d',strtotime($edate)+86400);
+            $this->db->where('milk_collections.collection_date >=',$sdate);
+            $this->db->where('milk_collections.collection_date <',$edate);
+        }
         $this->db->order_by('milk_collections.total', 'DESC');
         $query = $this->db->get();
         return $query->result_array();

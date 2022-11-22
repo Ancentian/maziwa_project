@@ -50,7 +50,7 @@
 				</div>
 			</div>
 			<div class="col-md-4 ">  
-				<input type="button" class="btn btn-success btn-block" value="Search" required>
+				<input type="submit" class="btn btn-success btn-block" value="Search" required>
 				<!-- <button class="btn btn-success " value="FILTER" type="submit"> Search</button>  --> 
 			</div>     
 		</div>
@@ -72,7 +72,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<?php $i=1; foreach ($milkCollection as $key) { ?>
+							<?php $i=1; $total = 0; foreach ($milkCollection as $key) { $total += $key['total']; ?>
 								<tr>
 								<td><?php echo $i; ?></td>
 								<td><a href="<?php echo base_url('reports/singleFarmerProduction?fid='.$key['farmerID'])?>"><?php echo $key['farmerID']?></a></td>
@@ -84,6 +84,14 @@
 							</tr>
 							<?php $i++; } ?>
 						</tbody>
+						<tfoot>
+							<tr>
+								<th></th>
+								<th colspan="3">TOTAL</th>
+								<th ><?php echo $total; ?></th>
+								<th colspan="2"></th>
+							</tr class="border border-double">
+						</tfoot>
 					</table>
 				</div>
 			</div>

@@ -213,25 +213,55 @@
 										<th>Collection Date</th>
 										<th>Morning</th>
 										<th>Evening</th>
-										<th>Rejected</th>					
+										<th>Rejected</th>
+										<th>Total</th>					
 										<th>Clerk</th>
 										<th>Created at</th>
 									</tr>
 								</thead>
 								<tbody>
-									<?php $i=1; foreach ($milk as $key) { ?>
+									<?php $i=1; $morning = 0; $evening = 0; $rejected = 0; $total = 0; 
+									foreach ($milk as $key) { 
+										$morning += $key['morning']; $evening += $key['evening'];
+										$rejected += $key['rejected']; $total += $key['total'];?>
 										<tr>
 											<td><?php echo $i; ?></td>
-											<td><?php echo date('d/m/Y', strtotime($key['collection_date']))?></td>	
+											<td><?php echo date('d/m/Y', strtotime($key['collection_date']))?></td>
+											<?php if($key['morning'] != "") {?>
 											<td><?php echo $key['morning']?></td>
+											<?php } elseif ($key['morning'] =="") {?>
+											<td><?php echo "0"; ?></td>
+											<?php }?>
+											<?php if($key['evening'] != "") {?>
 											<td><?php echo $key['evening']?></td>
-											<td><?php echo $key['rejected']?></td>				
+											<?php } elseif ($key['evening'] =="") {?>
+											<td><?php echo "0"; ?></td>
+											<?php }?>
+											<?php if($key['rejected'] != "") {?>
+											<td><?php echo $key['rejected']?></td>
+											<?php } elseif ($key['rejected'] == "") {?>
+											<td><?php echo "0"; ?></td>
+											<?php }?>
+											<td><?php echo $key['total']?></td>				
 											<td><?php echo $key['firstname']?></td>
 											<td><?php echo date('d/m/Y', strtotime($key['created_at'])) ?></td>
 										</tr>
 										<?php $i++; } ?>
 									</tbody>
+									<tfoot>
+										<tr>
+											<th style="width: 30px;">#</th>
+											<th colspan="">TOTALS</th>
+											<th ><?php echo $morning; ?></th>
+											<th><?php echo $evening; ?></th>						
+											<th><?php echo $rejected; ?></th>
+											<th><?php echo $total; ?></th>					
+											<th></th>
+											<th></th>
+										</tr>
+									</tfoot>
 								</table>
+
 
 							</div>
 						</div>
@@ -278,12 +308,13 @@
 									</tbody>
 									<tfoot>
 										<tr>
-											<td colspan="4" style="text-align: right; font-weight: bold">
+											<th colspan="4" style="text-align: right; font-weight: bold">
 												Grand Total
-											</td>
-											<td>
+											</th>
+											<th>
 												<input class="form-control text-right" type="text" id="grand_total" name="" value="Ksh. <?php echo $amt; ?>" readonly>
-											</td>
+											</th>
+											<th colspan="3"></th>
 										</tr>
 									</tfoot>
 								</table>
@@ -312,7 +343,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										<?php $i=1; foreach ($deductions as $key) { ?>
+										<?php $i=1; $amt = 0; foreach ($deductions as $key) { $amt += $key['amount']; ?>
 											<tr>
 												<td><?php echo $i; ?></td>
 												<td><?php echo $key['deductionName']?></td>		
@@ -327,6 +358,15 @@
 											</tr>
 											<?php $i++; } ?>
 										</tbody>
+										<tfoot>
+											<tr>
+												<th>#</th>
+												<th>TOTAL</th>
+												<th></th>
+												<th><?php echo $amt; ?></th>
+												<th colspan="2"></th>
+											</tr>
+										</tfoot>
 									</table>
 
 								</div>
@@ -359,200 +399,202 @@
 								<tbody>
 
 									<?php $i=1; 
-											$milk = 0; 
-											$shop = 0; 
-											$indv = 0; 
-											$gen = 0;  
-											$totDed = 0;
-											$totGross = 0;
-											foreach ($payments as $key){
-												$milk += $key['total_milk']; {
-												$shop += $key['shopDeductions']; {
+									$milk = 0; 
+									$shop = 0; 
+									$indv = 0; 
+									$gen = 0;  
+									$totDed = 0;
+									$totGross = 0;
+									foreach ($payments as $key){
+										$milk += $key['total_milk']; {
+											$shop += $key['shopDeductions']; {
 												$indv += $key['individualDeductions']; {
-												$gen += $key['generalDeductions'];  {
-												$totDed += $key['shopDeductions'] + $key['individualDeductions'] + $key['generalDeductions']; {
-												$totGross = (($milk * $key['milkRate']) - $totDed); {
+													$gen += $key['generalDeductions'];  {
+														$totDed += $key['shopDeductions'] + $key['individualDeductions'] + $key['generalDeductions']; {
+															$totGross = (($milk * $key['milkRate']) - $totDed); {
 
-									?>
+																?>
 
-										<tr <?php if(($key['total_milk']*$key['milkRate']) - ($key['shopDeductions'] + $key['individualDeductions'] + $key['generalDeductions']) < 0) {?> class="table-danger" <?php }?>>
-											<td><?php echo $i; ?></td>
-											<td><?php echo $key['total_milk']?></td>
-											<td><?php echo number_format($key['shopDeductions'])?></td>
-											<td><?php echo number_format($key['individualDeductions'])?></td>
-											<td><?php echo number_format($key['generalDeductions'])?></td>	
-											<td><?php echo number_format($key['shopDeductions'] + $key['individualDeductions'] + $key['generalDeductions'])?></td>
-											<td><?php echo number_format(($key['total_milk']*$key['milkRate']) - ($key['shopDeductions'] + $key['individualDeductions'] + $key['generalDeductions']))?></td>
-											
-											<td><?php echo date('d/m/Y', strtotime($key['created_at']))?></td>
-											<td class="text-right">
-												<a href="<?php echo base_url('payments/print_invoice/'.$key['id']) ?>" class="btn btn-info btn-sm"><i class="fa fa-print"></i></a>
-											</td>
-										</tr>
-										<?php $i++; } } } } } } }?>
-									</tbody>
-									<tfoot>
-										<tr>
-											<th></th>
-											<th><?php echo $milk;?></th>
-											<th><?php echo $shop;?></th>
-											<th><?php echo $indv;?></th>
-											<th><?php echo $gen;?></th>
-											<th><?php echo $totDed;?></th>
-											<th><?php echo $totGross;?></th>
-										</tr>
-									</tfoot>
-								</table>
+																<tr <?php if(($key['total_milk']*$key['milkRate']) - ($key['shopDeductions'] + $key['individualDeductions'] + $key['generalDeductions']) < 0) {?> class="table-danger" <?php }?>>
+																	<td><?php echo $i; ?></td>
+																	<td><?php echo $key['total_milk']?></td>
+																	<td><?php echo number_format($key['shopDeductions'])?></td>
+																	<td><?php echo number_format($key['individualDeductions'])?></td>
+																	<td><?php echo number_format($key['generalDeductions'])?></td>	
+																	<td><?php echo number_format($key['shopDeductions'] + $key['individualDeductions'] + $key['generalDeductions'])?></td>
+																	<td><?php echo number_format(($key['total_milk']*$key['milkRate']) - ($key['shopDeductions'] + $key['individualDeductions'] + $key['generalDeductions']))?></td>
+
+																	<td><?php echo date('d/m/Y', strtotime($key['created_at']))?></td>
+																	<td class="text-right">
+																		<a href="<?php echo base_url('payments/print_invoice/'.$key['id']) ?>" class="btn btn-info btn-sm"><i class="fa fa-print"></i></a>
+																	</td>
+																</tr>
+																<?php $i++; } } } } } } }?>
+															</tbody>
+															<tfoot>
+																<tr>
+																	<th></th>
+																	<th><?php echo $milk;?></th>
+																	<th><?php echo $shop;?></th>
+																	<th><?php echo $indv;?></th>
+																	<th><?php echo $gen;?></th>
+																	<th><?php echo $totDed;?></th>
+																	<th><?php echo $totGross;?></th>
+																	<th></th>
+																	<th></th>
+																</tr>
+															</tfoot>
+														</table>
+
+													</div>
+												</div>
+											</div>
+											<!-- /Bank Statutory Tab -->
+
+										</div>
+									</div>
+									<!-- /Page Content -->
+
+
+									<!-- Personal Info Modal -->
+									<div id="personal_info_modal" class="modal custom-modal fade" role="dialog">
+										<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title">Personal Information</h5>
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+												<div class="modal-body">
+													<form>
+														<div class="row">
+															<div class="col-md-6">
+																<div class="form-group">
+																	<label>Passport No</label>
+																	<input type="text" class="form-control">
+																</div>
+															</div>
+															<div class="col-md-6">
+																<div class="form-group">
+																	<label>Passport Expiry Date</label>
+																	<div class="cal-icon">
+																		<input class="form-control datetimepicker" type="text">
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-6">
+																<div class="form-group">
+																	<label>Tel</label>
+																	<input class="form-control" type="text">
+																</div>
+															</div>
+															<div class="col-md-6">
+																<div class="form-group">
+																	<label>Nationality <span class="text-danger">*</span></label>
+																	<input class="form-control" type="text">
+																</div>
+															</div>
+															<div class="col-md-6">
+																<div class="form-group">
+																	<label>Religion</label>
+																	<div class="cal-icon">
+																		<input class="form-control" type="text">
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-6">
+																<div class="form-group">
+																	<label>Marital status <span class="text-danger">*</span></label>
+																	<select class="select form-control">
+																		<option>-</option>
+																		<option>Single</option>
+																		<option>Married</option>
+																	</select>
+																</div>
+															</div>
+															<div class="col-md-6">
+																<div class="form-group">
+																	<label>Employment of spouse</label>
+																	<input class="form-control" type="text">
+																</div>
+															</div>
+															<div class="col-md-6">
+																<div class="form-group">
+																	<label>No. of children </label>
+																	<input class="form-control" type="text">
+																</div>
+															</div>
+														</div>
+														<div class="submit-section">
+															<button class="btn btn-primary submit-btn">Submit</button>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- /Personal Info Modal -->
+
+									<!-- Family Info Modal -->
+									<div id="family_info_modal" class="modal custom-modal fade" role="dialog">
+										<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title">Next of Kin</h5>
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+												<div class="modal-body">
+													<form action="<?php echo base_url('farmers/store_next_of_kin')?>" method="POST">
+														<div class="form-scroll">
+															<div class="card">
+																<div class="card-body">
+																	<h3 class="card-title">Next of Kin <a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
+																	<div class="row">
+																		<div class="col-md-6">
+																			<div class="form-group">
+																				<label>Farmer ID <span class="text-danger">*</span></label>
+																				<input class="form-control" name="farmerID" value="<?php echo $farmer['farmerID']?>" type="text" readonly>
+																			</div>
+																		</div>
+																		<div class="col-md-6">
+																			<div class="form-group">
+																				<label>Name <span class="text-danger">*</span></label>
+																				<input class="form-control" name="name" type="text" required>
+																			</div>
+																		</div>
+																		<div class="col-md-6">
+																			<div class="form-group">
+																				<label>Relationship <span class="text-danger">*</span></label>
+																				<input class="form-control" name="relationship" type="text" required>
+																			</div>
+																		</div>
+
+																		<div class="col-md-6">
+																			<div class="form-group">
+																				<label>Phone <span class="text-danger">*</span></label>
+																				<input class="form-control" name="phone" type="number" required>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="submit-section">
+															<button class="btn btn-primary submit-btn">Submit</button>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- /Family Info Modal -->
+
+								</div>
+								<!-- /Page Wrapper -->
 
 							</div>
-						</div>
-					</div>
-					<!-- /Bank Statutory Tab -->
-
-				</div>
-			</div>
-			<!-- /Page Content -->
-
-
-			<!-- Personal Info Modal -->
-			<div id="personal_info_modal" class="modal custom-modal fade" role="dialog">
-				<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title">Personal Information</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<form>
-								<div class="row">
-									<div class="col-md-6">
-										<div class="form-group">
-											<label>Passport No</label>
-											<input type="text" class="form-control">
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group">
-											<label>Passport Expiry Date</label>
-											<div class="cal-icon">
-												<input class="form-control datetimepicker" type="text">
-											</div>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group">
-											<label>Tel</label>
-											<input class="form-control" type="text">
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group">
-											<label>Nationality <span class="text-danger">*</span></label>
-											<input class="form-control" type="text">
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group">
-											<label>Religion</label>
-											<div class="cal-icon">
-												<input class="form-control" type="text">
-											</div>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group">
-											<label>Marital status <span class="text-danger">*</span></label>
-											<select class="select form-control">
-												<option>-</option>
-												<option>Single</option>
-												<option>Married</option>
-											</select>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group">
-											<label>Employment of spouse</label>
-											<input class="form-control" type="text">
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group">
-											<label>No. of children </label>
-											<input class="form-control" type="text">
-										</div>
-									</div>
-								</div>
-								<div class="submit-section">
-									<button class="btn btn-primary submit-btn">Submit</button>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- /Personal Info Modal -->
-
-			<!-- Family Info Modal -->
-			<div id="family_info_modal" class="modal custom-modal fade" role="dialog">
-				<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title">Next of Kin</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<form action="<?php echo base_url('farmers/store_next_of_kin')?>" method="POST">
-								<div class="form-scroll">
-									<div class="card">
-										<div class="card-body">
-											<h3 class="card-title">Next of Kin <a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
-											<div class="row">
-												<div class="col-md-6">
-													<div class="form-group">
-														<label>Farmer ID <span class="text-danger">*</span></label>
-														<input class="form-control" name="farmerID" value="<?php echo $farmer['farmerID']?>" type="text" readonly>
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-														<label>Name <span class="text-danger">*</span></label>
-														<input class="form-control" name="name" type="text" required>
-													</div>
-												</div>
-												<div class="col-md-6">
-													<div class="form-group">
-														<label>Relationship <span class="text-danger">*</span></label>
-														<input class="form-control" name="relationship" type="text" required>
-													</div>
-												</div>
-
-												<div class="col-md-6">
-													<div class="form-group">
-														<label>Phone <span class="text-danger">*</span></label>
-														<input class="form-control" name="phone" type="number" required>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="submit-section">
-									<button class="btn btn-primary submit-btn">Submit</button>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- /Family Info Modal -->
-
-		</div>
-		<!-- /Page Wrapper -->
-
-	</div>
-	<!-- /Main Wrapper -->
+							<!-- /Main Wrapper -->
 

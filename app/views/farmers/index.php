@@ -244,7 +244,7 @@
 												<div class="col-md-6">
 													<div class="form-group">
 														<label> Status <span class="text-danger">*</span></label>
-														<select name="" class="select" required>
+														<select name="status" class="select" required>
 															<option>Select Status</option>
 															<option value="0">Inactive</option>
 															<option value="1">Active</option>

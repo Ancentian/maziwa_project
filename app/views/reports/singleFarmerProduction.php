@@ -1,4 +1,5 @@
-<?php $sdate = "";$edate="";
+<?php $fid =""; $sdate = "";$edate="" ;
+	$fid = $_GET['fid'];
     $sdate = $_GET['sdate'];
     $edate = $_GET['edate'];
 ?>
@@ -28,8 +29,9 @@
 			<div class="alert alert-danger"><?php echo $this->session->flashdata('error-msg'); ?></div>
 		<?php } ?>
 		<!-- Search Filter -->
-		<form action="<?php echo base_url('reports/milk_CollectionReports')?>" method="GET">
+		<form action="<?php echo base_url('reports/filterSingleFarmerProduction')?>" method="GET">
 		<div class="row filter-row">
+			<input class="form-control " name="id" value="<?php echo $singleFarmer[0]['farmerID'];?>" type="text" hidden>
 			<div class="col-md-4">  
 				<div class="form-group form-focus">
 					<div class="cal-icon">
@@ -71,10 +73,15 @@
 							</tr>
 						</thead>
 						<tbody>
-							<?php $i=1; foreach ($singleFarmer as $key) { ?>
+							<?php $i=1; $morning = 0; $evening = 0; $rejected = 0; $total = 0; 
+							foreach ($singleFarmer as $key) { 
+								$morning += $key['morning']; $evening += $key['evening'];
+								$rejected += $key['rejected']; $total += $key['total']; ?>
 								<tr>
 								<td><?php echo $i; ?></td>
-								<td><a href="<?php echo base_url('farmers/farmerProfile?fid='. $key['farmerID'] )?>"><?php echo $key['farmerID']?></a></td>	
+								<td>
+									<a href="<?php echo base_url('farmers/farmerProfile?fid='.$key['farmerID'] )?>"><?php echo $key['farmerID']?></a>
+								</td>	
 								<td><?php echo $key['morning']?></td>
 								<td><?php echo $key['evening']?></td>
 								<td><?php echo $key['rejected']?></td>	
@@ -87,6 +94,19 @@
 							</tr>
 							<?php $i++; } ?>
 						</tbody>
+						<tfoot>
+							<tr>
+								<th style="width: 30px;">#</th>
+								<th colspan="">TOTALS</th>
+								<th ><?php echo $morning; ?></th>
+								<th><?php echo $evening; ?></th>						
+								<th><?php echo $rejected; ?></th>
+								<th><?php echo $total; ?></th>					
+								<th></th>
+								<th></th>
+								<th class="text-right"></th>
+							</tr>
+						</tfoot>
 					</table>
 				</div>
 			</div>
