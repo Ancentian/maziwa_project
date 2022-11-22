@@ -35,13 +35,13 @@
 			<div class="row filter-row mb-4">		
 				<div class="col-sm-6 col-md-4">  
 					<div class="form-group form-focus">
-						<input class="form-control"  name="sdate" value="<?php echo $sdate; ?>" type="date">
+						<input class="form-control floating datetimepicker"  name="sdate" value="<?php echo $sdate; ?>" type="text">
 						<label class="focus-label">From</label>
 					</div>
 				</div>
 				<div class="col-sm-6 col-md-4">  
 					<div class="form-group form-focus">
-						<input class="form-control"  name="edate" value="<?php echo $edate; ?>" type="date">
+						<input class="form-control floating datetimepicker"  name="edate" value="<?php echo $edate; ?>" type="text">
 						<label class="focus-label">To</label>
 					</div>
 				</div>
@@ -71,7 +71,10 @@
 							</tr>
 						</thead>
 						<tbody>
-							<?php $i=1; foreach ($milk as $key) { ?>
+							<?php $i=1; $morning = 0; $evening = 0; $rejected = 0; $total = 0;
+							 foreach ($milk as $key) { 
+							 	$morning += $key['morning']; $evening += $key['evening'];
+								$rejected += $key['rejected']; $total += $key['total']; ?>
 								<tr>
 								<td><?php echo $i; ?></td>
 								<td><?php echo $key['farmerID']." - ".$key['fname']." ".$key['mname']." ".$key['lname']?></td>
@@ -102,6 +105,20 @@
 							</tr>
 							<?php $i++; } ?>
 						</tbody>
+						<tfoot>
+							<tr>
+								<th style="width: 30px;">#</th>
+								<th class="text-center">TOTALS</th>
+								<th colspan="2"></th>
+								<th ><?php echo $morning; ?></th>
+								<th><?php echo $evening; ?></th>						
+								<th><?php echo $rejected; ?></th>
+								<th><?php echo $total; ?></th>					
+								<th></th>
+								<th></th>
+								<th class="text-right"></th>
+							</tr>
+						</tfoot>
 					</table>
 				</div>
 			</div>

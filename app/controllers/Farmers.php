@@ -223,10 +223,12 @@ class Farmers extends BASE_Controller {
     /*
       Delete a record
     */
-    public function deleteFarmer($id)
+    public function deleteFarmer()
     {
+        $id = $this->input->get('fid');
+        //var_dump($id);die;
         $item = $this->farmers->delete_farmer($id);
-        $this->session->set_flashdata('success', "Data Deleted Successfully!");
+        $this->session->set_flashdata('success-msg', "Data Deleted Successfully!");
         redirect(base_url('farmers/index'));
     }
 
