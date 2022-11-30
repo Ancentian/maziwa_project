@@ -102,7 +102,7 @@
     });
 
     function getcube(){  
-var rate = document.getElementById("rate").value;  
+    var rate = document.getElementById("rate").value;  
   //alert(rate);
 }  
 

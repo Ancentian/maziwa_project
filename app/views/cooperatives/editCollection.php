@@ -61,13 +61,13 @@
 											</td>
 												<input type="text" name="farmerID" value="<?php echo $key['farmerID']?>" class="form-control" readonly hidden> 
 											<td>
-												<input type="number" name="morning" id="value1" class="form-control  morning" value="<?php echo $key['morning']?>" required />
+												<input type="number" name="morning" id="value1" class="form-control  morning" step="any" value="<?php echo $key['morning']?>" required />
 											</td>
 											<td>
-												<input type="number" name="evening" id="value2" class="form-control  evening" value="<?php if($key['evening'] == ''){ echo "0"; }else{ echo $key['evening']; } ?>" required />
+												<input type="number" name="evening" id="value2" class="form-control  evening" step="any" value="<?php if($key['evening'] == ''){ echo "0"; }else{ echo $key['evening']; } ?>" required />
 											</td>
 											<td>
-												<input type="number" name="rejected" id="value3" class="form-control  rejected" value="<?php if($key['rejected'] == ''){ echo "0"; }else{ echo $key['rejected']; } ?>" required />
+												<input type="number" name="rejected" id="value3" class="form-control  rejected" step="any" value="<?php if($key['rejected'] == ''){ echo "0"; }else{ echo $key['rejected']; } ?>" required />
 											</td>
 											<td>
 												<input type="number" name="total" id="sum" value="<?php echo $key['total']?>" class="form-control total"readonly />
