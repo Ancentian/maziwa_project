@@ -10,6 +10,10 @@
             padding: 0;
             font-size: 12px;
             background-color: #fff;
+            /*table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;*/
+}
         }
 
         #products {
@@ -27,9 +31,10 @@
             text-align: justify;
         }
 
-        .inv_info tr th td {
+        .inv_info th td {
             padding-right: 10pt;
-            border: 1px solid #dddddd;
+            border: 1px solid black;
+            border-collapse: collapse;
             text-align: left;
         }
 
@@ -84,24 +89,24 @@
         </tr>
         <tr class="product_row">
             <td colspan="2"><b>Total Milk</b></td>
-            <td><?php echo $payments['total_milk'] ?>&nbsp;</td>
+            <td class="text-center"><?php echo $payments['total_milk'] ?>&nbsp;</td>
         </tr>
         <tr class="product_row">
             <td colspan="2"><b> Rate/Litre</td>
-            <td><?php echo $payments['milkRate'] ?>&nbsp;</td>
+            <td class="text-center"><?php echo $payments['milkRate'] ?>&nbsp;</td>
         </tr>
         <tr class="product_row">
             <td colspan="2"><b> Total Deductions</b></td>
-            <td><?php echo number_format($payments['shopDeductions'] + $payments['individualDeductions'] + $payments['generalDeductions']) ?>&nbsp;</td>
+            <td class="text-center"><?php echo number_format($payments['shopDeductions'] + $payments['individualDeductions'] + $payments['generalDeductions']) ?>&nbsp;</td>
         </tr>
         <tr class="product_row">
             <td colspan="2"><b> Total Earned</b></td>
-            <td><?php echo number_format(($payments['total_milk']*$payments['milkRate']) - ($payments['shopDeductions'] + $payments['individualDeductions'] + $payments['generalDeductions'])) ?>&nbsp;</td>
+            <td class="text-center"><?php echo number_format(($payments['total_milk']*$payments['milkRate']) - ($payments['shopDeductions'] + $payments['individualDeductions'] + $payments['generalDeductions'])) ?>&nbsp;</td>
         </tr>        
     </table>
     <hr>
    
-    <table class="inv_info">
+    <table class="inv_info" >
         <thead>
             <tr>
                 <td>#</td>
@@ -132,7 +137,6 @@
             </tr>
         </tfoot>
     </table>
-    <hr>
     <table>
         <tr>
             <td>Invoiced by: </td>

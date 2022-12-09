@@ -75,7 +75,7 @@
 												<input type="number" name="rejected[]" id="value3" class="form-control  rejected" value="0" step="any" placeholder="Enter second value" required />
 											</td>
 											<td>
-												<input type="number" name="total[]" id="sum" class="form-control total"readonly />
+												<input type="number" value="0" name="total[]" id="sum" class="form-control total"readonly />
 											</td>
 										</tr>
 									<?php }?>

@@ -136,8 +136,8 @@ class Cooperative extends BASE_Controller {
     public function storeMilkCollection()
     {
         $forminput = $this->input->post();
-        //var_dump($forminput);die;
-
+        //var_dump(json_encode($forminput));die;
+        $total = 0;
         $farmer     =     $forminput['farmerID'];
         $date =           date('Y-m-d',strtotime(str_replace("/","-",$forminput['collection_date'])));
         $morning    =     $forminput['morning'];

@@ -94,6 +94,11 @@
 								<td><?php echo $key['rejected']?></td>
 								<?php } elseif ($key['rejected'] == "") {?>
 								<td><?php echo "0"; ?></td>
+								<?php }?>
+								<?php if($key['total'] != "") {?>
+								<td><?php echo $key['total']?></td>
+								<?php } elseif ($key['total'] == "") {?>
+								<td><?php echo "0"; ?></td>
 								<?php }?>	
 								<td><?php echo $key['total']?></td>			
 								<td><?php echo $key['firstname']?></td>

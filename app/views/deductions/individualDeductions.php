@@ -15,7 +15,7 @@
 						<li class="breadcrumb-item active">Farmers</li>
 					</ul>
 				</div>
-				<div class="col-auto float-right ml-auto">
+				<div class="col-auto float-right ml-auto" hidden>
 					<a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee"><i class="fa fa-plus"></i> Add Farmer</a>
 					<div class="view-icons" hidden>
 						<a href="employees.html" class="grid-view btn btn-link"><i class="fa fa-th"></i></a>
@@ -43,7 +43,6 @@
 								<th>Name</th>
 								<th>Contact</th>
 								<th>Center</th>
-								<th>Gender</th>
 								<th class="text-right no-sort">Action</th>
 							</tr>
 						</thead>
@@ -64,7 +63,6 @@
 								<td><?php echo "--"; ?></td>
 								<?php }?>
 								<td><?php echo ucfirst($key['centerName'])?></td>
-								<td><?php echo ucfirst($key['gender'])?></td>
 								<td class="text-right">
 									<a href="<?php echo base_url('deductions/addDeduction?fid='.$key['farmerID']) ?>" class="btn btn-warning"><i class="fa fa-plus"></i></a>
 								</td>
