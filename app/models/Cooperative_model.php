@@ -76,7 +76,7 @@ class Cooperative_model extends CI_Model{
             //var_dump($sdate);die;
             $edate = date('Y-m-d',strtotime($edate)+86400);
             $this->db->where('milk_collections.collection_date >=',$sdate);
-            $this->db->where('milk_collections.collection_date <=',$edate);
+            $this->db->where('milk_collections.collection_date <',$edate);
         }
         $this->db->order_by('milk_collections.id', 'DESC');
         $query = $this->db->get();

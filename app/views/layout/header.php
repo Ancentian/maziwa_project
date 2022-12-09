@@ -3,14 +3,14 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-        <meta name="description" content="Smarthr - Bootstrap Admin Template">
-        <meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
-        <meta name="author" content="Dreamguys - Bootstrap Admin Template">
+        <meta name="description" content="Ancent - Bootstrap Admin Template">
+        <meta name="keywords" content="admin">
+        <meta name="author" content="Ancent Bootstrap Admin Template">
         <meta name="robots" content="noindex, nofollow">
         <title><?php echo $pg_title; ?></title>
         
         <!-- Favicon -->
-        <link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url(); ?>res/assets/img/favicon.png">
+        <link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url(); ?>res/assets/img/cowa_logo.png">
         
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="<?php echo base_url(); ?>res/assets/css/bootstrap.min.css">
@@ -38,11 +38,6 @@
         <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet">
         <link href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css" rel="stylesheet">
         
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-            <script src="assets/js/html5shiv.min.js"></script>
-            <script src="assets/js/respond.min.js"></script>
-        <![endif]-->
     </head>
     
     <body>

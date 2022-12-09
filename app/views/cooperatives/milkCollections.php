@@ -14,12 +14,12 @@
 				<div class="col">
 					<h3 class="page-title">Milk Collections</h3>
 					<ul class="breadcrumb">
-						<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+						<li class="breadcrumb-item"><a href="<?php echo base_url('')?>">Dashboard</a></li>
 						<li class="breadcrumb-item active">General</li>
 					</ul>
 				</div>
-				<div class="col-auto float-right ml-auto" hidden>
-					<a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_department"><i class="fa fa-plus"></i> Add Cooperative</a>
+				<div class="col-auto float-right ml-auto" >
+					<a href="<?php echo base_url('cooperative/searchCollectionCenter')?>" class="btn add-btn" ><i class="fa fa-plus"></i> Add New Collection</a>
 				</div>
 			</div>
 		</div>
@@ -93,6 +93,11 @@
 								<?php if($key['rejected'] != "") {?>
 								<td><?php echo $key['rejected']?></td>
 								<?php } elseif ($key['rejected'] == "") {?>
+								<td><?php echo "0"; ?></td>
+								<?php }?>
+								<?php if($key['total'] != "") {?>
+								<td><?php echo $key['total']?></td>
+								<?php } elseif ($key['total'] == "") {?>
 								<td><?php echo "0"; ?></td>
 								<?php }?>	
 								<td><?php echo $key['total']?></td>			

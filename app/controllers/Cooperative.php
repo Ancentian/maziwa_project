@@ -9,6 +9,7 @@ class Cooperative extends BASE_Controller {
         }
         $this->load->model('cooperative_model');
         $this->load->model('employee_model');
+        $this->load->model('farmers_model');
         //$this->load->library('form_validation');
     }
 
@@ -69,6 +70,7 @@ class Cooperative extends BASE_Controller {
         $forminput = $this->input->get();
         $sdate = $forminput['sdate'];
         $edate = $forminput['edate'];
+        //var_dump($sdate."".$edate);die;
         $this->data['milk'] = $this->cooperative_model->milk_collections($sdate, $edate);
         //var_dump($this->data['milk'][0]);die;
         $this->data['pg_title'] = "Selected Center";
@@ -134,8 +136,8 @@ class Cooperative extends BASE_Controller {
     public function storeMilkCollection()
     {
         $forminput = $this->input->post();
-        //var_dump($forminput);die;
-
+        //var_dump(json_encode($forminput));die;
+        $total = 0;
         $farmer     =     $forminput['farmerID'];
         $date =           date('Y-m-d',strtotime(str_replace("/","-",$forminput['collection_date'])));
         $morning    =     $forminput['morning'];

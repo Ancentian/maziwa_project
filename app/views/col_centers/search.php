@@ -60,8 +60,7 @@
 								<th style="width: 30px;">#</th>
 								<th>Collection Center </th>
 								<th>Clerk Name</th>
-								<th>Farmers</th>
-								<th class="text-right">Action</th>
+								<th class="text-center">Farmers</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -71,8 +70,7 @@
 								<td><a href="<?php echo base_url('cooperative/centerMembers/') . $key['id']; ?>"><?php echo strtoupper($key['centerName']); ?>
 								</a></td>
 								<td><?php echo $key['firstname']." ".$key['lastname']?></td>
-								<td></td>
-								<td class="text-right"></td>
+								<td class="text-center"><?php echo $this->farmers_model->count_farmers($key['id']); ?></td>
 							</tr>
 							<?php $i++; }?>
 						</tbody>

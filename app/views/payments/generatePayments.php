@@ -65,12 +65,11 @@ $edate = $_GET['edate'];
 					<form action="<?php echo base_url('payments/storeMonthlyPayments')?>" method="POST">
 						<input class="form-control floating" name="from_date" value="<?php echo $sdate; ?>"  type="text" hidden>
 						<input class="form-control floating" name="to_date" value="<?php echo $edate; ?>" type="text" hidden>
-					<table class="table table-striped custom-table mb-0 test" id="cmaziwa">
+					<table class="table  mb-0 test stripe row-border order-column" class="" id="cmaziwa">
 						<thead>
 							<tr>
 								<th style="width: 30px;">#</th>
 								<th>Code</th>
-								<th>Name</th>
 								<th>Center</th>
 								<th>Milk</th>
 								<th>Shop</th>					
@@ -95,8 +94,8 @@ $edate = $_GET['edate'];
 							 <?php if($key['milktotal'] > 0) {?>
 								<tr>
 									<td><?php echo $i; ?></td>
-									<td><input type="text" class="form-control" value="<?php echo $key['farmerID']?>" name="farmerID[]" readonly></td>
-									<td><?php echo $key['fname']." ".$key['mname']." ".$key['lname']?></td>
+									<td><?php echo $key['farmerID']." - ".$key['fname']." ".$key['mname']." ".$key['lname']?></td>
+									<input type="text" name="farmerID[]" value="<?php echo $key['farmerID']?>" class="form-control" hidden> 
 									<td><?php echo $key['centerName']?></td>
 									<td>
 										<input type="text" class="form-control totalMilk" name="total_milk[]" value="<?php echo $key['milktotal']?>" readonly>

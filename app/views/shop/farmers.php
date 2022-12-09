@@ -35,9 +35,7 @@
 								<th>Name</th>
 								
 								<th>Contact</th>
-								<th>Collection Center</th>
-								<th class="text-nowrap">Join Date</th>
-								<th>Gender</th>
+								<th>Center</th>
 								<th class="text-right no-sort">Action</th>
 							</tr>
 						</thead>
@@ -53,11 +51,12 @@
 									</h2>
 								</td>
 								
+								<?php if($key['contact1'] != "") {?>
 								<td><?php echo $key['contact1']?></td>
-								<td><?php echo $key['centerName']?></td>
-								<td><?php echo date('d/m/Y', strtotime($key['join_date']))?></td>
-								<td><?php echo $key['gender']?></td>
-								
+								<?php }elseif($key['contact1'] == ""){?>
+								<td><?php echo "--"; ?></td>
+								<?php }?>
+								<td class="text-center"><?php echo $key['centerName']?></td>			
 								<td class="text-right">
 									<a href="<?php echo base_url('shop/addShopping?fid='.$key['farmerID']) ?>" class="btn btn-warning"><i class="fa fa-plus"></i></a>
 								</td>

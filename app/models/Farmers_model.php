@@ -9,6 +9,13 @@ class Farmers_model extends CI_Model{
     /*
         Get all the records from the database
     */
+    public function count_farmers($id)
+    {
+        $this->db->where('center_id', $id);
+        $query = $this->db->get('farmers_biodata');
+        echo $query->num_rows();
+    }
+
     public function fetch_farmers()
     {
         $this->db->select('farmers_biodata.*, collection_centers.id as colID, collection_centers.centerName')->from('farmers_biodata');
